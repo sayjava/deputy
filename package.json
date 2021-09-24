@@ -18,7 +18,7 @@
     ],
     "main": "lib/index.js",
     "bin": {
-        "behave": "lib/index.js",
+        "behave": "lib/deputy.js",
         "devcert": "lib/cert.js"
     },
     "scripts": {

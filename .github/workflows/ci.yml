@@ -44,7 +44,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Npm version
-        working-directory: packages/server
         run: | 
           npm version ${{ steps.tag_version.outputs.new_version }}
           git config --global user.email "robot@github.com"
