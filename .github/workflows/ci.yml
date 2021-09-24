@@ -45,9 +45,9 @@ jobs:
 
       - name: Npm version
         run: | 
-          npm version ${{ steps.tag_version.outputs.new_version }}
-          git config --global user.email "robot@github.com"
+          git config --global user.email "${{ github.actor }}@gmail.com"
           git config --global user.name "${{ github.actor }}"
+          npm version ${{ steps.tag_version.outputs.new_version }}
           git add .
           git commit -m "ci: [skip ci] new version update ${{ steps.tag_version.outputs.new_version }}"
           git push
