@@ -48,9 +48,6 @@ jobs:
           git config --global user.email "${{ github.actor }}@gmail.com"
           git config --global user.name "${{ github.actor }}"
           npm version ${{ steps.tag_version.outputs.new_version }}
-          echo ${{ steps.tag_version.outputs.changelog }} >> CHANGELOG.md 
-          git add .
-          git commit -m "ci: [skip ci] new version update ${{ steps.tag_version.outputs.new_version }}"
           git push
 
       - name: Create a GitHub release
