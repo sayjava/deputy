@@ -1,0 +1,62 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Dependencies
+        run: yarn
+      
+      - name: Build
+        run: yarn build
+
+      - name: Test
+        run: yarn test
+
+  version:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.6
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Npm version
+        working-directory: packages/server
+        run: | 
+          npm version ${{ steps.tag_version.outputs.new_version }}
+          git config --global user.email "robot@github.com"
+          git config --global user.name "${{ github.actor }}"
+          git add .
+          git commit -m "ci: [skip ci] new version update ${{ steps.tag_version.outputs.new_version }}"
+          git push
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
+          token: ${{ secrets.ACCESS_TOKEN }}

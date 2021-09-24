@@ -1,0 +1,7 @@
+{
+    "verbose": true,
+    "ignore": ["**/*.test.ts", "**/*.spec.ts", ".git", ".yml", "node_modules"],
+    "watch": ["src"],
+    "exec": "yarn dev",
+    "ext": "ts"
+}
