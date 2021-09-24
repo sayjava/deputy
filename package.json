@@ -1,6 +1,6 @@
 {
     "name": "deputy",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "A robust HTTP sever for mocking, inspecting and proxying API endpoints for development and testing",
     "repository": "git@gitlab.com:sayjava/deputy.git",
     "license": "MIT",
