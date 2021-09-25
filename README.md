@@ -202,7 +202,7 @@ curl -X PUT http://localhost:8080/_/api/requests/sequence -H "content-type:appli
 ]'
 ```
 
-see the [Behavior Guide](http://sayjava.github.com/deputy)
+see the [Mock Guide](http://sayjava.github.com/deputy)
 
 ### Programmatically Use cases (Express Middleware / NodeJS HTTP Middleware)
 
