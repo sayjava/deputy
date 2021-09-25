@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  behave:
+  deputy:
     build: 
       dockerfile: Dockerfile
       context: .
     environment: 
-      BEHAVE_PORT: 8080
-      BEHAVE_TLS_ENABLED: 'true'
+      DEPUTY_PORT: 8080
+      DEPUTY_TLS_ENABLED: 'true'
     volumes: 
       - ./ssl:/app/ssl
     ports: 

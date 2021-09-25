@@ -1,4 +1,4 @@
- <h1 align="center">Behave</h1>
+ <h1 align="center">Deputy</h1>
  <p align="center">
 The easiest and quickest way to mock HTTP endpoints for development and testing purposes
  </p>
@@ -17,9 +17,9 @@ The easiest and quickest way to mock HTTP endpoints for development and testing 
 
 # What is Deputy?
 
-Behave is an HTTP API mock server that can aid in rapid application development by mocking endpoints and configuring responses from configurations.
+Deputy is an HTTP API mock server that can aid in rapid application development by mocking endpoints and configuring responses from configurations.
 
-Behave can also act as a testing server to validate what requests made by system under test.
+Deputy can also act as a testing server to validate what requests made by system under test.
 
 # Quick Start
 
@@ -42,27 +42,27 @@ curl -X GET http://localhost:8080/hello
 
 # Features
 
--   [Declarative request matching and response](https://sayjava.github.io/behave/guide)
--   [Regex based request matching](https://sayjava.github.io/behave/guide) (request path, headers and body matchers)
--   [Alternate and limit responses on same request](https://sayjava.github.io/behave/guide)
--   [Templated based response](https://sayjava.github.io/behave/guide), e.g `"Task is {{req.queryParams.name}}"`
--   [NodeJS HTTP/Express Middleware](https://sayjava.github.io/behave/start)
--   [HTTP request validations](https://sayjava.github.io/behave/assertions)
--   [Simulate response delays and network failures](https://sayjava.github.io/behave/guide)
--   [Serverless compatible](https://sayjava.github.io/behave)
+-   [Declarative request matching and response](https://sayjava.github.io/deputy/guide)
+-   [Regex based request matching](https://sayjava.github.io/deputy/guide) (request path, headers and body matchers)
+-   [Alternate and limit responses on same request](https://sayjava.github.io/deputy/guide)
+-   [Templated based response](https://sayjava.github.io/deputy/guide), e.g `"Task is {{req.queryParams.name}}"`
+-   [NodeJS HTTP/Express Middleware](https://sayjava.github.io/deputy/start)
+-   [HTTP request validations](https://sayjava.github.io/deputy/assertions)
+-   [Simulate response delays and network failures](https://sayjava.github.io/deputy/guide)
+-   [Serverless compatible](https://sayjava.github.io/deputy)
 
 # Examples
 
-Here are some scenarios where `Behave` can be used to mock endpoints. Start the server on the default 8080 port
+Here are some scenarios where `Deputy` can be used to mock endpoints. Start the server on the default 8080 port
 
 ```shell
-npx @sayjava/behave
+npx @sayjava/deputy
 ```
 
 ### Regex paths
 
 ```shell
-npx @sayjava/behave -b '[
+npx @sayjava/deputy -b '[
   {
     "name": "Match any task with id",
     "request": { "path": "/tasks/[0-9]+" },
@@ -86,7 +86,7 @@ curl http://localhost:8080/tasks/10
 e.g `{"user-a∫gent": "Chrome|Apple*"}`
 
 ```shell
-npx @sayjava/behave -b '[
+npx @sayjava/deputy -b '[
   {
     "name": "Match requests coming from Apple devices or Chrome",
     "request": {
@@ -114,7 +114,7 @@ curl http://localhost:8080/tasks/2 -H 'user-agent: Chrome'
 HTTP response can be templated using Handlebars syntax
 
 ```shell
-@sayava/behave -b `[
+@sayava/deputy -b `[
   {
     "request": {
       "path": "/greet/:name",
@@ -142,7 +142,7 @@ and respond with `Hello jane`
 e.g `{"user":"john_[a-z]+"}`
 
 ```shell
-@sayjava/behave -b '[{
+@sayjava/deputy -b '[{
   "name": "Match requests with users with names like john_xxx",
   "request": {
     "path": "/tasks",
@@ -167,7 +167,7 @@ curl -X POST http://localhost:8080/tasks -H "content-type:application/json" -d '
 
 ### Asserts received requests
 
-Asserts that Behave has received a request with that path at least twice and at most 10 times
+Asserts that Deputy has received a request with that path at least twice and at most 10 times
 
 ```shell
 curl -X PUT http://localhost:8080/_/api/requests/assert -H "content-type:application/json" -d '[
@@ -185,7 +185,7 @@ curl -X PUT http://localhost:8080/_/api/requests/assert -H "content-type:applica
 
 ### Asserts the sequence requests are received
 
-Asserts that Behave has received a request with that path at least twice and at most 10 times
+Asserts that Deputy has received a request with that path at least twice and at most 10 times
 
 ```shell
 curl -X PUT http://localhost:8080/_/api/requests/sequence -H "content-type:application/json" -d '[
@@ -202,13 +202,13 @@ curl -X PUT http://localhost:8080/_/api/requests/sequence -H "content-type:appli
 ]'
 ```
 
-see the [Behavior Guide](http://sayjava.github.com/behave)
+see the [Behavior Guide](http://sayjava.github.com/deputy)
 
 ### Programmatically Use cases (Express Middleware / NodeJS HTTP Middleware)
 
 ```javascript
 const express = require('express');
-const { behaveHandler } = require('@sayjava/behave');
+const { deputyHandler } = require('@sayjava/deputy');
 
 const app = express();
 app.use(express.static(__dirname + '/views'));
@@ -217,15 +217,15 @@ app.use(express.static(__dirname + '/views'));
 app.get('/', (req, res) => res.render('index', { title: 'Hey', message: 'Hello there!' }));
 
 // Mount the middleware on /api.
-app.use('/api', behaveHandler({ config: { fromFile: 'api.json' } }));
+app.use('/api', deputyHandler({ config: { fromFile: 'api.json' } }));
 
 app.listen(3000, () => console.info(`App started on 3000`));
 ```
 
 ### Serverless Mock Server
 
-See [Serverless Deployment](examples/behave-with-lambda/README.md)
+See [Serverless Deployment](examples/deputy-with-lambda/README.md)
 
 ### Full Documentation
 
-[Full Documentation](https://sayjava.github.io/behave)
+[Full Documentation](https://sayjava.github.io/deputy)

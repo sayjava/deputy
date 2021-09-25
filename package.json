@@ -1,7 +1,7 @@
 {
     "name": "@sayjava/deputy",
     "version": "0.0.4",
-    "description": "A robust HTTP sever for mocking, inspecting and proxying API endpoints for development and testing",
+    "description": "A robust HTTP mock sever for development, inspecting and proxying API endpoints. Suitable also for micro-services testing",
     "repository": "git@github.com:sayjava/deputy.git",
     "license": "MIT",
     "keywords": [
@@ -9,8 +9,8 @@
         "mock-services",
         "mock-api",
         "http-stub",
-        "express mock middleware",
-        "http test server"
+        "express-mock-middleware",
+        "http-test"
     ],
     "files": [
         "lib/**",
@@ -18,8 +18,7 @@
     ],
     "main": "lib/index.js",
     "bin": {
-        "behave": "lib/deputy.js",
-        "devcert": "lib/cert.js"
+        "deputy": "lib/deputy.js"
     },
     "scripts": {
         "start": "node --inspect=5858 lib/index.js",
