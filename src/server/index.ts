@@ -30,7 +30,7 @@ const createExpress = ({ config, engine }: { config: DeputyConfig; engine: Engin
     app.use(bodyParser.text({ type: 'application/x-yaml' }));
     app.use(bodyParser.json());
     app.use(cors());
-    app.use('/_/dashboard', express.static(`dashboard`));
+    app.use('/_/dashboard', express.static('ui/build/'));
 
     if (process.env.NODE_ENV !== 'test') {
         app.use(morgan('common'));
