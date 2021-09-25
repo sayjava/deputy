@@ -63,6 +63,7 @@ jobs:
           node-version: '10.x'
           registry-url: 'https://registry.npmjs.org'
       - run: |
+          git fetch
           yarn
           yarn build
           git log
