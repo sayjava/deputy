@@ -21,11 +21,11 @@
         "deputy": "lib/deputy.js"
     },
     "scripts": {
-        "start": "node --inspect=5858 lib/index.js",
+        "start": "node --inspect=5858 lib/deputy.js",
         "clean": "rm -rf lib",
         "build": "tsc",
         "watch": "nodemon",
-        "dev": "ts-node src/index.ts",
+        "dev": "ts-node src/deputy.ts",
         "test": "jest"
     },
     "devDependencies": {
@@ -50,6 +50,15 @@
     },
     "dependencies": {
         "axios": "^0.21.4",
-        "shortid": "^2.2.16"
+        "cli-table": "^0.3.6",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "express-ws": "^5.0.2",
+        "morgan": "^1.10.0",
+        "shortid": "^2.2.16",
+        "winston": "^3.3.3",
+        "ws": "^8.2.2",
+        "yaml": "^1.10.2",
+        "yargs": "^17.2.0"
     }
 }

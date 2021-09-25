@@ -37,7 +37,7 @@ const minimumMock: Mock = {
     },
 };
 
-export const validateMock = (behave: Mock): Mock => {
+export const validateMock = (mock: Mock): Mock => {
     const newMock = Object.assign(
         {
             name: 'Mock',
@@ -45,7 +45,7 @@ export const validateMock = (behave: Mock): Mock => {
                 path: '.*',
             },
         },
-        behave,
+        mock,
     );
 
     if (!matchKeys(minimumMock, newMock)) {
@@ -77,8 +77,8 @@ export class Engine extends EventEmitter {
 
     constructor(mocks: Mock[], config: EngineConfig) {
         super();
-        this.$mocks = mocks.map((behave) => {
-            return Object.assign(this.baseMock(), behave);
+        this.$mocks = mocks.map((mock) => {
+            return Object.assign(this.baseMock(), mock);
         });
 
         this.$config = config;

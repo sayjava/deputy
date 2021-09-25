@@ -28,7 +28,7 @@ test('matches headers values', () => {
         path: '/todo/1',
         headers: {
             Accept: 'application/json+vnd',
-            'x-behave-version': '[0-9]+',
+            'x-mock-version': '[0-9]+',
         },
         method: 'GET',
     };
@@ -38,7 +38,7 @@ test('matches headers values', () => {
         headers: {
             Accept: 'application/json+vnd',
             HOST: 'example.com',
-            'x-behave-version': '1',
+            'x-mock-version': '1',
         },
         method: 'GET',
     };

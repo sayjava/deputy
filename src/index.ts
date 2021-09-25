@@ -1,6 +1,1 @@
-import { doSomething } from './server';
-export const start = () => {
-    doSomething();
-};
-
-start();
+export const createExpressMiddleware = () => console.info('Coming soon');

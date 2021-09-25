@@ -119,7 +119,7 @@ tailwind.output.css
 
 dashboard
 
-packages/server/ssl
+ssl
 
 .DS_Store
 node_modules
