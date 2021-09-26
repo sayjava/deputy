@@ -12,6 +12,8 @@ import { MocksView } from './components/mocks/Mocks';
 import { ServerControls } from './components/ServerControls';
 import { Visualise } from './components/Visualise';
 import { Header } from 'antd/lib/layout/layout';
+import { ReactComponent as Logo } from './logo.svg';
+
 const { Footer, Content } = Layout;
 
 const App = () => {
@@ -21,7 +23,11 @@ const App = () => {
                 <Layout className="layout" style={{ minHeight: '100vh' }}>
                     <Header className="header">
                         <Row justify="space-between">
-                            <h4 style={{ color: 'white' }}>Deputy Server</h4>
+                            <Row align="middle">
+                                <Logo width="30" />
+                                <span style={{ color: 'white', paddingLeft: '10px' }}>Deputy</span>
+                            </Row>
+
                             <Typography.Link href="https://sayjava.github.io/behave/" target="_blank">
                                 Docs
                             </Typography.Link>

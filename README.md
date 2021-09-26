@@ -1,5 +1,8 @@
  <h1 align="center">Deputy</h1>
  <p align="center">
+  <img src="ui/src/logo.svg" width="150">
+ </p>
+ <p align="center">
 The easiest and quickest way to mock HTTP endpoints for development and testing purposes
  </p>
  <p align="center">
@@ -11,8 +14,9 @@ The easiest and quickest way to mock HTTP endpoints for development and testing 
   <a href="https://sayjava.github.io/deputy/api">API »</a>
  </p>
  <p align="center">
-  <img src="https://github.com/sayjava/deputy/workflows/CI/badge.svg" />
+  <img src="https://github.com/sayjava/deputy/workflows/Build/badge.svg" />
   <img src="https://github.com/sayjava/deputy/workflows/Docs/badge.svg" />
+  <img src="https://github.com/sayjava/deputy/workflows/Release/badge.svg" />
  </p>
 
 # What is Deputy?

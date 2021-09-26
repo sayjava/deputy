@@ -28,8 +28,7 @@
         "start": "react-scripts start",
         "build": "NODE_ENV=production react-scripts build",
         "test": "echo 'Testing coming soon'",
-        "eject": "react-scripts eject",
-        "fill": "NODE_TLS_REJECT_UNAUTHORIZED=0 node fill.js"
+        "eject": "react-scripts eject"
     },
     "eslintConfig": {
         "extends": [
