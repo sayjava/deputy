@@ -19,7 +19,7 @@ const getDestinationHost = (request, splitByURL) => {
         return capitalize(hostname);
     }
     const [, hostname] = String(request.headers['host']).split('.');
-    return hostname ? capitalize(hostname) : hostname;
+    return hostname ? capitalize(hostname) : 'Deputy';
 };
 
 interface VisualiseState {
@@ -27,13 +27,11 @@ interface VisualiseState {
     open: boolean;
     code: string;
     withProxy: boolean;
+    warn: boolean;
 }
 
 const Diagram = ({ code }) => {
     const [state, setState] = useState({ svg: null, error: null, href: '' });
-
-    console.log('reading new code', code);
-
     useEffect(() => {
         try {
             mermaid.parse(code);
@@ -62,12 +60,21 @@ const Diagram = ({ code }) => {
     );
 };
 
+Diagram.displayName = 'SequenceDiagram';
+
+const MAX_RECORDS = 15;
 export const Visualise = () => {
     const {
         state: { records },
     } = useServerState();
 
-    const [state, setState] = useState<VisualiseState>({ byUrl: false, open: false, code: null, withProxy: true });
+    const [state, setState] = useState<VisualiseState>({
+        byUrl: false,
+        open: false,
+        code: null,
+        withProxy: false,
+        warn: false,
+    });
 
     const createSequenceGraph = async (newState: VisualiseState) => {
         if (records.length === 0) {
@@ -75,23 +82,28 @@ export const Visualise = () => {
         }
 
         const seqs = ['sequenceDiagram'];
-        records.forEach((rec) => {
+        records.slice(0, MAX_RECORDS).forEach((rec) => {
             const { request, response, proxyRequest } = rec;
-            seqs.push(`App->>Proxy: ${request.method} ${request.path}`);
             const destRequest = proxyRequest || request;
-            const destination = getDestinationHost(request, newState.byUrl);
+            const destination = getDestinationHost(destRequest, newState.byUrl);
 
-            if (destination) {
-                seqs.push(`Proxy->>${destination}: ${destRequest.method} ${destRequest.path}`);
-                seqs.push(`${destination}-->>Proxy: ${response.statusCode}`);
+            if (proxyRequest) {
+                if (state.withProxy) {
+                    seqs.push(`App->>Proxy: ${request.method} ${request.path}`);
+                    seqs.push(`Proxy->>${destination}: ${request.method} ${request.path}`);
+                    seqs.push(`${destination}->>Proxy: ${response.statusCode}`);
+                    seqs.push(`Proxy->>App: ${response.statusCode}`);
+                } else {
+                    seqs.push(`App->>${destination}: ${request.method} ${request.path}`);
+                    seqs.push(`${destination}->>App: ${response.statusCode}`);
+                }
             } else {
-                console.info('no destination');
+                seqs.push(`App->>${destination}: ${request.method} ${request.path}`);
+                seqs.push(`${destination}->>App: ${response.statusCode}`);
             }
-
-            seqs.push(`Server->>App: ${response.statusCode}`);
         });
         const code = seqs.join('\n');
-        return setState(Object.assign({}, state, newState, { code }));
+        return setState(Object.assign({}, state, newState, { code, warn: records.length > MAX_RECORDS }));
     };
 
     const onCancel = () => createSequenceGraph(Object.assign(state, { open: false }));
@@ -128,6 +140,10 @@ export const Visualise = () => {
                             </Checkbox>
                         </Col>
                     </Row>
+
+                    {state.warn && (
+                        <Alert type="warning" message={`Only a maximum of ${MAX_RECORDS} are rendered`} showIcon />
+                    )}
 
                     {state.code && <Diagram code={state.code} />}
                 </Space>
