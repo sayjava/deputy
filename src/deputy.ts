@@ -65,7 +65,7 @@ const args = yargs(hideBin(process.argv))
     }).argv;
 
 const startServer = async () => {
-    let app = await createServer({ ...(args as any) });
+    const app = await createServer({ ...(args as any) });
     app.start();
     logInfo(args);
     return app;
