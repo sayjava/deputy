@@ -27,7 +27,6 @@ const App = () => {
                                 <Logo width="30" />
                                 <span style={{ color: 'white', paddingLeft: '10px' }}>Deputy</span>
                             </Row>
-
                             <Typography.Link href="https://sayjava.github.io/behave/" target="_blank">
                                 Docs
                             </Typography.Link>
@@ -42,9 +41,7 @@ const App = () => {
                                 <ServerControls />
                             </Col>
                         </Row>
-
                         <Divider dashed />
-
                         <div className="site-layout-content">
                             <Space direction="vertical" size="large">
                                 <Row justify="space-between">

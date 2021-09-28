@@ -41,10 +41,10 @@ interface EditMockContextState {
     clear?: () => void;
 }
 
-const EditExpectationContext = React.createContext<EditMockContextState>({});
+const EditMockContext = React.createContext<EditMockContextState>({});
 
 export const useEditMocks = () => {
-    const ctx = React.useContext(EditExpectationContext);
+    const ctx = React.useContext(EditMockContext);
     if (!ctx) {
         throw new Error('Must be mused withing a EditExpectationProvider');
     }
@@ -55,10 +55,6 @@ export const useEditMocks = () => {
 export const EditMockProvider = ({ children }) => {
     const api = mock();
     const [state, setState] = useState<{ mock?: Mock; error: any }>({ error: null });
-
-    const createMock = (mock: Mock) => {
-        setState({ mock, error: null });
-    };
 
     const deleteMock = async (mock: Mock) => {
         try {
@@ -101,12 +97,11 @@ export const EditMockProvider = ({ children }) => {
     };
 
     return (
-        <EditExpectationContext.Provider
+        <EditMockContext.Provider
             value={{
                 clone: cloneMock,
                 delete: deleteMock,
                 update: updateMock,
-                create: createMock,
                 clear: clearRecords,
                 reset: resetServer,
             }}
@@ -135,6 +130,6 @@ export const EditMockProvider = ({ children }) => {
                 </Drawer>
                 {children}
             </>
-        </EditExpectationContext.Provider>
+        </EditMockContext.Provider>
     );
 };
