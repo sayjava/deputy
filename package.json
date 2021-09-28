@@ -28,7 +28,9 @@
         "watch": "nodemon",
         "dev": "ts-node src/deputy.ts",
         "dev:ui": "yarn --cwd ui dev",
+        "build:ui": "yarn --cwd ui build",
         "dev:docs": "vuepress dev docs",
+        "build:docs": "vuepress build docs",
         "test": "jest",
         "fill": "NODE_TLS_REJECT_UNAUTHORIZED=0 node random.js"
     },
