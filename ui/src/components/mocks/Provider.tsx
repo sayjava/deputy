@@ -56,6 +56,10 @@ export const EditMockProvider = ({ children }) => {
     const api = mock();
     const [state, setState] = useState<{ mock?: Mock; error: any }>({ error: null });
 
+    const createMock = (mock: Mock) => {
+        setState({ mock, error: null });
+    };
+
     const deleteMock = async (mock: Mock) => {
         try {
             await api.delete(Yaml.stringify(mock));
@@ -102,6 +106,7 @@ export const EditMockProvider = ({ children }) => {
                 clone: cloneMock,
                 delete: deleteMock,
                 update: updateMock,
+                create: createMock,
                 clear: clearRecords,
                 reset: resetServer,
             }}
