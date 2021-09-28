@@ -28,6 +28,7 @@
         "watch": "nodemon",
         "dev": "ts-node src/deputy.ts",
         "dev:ui": "yarn --cwd ui dev",
+        "dev:docs": "vuepress dev docs",
         "test": "jest",
         "fill": "NODE_TLS_REJECT_UNAUTHORIZED=0 node random.js"
     },
