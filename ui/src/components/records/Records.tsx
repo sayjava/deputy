@@ -126,6 +126,7 @@ export const Records = () => {
                 dataSource={records}
                 pagination={false}
                 rowSelection={historySelection}
+                expandRowByClick
                 expandable={{
                     expandedRowRender: (record) => <ExpandedRow record={record} />,
                 }}
