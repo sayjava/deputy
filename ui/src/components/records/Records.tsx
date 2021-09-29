@@ -1,4 +1,4 @@
-import { Space, Table, Tooltip, Alert, Button } from 'antd';
+import { Space, Table, Tooltip, Alert, Button, Row } from 'antd';
 import { ApiOutlined, PlusCircleFilled } from '@ant-design/icons';
 import { Record } from '../../../../src/engine';
 import { RequestPath } from './RequestPath';
@@ -8,6 +8,7 @@ import { RecordRow } from './RecordRow';
 import { MockImport } from '../mocks/Import';
 import { useServerState } from '../Provider';
 import { useEditMocks } from '../mocks/Provider';
+import ViewMock from '../ViewMock';
 
 const columns = [
     {
@@ -76,19 +77,26 @@ const cleanupRequest = (req) => {
 
 const ExpandedRow = ({ record }) => {
     const edit = useEditMocks();
-
-    const { request, response } = record;
+    const { request, response, proxyRequest } = record;
     const newRequest = cleanupRequest(Object.assign({}, request));
 
     return (
         <Space direction="vertical" style={{ width: '100%' }}>
-            <Button
-                type="dashed"
-                onClick={() => edit.create({ request: newRequest, response })}
-                icon={<PlusCircleFilled />}
-            >
-                Create Mock
-            </Button>
+            <Row justify="space-between">
+                {proxyRequest && (
+                    <Button
+                        type="dashed"
+                        size="small"
+                        onClick={() => edit.create({ request: newRequest, response })}
+                        icon={<PlusCircleFilled />}
+                    >
+                        Create Mock
+                    </Button>
+                )}
+
+                <ViewMock record={record} />
+            </Row>
+
             <RecordRow record={record} />
         </Space>
     );

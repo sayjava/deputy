@@ -29,7 +29,7 @@ export const RecordRow = ({ record }: { record: Record }) => {
     return (
         <div style={{ width: '100%' }}>
             <Row style={{ width: '100%' }}>
-                <Col span={12} style={{ padding: '0 5px' }}>
+                <Col span={12}>
                     <Card title={proxyRequest ? 'Request (proxied)' : 'Request'}>
                         <KeyValues
                             values={headers}

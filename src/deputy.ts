@@ -49,7 +49,7 @@ const args = yargs(hideBin(process.argv))
         type: 'number',
         alias: 'p',
         describe: 'server port',
-        default: process.env.BEHAVE_PORT || 8080,
+        default: process.env.DEPUTY_PORT || 8080,
     })
     .option('proxy', {
         type: 'boolean',
@@ -61,7 +61,7 @@ const args = yargs(hideBin(process.argv))
         type: 'string',
         alias: 'f',
         describe: 'JSON file containing array of behaviors',
-        default: process.env.BEHAVE_FILE || 'behaviors.yaml',
+        default: process.env.MOCK_FILE || 'mocks.yaml',
     }).argv;
 
 const startServer = async () => {
@@ -74,12 +74,11 @@ const startServer = async () => {
 const start = async () => {
     try {
         let serverApp = await startServer();
-        const behaviorFile = path.join(process.cwd(), args['from-file']);
-
-        if (existsSync(behaviorFile)) {
-            watchFile(behaviorFile, async () => {
+        const mockFile = path.join(process.cwd(), args['from-file']);
+        if (existsSync(mockFile)) {
+            watchFile(mockFile, async () => {
                 try {
-                    logger.info(`${behaviorFile} has changed and restarting the server`);
+                    logger.info(`${mockFile} has changed and restarting the server`);
                     serverApp.stop();
                     serverApp = await startServer();
                 } catch (error) {

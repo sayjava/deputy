@@ -29,9 +29,9 @@ const randomBody = () => {
     };
 };
 
-const fillHellos = async (max) => {
+const fillTodos = async (max) => {
     for (let i = 0; i <= max; i++) {
-        const url = i % 2 === 0 ? `${BASE_URL}/hello/${i}` : `${BASE_URL}/hello`;
+        const url = i % 2 === 0 ? `${BASE_URL}/todo/${i}` : `${BASE_URL}/todos`;
         try {
             await axios(url, { method: randomMethod(), data: randomBody() });
         } catch (e) {
@@ -58,5 +58,5 @@ const fillCustomer = async (max) => {
     }
 };
 
-fillHellos(2);
-fillCustomer(3);
+fillTodos(5);
+fillCustomer(2);

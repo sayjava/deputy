@@ -7,6 +7,7 @@ import { KeyValues } from '../KeyValues';
 
 interface Props {
     mock: Mock;
+    readonly?: boolean;
 }
 
 const ResponseView = ({ response }: { response: Response }) => {
@@ -28,37 +29,39 @@ const ProxyRequestView = ({ proxy }: { proxy: Proxy }) => {
     );
 };
 
-export const MockView = ({ mock }: Props) => {
+export const MockView = ({ mock, readonly }: Props) => {
     const noop = () => {};
     const { delete: deleteExp = noop, clone = noop, update = noop } = useEditMocks();
 
     return (
         <Space direction="vertical" style={{ width: '100%' }}>
-            <Row justify="space-between">
-                <Col>
-                    <Space>
-                        <Button onClick={() => update(mock)} size="small" type="dashed" icon={<EditOutlined />}>
-                            Edit
-                        </Button>
-                        <Button onClick={() => clone(mock)} size="small" type="dashed" icon={<CopyOutlined />}>
-                            Clone
-                        </Button>
-                    </Space>
-                </Col>
-                <Col>
-                    <Popconfirm
-                        title="Delete mock"
-                        okText="Yes"
-                        cancelText="No"
-                        placement="topLeft"
-                        onConfirm={() => deleteExp(mock)}
-                    >
-                        <Button size="small" type="dashed" icon={<DeleteOutlined />} danger>
-                            Delete
-                        </Button>
-                    </Popconfirm>
-                </Col>
-            </Row>
+            {!readonly && (
+                <Row justify="space-between">
+                    <Col>
+                        <Space>
+                            <Button onClick={() => update(mock)} size="small" type="dashed" icon={<EditOutlined />}>
+                                Edit
+                            </Button>
+                            <Button onClick={() => clone(mock)} size="small" type="dashed" icon={<CopyOutlined />}>
+                                Clone
+                            </Button>
+                        </Space>
+                    </Col>
+                    <Col>
+                        <Popconfirm
+                            title="Delete mock"
+                            okText="Yes"
+                            cancelText="No"
+                            placement="topLeft"
+                            onConfirm={() => deleteExp(mock)}
+                        >
+                            <Button size="small" type="dashed" icon={<DeleteOutlined />} danger>
+                                Delete
+                            </Button>
+                        </Popconfirm>
+                    </Col>
+                </Row>
+            )}
             <Divider dashed />
             <Row>
                 <Col span={12} style={{ padding: '10px' }}>
@@ -88,3 +91,5 @@ export const MockView = ({ mock }: Props) => {
         </Space>
     );
 };
+
+MockView.displayName = 'MockView';

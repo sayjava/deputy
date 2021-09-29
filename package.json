@@ -26,7 +26,7 @@
         "clean": "rm -rf lib",
         "build": "tsc",
         "watch": "nodemon",
-        "dev": "ts-node src/deputy.ts",
+        "dev": "ts-node src/deputy.ts --from-file=mocks/mocks.yml",
         "dev:ui": "yarn --cwd ui dev",
         "build:ui": "yarn --cwd ui build",
         "dev:docs": "vuepress dev docs",

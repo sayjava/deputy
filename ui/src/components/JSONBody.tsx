@@ -12,7 +12,7 @@ export const JSONBody = ({ body }: { body: any }) => {
                 value={JSON.stringify(body, null, 2)}
                 theme="vs-dark"
                 language="json"
-                options={{ minimap: { enabled: false } }}
+                options={{ minimap: { enabled: false }, readOnly: true }}
             />
         </div>
     );

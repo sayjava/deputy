@@ -34,3 +34,5 @@ export const MockList = () => {
         </Space>
     );
 };
+
+MockList.displayName = 'MockList';
