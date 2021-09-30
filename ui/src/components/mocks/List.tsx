@@ -1,4 +1,4 @@
-import { Alert, Empty, Space, Collapse, Tag } from 'antd';
+import { Alert, Empty, Space, Collapse, Tag, Row } from 'antd';
 import { Mock } from '../../../../src/engine';
 import { MockView } from './Mock';
 import { useServerState } from '../Provider';
@@ -11,9 +11,19 @@ export const MockList = () => {
     const isEmpty = mocks.length === 0 && !error;
 
     const PanelHeader = ({ mock }: { mock: Mock }) => {
+        const colors = {
+            GET: 'blue',
+            DELETE: 'red',
+            PUT: 'green',
+            POST: 'purple',
+        };
+
+        const method = (mock.request.method || 'GET').toUpperCase();
+        const color = mock.limit === 0 ? 'default' : colors[method];
+
         return (
             <Space>
-                <Tag color="blue">{mock.request.method || 'GET'}</Tag>
+                <Tag color={color}>{method}</Tag>
                 <span>{mock.request.path}</span>
             </Space>
         );
