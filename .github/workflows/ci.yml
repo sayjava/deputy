@@ -48,6 +48,7 @@ jobs:
           git config --global user.email "${{ github.actor }}@gmail.com"
           git config --global user.name "${{ github.actor }}"
           npm version ${{ steps.tag_version.outputs.new_version }}
+          cd ui && npm version ${{ steps.tag_version.outputs.new_version }}
           git push
 
       - name: Create a GitHub release

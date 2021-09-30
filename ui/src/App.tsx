@@ -3,6 +3,7 @@ import 'antd/dist/antd.css';
 import { Space, Row, Col, Typography, Divider } from 'antd';
 
 import './App.css';
+import { version } from '../package.json';
 
 import { Layout } from 'antd';
 import { ServerProvider } from './components/Provider';
@@ -25,7 +26,7 @@ const App = () => {
                         <Row justify="space-between">
                             <Row align="middle">
                                 <Logo width="30" />
-                                <span style={{ color: 'white', paddingLeft: '10px' }}>Deputy</span>
+                                <span style={{ color: 'white', paddingLeft: '10px' }}>Deputy v{version}</span>
                             </Row>
                             <Typography.Link href="https://sayjava.github.io/behave/" target="_blank">
                                 Docs
