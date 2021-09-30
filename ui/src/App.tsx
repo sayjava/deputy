@@ -14,6 +14,7 @@ import { ServerControls } from './components/ServerControls';
 import { Visualise } from './components/Visualise';
 import { Header } from 'antd/lib/layout/layout';
 import { ReactComponent as Logo } from './logo.svg';
+import { ServerStatus } from './components/ServerStatus';
 
 const { Footer, Content } = Layout;
 
@@ -26,7 +27,8 @@ const App = () => {
                         <Row justify="space-between">
                             <Row align="middle">
                                 <Logo width="30" />
-                                <span style={{ color: 'white', paddingLeft: '10px' }}>Deputy v{version}</span>
+                                <span style={{ color: 'white', padding: '0 10px' }}>Deputy v{version}</span>
+                                <ServerStatus />
                             </Row>
                             <Typography.Link href="https://sayjava.github.io/behave/" target="_blank">
                                 Docs
