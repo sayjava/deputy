@@ -49,3 +49,5 @@ export const RecordRow = ({ record }: { record: Record }) => {
         </div>
     );
 };
+
+RecordRow.displayName = 'RecordRow';

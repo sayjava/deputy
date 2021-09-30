@@ -9,6 +9,7 @@ import { MockImport } from '../mocks/Import';
 import { useServerState } from '../Provider';
 import { useEditMocks } from '../mocks/Provider';
 import ViewMock from '../ViewMock';
+import { convertRecordToMock } from '../../utils';
 
 const columns = [
     {
@@ -77,19 +78,14 @@ const cleanupRequest = (req) => {
 
 const ExpandedRow = ({ record }) => {
     const edit = useEditMocks();
-    const { request, response, proxyRequest } = record;
-    const newRequest = cleanupRequest(Object.assign({}, request));
+    const { proxyRequest } = record;
+    const mock = convertRecordToMock(record);
 
     return (
         <Space direction="vertical" style={{ width: '100%' }}>
             <Row justify="space-between">
                 {proxyRequest && (
-                    <Button
-                        type="dashed"
-                        size="small"
-                        onClick={() => edit.create({ request: newRequest, response })}
-                        icon={<PlusCircleFilled />}
-                    >
+                    <Button type="dashed" size="small" onClick={() => edit.create(mock)} icon={<PlusCircleFilled />}>
                         Create Mock
                     </Button>
                 )}
@@ -134,3 +130,5 @@ export const Records = () => {
         </Space>
     );
 };
+
+Records.displayName = 'Records';

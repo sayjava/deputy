@@ -2,8 +2,9 @@ import { ImportOutlined } from '@ant-design/icons';
 import { Button, Drawer } from 'antd';
 import { useState } from 'react';
 import { Create } from './Create';
-import { Record, Mock } from '../../../../src/engine';
+import { Record } from '../../../../src/engine';
 import { useServerState } from '../Provider';
+import { convertRecordToMock } from '../../utils';
 
 export const MockImport = ({ selections = [] }: any) => {
     const disabled = selections.length === 0;
@@ -36,18 +37,9 @@ export const MockImport = ({ selections = [] }: any) => {
 
     const startImport = () => {
         const mocks: Array<any> = selections.map((key: string) => {
-            // TODO: fix later
             // @ts-ignore: ignore for now
             const record: Record = records.find((rec) => rec.key === key);
-            const cleanRequestHeaders = cleanHeaders(record.request.headers || {});
-            const newMock: Mock = {
-                request: Object.assign({}, record.request, { headers: cleanRequestHeaders }),
-                response: record.response,
-            };
-
-            delete newMock.request.time;
-            delete newMock.request.protocol;
-            return newMock;
+            return convertRecordToMock(record);
         });
 
         setToImport(mocks);
