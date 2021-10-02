@@ -47,9 +47,10 @@ jobs:
         run: | 
           git config --global user.email "${{ github.actor }}@gmail.com"
           git config --global user.name "${{ github.actor }}"
-          npm version ${{ steps.tag_version.outputs.new_version }}
           cd ui && npm version ${{ steps.tag_version.outputs.new_version }}
-          git push
+          git add .
+          git commit -m "ui version ${{ steps.tag_version.outputs.new_version }}"
+          npm version ${{ steps.tag_version.outputs.new_version }}
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
