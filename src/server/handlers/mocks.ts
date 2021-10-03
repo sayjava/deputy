@@ -20,15 +20,18 @@ export default (engine: Engine) => async (req: IncomingMessage, res: ServerRespo
 
             case 'POST':
                 if (Array.isArray(body)) {
-                    body.forEach((be) => engine.addMock(be));
+                    body.forEach((mock) => engine.addMock(mock));
                 } else {
                     engine.addMock(body);
                 }
                 return sendJson({ res, status: 201, body: { message: 'ok' } });
 
             case 'PUT':
-                engine.removeMock(body.id);
-                engine.addMock(body);
+                if (Array.isArray(body)) {
+                    body.forEach((mock) => engine.updateMock(mock));
+                } else {
+                    engine.updateMock(body);
+                }
                 return sendJson({ res, status: 201, body: { message: 'ok' } });
 
             case 'DELETE':

@@ -380,6 +380,17 @@ export class Engine extends EventEmitter {
         this.emit('change', this.state);
     }
 
+    updateMock(newMock: Mock) {
+        const currentMock = this.$mocks.find((m) => m.id === newMock.id);
+        const mockIndex = this.$mocks.map((m) => m.id).indexOf(newMock.id);
+        const validated = validateMock(newMock);
+
+        if (currentMock) {
+            this.$mocks[mockIndex] = Object.assign({}, validated);
+            this.emit('change', this.state);
+        }
+    }
+
     removeMock(id: string): void {
         this.$mocks = this.$mocks.filter((exp) => exp.id !== id);
         this.emit('change', this.state);

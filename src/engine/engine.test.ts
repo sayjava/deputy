@@ -442,3 +442,113 @@ test(`Clear all records`, () => {
     expect(engine.records).toMatchInlineSnapshot(`Array []`);
     expect(engine.mocks).toMatchInlineSnapshot(`Array []`);
 });
+
+test('update an existing mock', () => {
+    const mocks: Mock[] = [
+        {
+            id: 'exp1',
+            name: 'sample1',
+            request: {
+                headers: {},
+                path: '/todos',
+                method: 'GET',
+            },
+            response: {
+                body: [{ id: 2, text: 'get request' }],
+            },
+            limit: 2,
+        },
+    ];
+
+    const engine = create({ mocks, config: {} });
+
+    engine.updateMock({
+        id: 'exp1',
+        request: {
+            path: '/tasks',
+            headers: {
+                'user-agent': 'test-agent',
+            },
+        },
+        response: {
+            statusCode: 200,
+            body: '',
+        },
+    });
+
+    expect(engine.mocks).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "id": "exp1",
+            "name": "Mock",
+            "request": Object {
+              "headers": Object {
+                "user-agent": "test-agent",
+              },
+              "path": "/tasks",
+            },
+            "response": Object {
+              "body": "",
+              "statusCode": 200,
+            },
+          },
+        ]
+    `);
+});
+
+test('ignore  a non-existing mock', () => {
+    const mocks: Mock[] = [
+        {
+            id: 'exp1',
+            name: 'sample1',
+            request: {
+                headers: {},
+                path: '/todos',
+                method: 'GET',
+            },
+            response: {
+                body: [{ id: 2, text: 'get request' }],
+            },
+            limit: 2,
+        },
+    ];
+
+    const engine = create({ mocks, config: {} });
+
+    engine.updateMock({
+        id: 'exp2',
+        request: {
+            path: '/tasks',
+            headers: {
+                'user-agent': 'test-agent',
+            },
+        },
+        response: {
+            statusCode: 200,
+            body: '',
+        },
+    });
+
+    expect(engine.mocks).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "id": "exp1",
+            "limit": 2,
+            "name": "sample1",
+            "request": Object {
+              "headers": Object {},
+              "method": "GET",
+              "path": "/todos",
+            },
+            "response": Object {
+              "body": Array [
+                Object {
+                  "id": 2,
+                  "text": "get request",
+                },
+              ],
+            },
+          },
+        ]
+    `);
+});

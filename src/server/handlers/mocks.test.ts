@@ -137,7 +137,7 @@ test('update a mock', async () => {
     `);
     const { server } = await createServer({});
 
-    const res = await request(server).put('/_/api/mocks').set('content-type', 'application/x-yaml').send(` 
+    await request(server).put('/_/api/mocks').set('content-type', 'application/x-yaml').send(` 
             id: 'sample-mock' 
             request: 
                 path: '/somewhere' 
@@ -145,12 +145,83 @@ test('update a mock', async () => {
                 statusCode: 200
         `);
 
-    expect(res.status).toBe(201);
+    const res = await request(server).get('/_/api/mocks');
+
     expect(res.body).toMatchInlineSnapshot(`
-            Object {
-              "message": "ok",
-            }
-      `);
+        Array [
+          Object {
+            "id": "sample-mock",
+            "name": "Mock",
+            "request": Object {
+              "path": "/somewhere",
+            },
+            "response": Object {
+              "statusCode": 200,
+            },
+          },
+        ]
+    `);
+});
+
+test('update a mocks', async () => {
+    // @ts-ignore: Jest Mock
+    fs.readFileSync.mockReturnValueOnce(`
+        -   id: mock1
+            name: test mocks
+            request:
+                path: /mock1
+                method: GET
+            response:
+
+        -   id: mock2
+            name: test mocks
+            request:
+                path: /mock2
+                method: GET
+            response:
+
+    `);
+    const { server } = await createServer({});
+
+    await request(server).put('/_/api/mocks').set('content-type', 'application/x-yaml').send(` 
+            - id: mock1
+              request: 
+                path: /somewhere 
+              response: 
+                statusCode: 200
+            - id: mock2
+              request: 
+                path: /another-place 
+              response: 
+                statusCode: 200
+        `);
+
+    const res = await request(server).get('/_/api/mocks');
+
+    expect(res.body).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "id": "mock1",
+            "name": "Mock",
+            "request": Object {
+              "path": "/somewhere",
+            },
+            "response": Object {
+              "statusCode": 200,
+            },
+          },
+          Object {
+            "id": "mock2",
+            "name": "Mock",
+            "request": Object {
+              "path": "/another-place",
+            },
+            "response": Object {
+              "statusCode": 200,
+            },
+          },
+        ]
+    `);
 });
 
 test('retrieve all mocks', async () => {
