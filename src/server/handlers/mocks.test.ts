@@ -224,6 +224,61 @@ test('update a mocks', async () => {
     `);
 });
 
+test('re-order mocks', async () => {
+    // @ts-ignore: Jest Mock
+    fs.readFileSync.mockReturnValueOnce(`
+        -   id: mock1
+            name: test mocks
+            request:
+                path: /mock1
+                method: GET
+            response:
+
+        -   id: mock2
+            name: test mocks
+            request:
+                path: /mock2
+                method: GET
+            response:
+
+    `);
+    const { server } = await createServer({});
+
+    const res = await request(server).post('/_/api/reorder-mocks').set('content-type', 'application/x-yaml').send(` 
+            ids:
+                - mock2
+                - mock1
+        `);
+
+    expect(res.status).toBe(201);
+
+    const { body: mocks } = await request(server).get('/_/api/mocks');
+    expect(mocks).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "id": "mock2",
+            "limit": "unlimited",
+            "name": "test mocks",
+            "request": Object {
+              "method": "GET",
+              "path": "/mock2",
+            },
+            "response": null,
+          },
+          Object {
+            "id": "mock1",
+            "limit": "unlimited",
+            "name": "test mocks",
+            "request": Object {
+              "method": "GET",
+              "path": "/mock1",
+            },
+            "response": null,
+          },
+        ]
+    `);
+});
+
 test('retrieve all mocks', async () => {
     // @ts-ignore: Jest Mock
     fs.readFileSync.mockReturnValueOnce(`

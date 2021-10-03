@@ -552,3 +552,60 @@ test('ignore  a non-existing mock', () => {
         ]
     `);
 });
+
+test('re-order mocks', () => {
+    const mocks: Mock[] = [
+        {
+            id: 'mock1',
+            request: {
+                path: '/todos',
+                method: 'GET',
+            },
+            response: {
+                body: 'mock 1',
+            },
+        },
+        {
+            id: 'mock2',
+            request: {
+                path: '/todos',
+                method: 'GET',
+            },
+            response: {
+                body: 'mock 2',
+            },
+        },
+    ];
+
+    const engine = create({ mocks, config: {} });
+    engine.reorderMocks(['mock2', 'mock1']);
+
+    expect(engine.mocks).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "id": "mock2",
+            "limit": "unlimited",
+            "name": "Mock",
+            "request": Object {
+              "method": "GET",
+              "path": "/todos",
+            },
+            "response": Object {
+              "body": "mock 2",
+            },
+          },
+          Object {
+            "id": "mock1",
+            "limit": "unlimited",
+            "name": "Mock",
+            "request": Object {
+              "method": "GET",
+              "path": "/todos",
+            },
+            "response": Object {
+              "body": "mock 1",
+            },
+          },
+        ]
+    `);
+});

@@ -6,6 +6,7 @@ import createRecordsHandler from '../handlers/records';
 import createRoutesHandler from '../handlers/routes';
 import createSequenceHandler from '../handlers/sequence';
 import { DeputyConfig, sendJson } from '../utils';
+import Yaml from 'yaml';
 
 export interface MockHttpProps {
     config: DeputyConfig;
@@ -49,6 +50,25 @@ export default ({ engine }: MockHttpProps) => {
                         return sendJson({ res, status: 201, body: { ok: true } });
                     default:
                         return sendJson({ res, status: 401, body: { message: `${req.method} Not supported` } });
+                }
+
+            case '/_/api/reorder-mocks':
+                try {
+                    switch (req.method) {
+                        case 'POST':
+                            // @ts-ignore:  req.body
+                            const { ids } = Yaml.parse(req.body);
+                            if (Array.isArray(ids)) {
+                                engine.reorderMocks(ids);
+                                return sendJson({ res, status: 201, body: { ok: true } });
+                            } else {
+                                sendJson({ res, status: 401, body: { message: `Mock ids must be an array` } });
+                            }
+                        default:
+                            return sendJson({ res, status: 401, body: { message: `${req.method} Not supported` } });
+                    }
+                } catch (error) {
+                    console.error();
                 }
 
             case '/_/api/engine':

@@ -412,6 +412,21 @@ export class Engine extends EventEmitter {
         this.emit('change', this.state);
     }
 
+    reorderMocks(ids: string[]): void {
+        const mockIds = this.$mocks.map((m) => m.id);
+        const newMocks = [];
+
+        ids.forEach((id) => {
+            const mock = this.$mocks[mockIds.indexOf(id)];
+            if (mock) {
+                newMocks.push(mock);
+            }
+        });
+
+        this.$mocks = newMocks;
+        this.emit('change', this.state);
+    }
+
     get records(): Record[] {
         return this.$records;
     }
