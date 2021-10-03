@@ -549,6 +549,20 @@ test('ignore  a non-existing mock', () => {
               ],
             },
           },
+          Object {
+            "id": "exp2",
+            "name": "Mock",
+            "request": Object {
+              "headers": Object {
+                "user-agent": "test-agent",
+              },
+              "path": "/tasks",
+            },
+            "response": Object {
+              "body": "",
+              "statusCode": 200,
+            },
+          },
         ]
     `);
 });

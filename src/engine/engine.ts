@@ -387,8 +387,10 @@ export class Engine extends EventEmitter {
 
         if (currentMock) {
             this.$mocks[mockIndex] = Object.assign({}, validated);
-            this.emit('change', this.state);
+        } else {
+            this.$mocks.push(validated);
         }
+        this.emit('change', this.state);
     }
 
     removeMock(id: string): void {
