@@ -43,13 +43,19 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Npm version
-        run: | 
+      - name: Setup Git
+        run: |
           git config --global user.email "${{ github.actor }}@gmail.com"
           git config --global user.name "${{ github.actor }}"
+
+      - name: UI Version
+        run: |
           cd ui && npm version ${{ steps.tag_version.outputs.new_version }}
           git add .
           git commit -m "ui version ${{ steps.tag_version.outputs.new_version }}"
+
+      - name: Server version
+        run: | 
           npm version ${{ steps.tag_version.outputs.new_version }}
 
       - name: Create a GitHub release
