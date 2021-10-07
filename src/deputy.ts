@@ -19,8 +19,6 @@ const logInfo = (config) => {
         ],
     } = os.networkInterfaces();
 
-    console.info(`|------ Deputy Server Started on port ${config.port} -------|`);
-
     const routes = [
         ['Dashboard', '/_/dashboard'],
         ['List Behaviors', '/_/api/mocks'],
@@ -32,13 +30,13 @@ const logInfo = (config) => {
 
     eth0.forEach((it) => {
         if (it.family === 'IPv4') {
-            const table = new Table({ head: ['Description', 'Url'] });
             const protocol = isTLSEnabled() ? 'https' : 'http';
-
+            const table = new Table({ head: ['Description', 'Url'] });
             routes.forEach(([desc, url]) => {
                 table.push([desc, `http://${it.address}:${config.port}${url}`]);
             });
 
+            console.info(`|------ Deputy Server Started on port ${protocol}://${it.address}:${config.port} -------|`);
             console.info(table.toString());
         }
     });
