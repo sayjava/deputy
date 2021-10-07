@@ -60,7 +60,7 @@ const args = yargs(hideBin(process.argv))
     .option('from-file', {
         type: 'string',
         alias: 'f',
-        describe: 'JSON file containing array of behaviors',
+        describe: '.yml file containing array of mocks',
         default: process.env.MOCK_FILE || 'mocks.yaml',
     }).argv;
 

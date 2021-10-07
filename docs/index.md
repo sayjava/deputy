@@ -1,42 +1,31 @@
 ---
 home: true
 heroImage: /assets/img/landing.svg
-tagline: A robust HTTP mocking server to rapidly aid application development and system testing
+tagline: A robust HTTP mocking server that aids application development, inspection and testing
 actionText: Get Started →
 actionLink: /start/
 features:
     - title: Develop
-      details:  Simulate non-ready/remote APIs with an easy declarative system 
-    - title: Inspect
-      details: By proxying requests automatically, devs can inspect and visualize network requests by system under test
+      details:  Transparently mock non-ready/remote HTTP APIs with an easy declarative system
+    - title: Proxy & Inspect
+      details: Automatically proxy requests to remote servers. Developers can inspect and visualize network requests by application under test
     - title: Test
-      details: Assert HTTP requests made from system under test using a RESTful API
+      details: Assert HTTP requests made from application under test using a RESTful API
 footer: MIT Licensed
 ---
 
-## Quick Start
-Create a file mock.yml
-```yaml
-- request:
-    path: /hello
-  response:
-    statusCode: 200
-    body:
-      name: John Doe
-      job: developer
+### Sample Environment
 
-```
+Selectively mock APIs, Deputy server will transparently forward unmatched requests to remote systems  
+![media/dev_environment](./media/dev_environment.png)
 
+### Quick Start
 ```bash
-npx @sayjava/behave 
-```
-
-<!-- or  -->
-
-```bash
-docker run -p 8080:8080 ghcr.io/sayjava/behave
+docker run -p 8080:8080 ghcr.io/sayjava/deputy
 ```
 
 ```bash
 $ curl http://localhost:8080/whoami
 ```
+
+Visit the dashboard at `http://localhost:8080/_/dashboard`
