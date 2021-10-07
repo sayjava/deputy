@@ -1,5 +1,4 @@
 import { ApiFilled } from '@ant-design/icons';
-import { Modal } from 'antd';
 import { useServerState } from './Provider';
 
 export const ServerStatus = () => {
@@ -11,5 +10,5 @@ export const ServerStatus = () => {
         return <></>;
     }
 
-    </Modal>
+    return <ApiFilled style={{ color: '#ff0000' }} />;
 };

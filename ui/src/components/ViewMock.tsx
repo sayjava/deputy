@@ -1,4 +1,4 @@
-import { Button, Drawer, Tag } from 'antd';
+import { Button, Drawer } from 'antd';
 import { useState } from 'react';
 import { Record } from '../../../src/types';
 import { MockView } from './mocks/Mock';

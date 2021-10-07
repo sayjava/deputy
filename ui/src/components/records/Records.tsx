@@ -68,14 +68,6 @@ const columns = [
     },
 ];
 
-const cleanupRequest = (req) => {
-    ['httpVersion', 'remoteAddress', 'connection', 'content-length', 'host'].forEach(
-        (header) => delete req.headers[header],
-    );
-    ['protocol', 'time'].forEach((key) => delete req[key]);
-    return req;
-};
-
 const ExpandedRow = ({ record }) => {
     const edit = useEditMocks();
     const { proxyRequest } = record;

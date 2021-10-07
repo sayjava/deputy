@@ -13,28 +13,6 @@ export const MockImport = ({ selections = [] }: any) => {
         state: { records },
     } = useServerState();
 
-    const USELESS_HEADERS = [
-        'x-forwarded-host',
-        'x-forwarded-proto',
-        'x-forwarded-port',
-        'x-forwarded-for',
-        'connection',
-        'user-agent',
-        'remoteAddress',
-        'content-length',
-        'httpVersion',
-    ];
-
-    const cleanHeaders = (headers: any) => {
-        const newHeader: any = {};
-        Object.entries(headers).forEach(([key, value]: [string, any]) => {
-            if (!USELESS_HEADERS.includes(key)) {
-                newHeader[key] = value;
-            }
-        });
-        return newHeader;
-    };
-
     const startImport = () => {
         const mocks: Array<any> = selections.map((key: string) => {
             // @ts-ignore: ignore for now

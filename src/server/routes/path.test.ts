@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { createServer } from '../../server';
+import { createServer } from '..';
 import request from 'supertest';
 
 jest.mock('fs', () => {
@@ -28,8 +28,8 @@ test('validates that query parameters work', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    const res = await request(server).get('/tasks?id=visitShop').send();
+    const { mockServer } = await createServer({});
+    const res = await request(mockServer).get('/tasks?id=visitShopd').send();
 
     expect(res.status).toBe(200);
     expect(res.text).toMatchInlineSnapshot(`"\\"Query worked\\""`);
@@ -49,8 +49,8 @@ test('validates that path parameters work', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    const res = await request(server).get('/tasks/apple/doc/new').send();
+    const { mockServer } = await createServer({});
+    const res = await request(mockServer).get('/tasks/apple/doc/new').send();
 
     expect(res.status).toBe(200);
 });
@@ -69,8 +69,8 @@ test('validates that the middleware mounts on the route', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    const res = await request(server).get('/api/tasks/apple/doc/new').send();
+    const { mockServer } = await createServer({});
+    const res = await request(mockServer).get('/api/tasks/apple/doc/new').send();
 
     expect(res.status).toBe(200);
     expect(res.body).toMatchInlineSnapshot(`"Query worked"`);
@@ -93,14 +93,14 @@ test('validates that response headers are sent', async () => {
                 body: a response
     `);
 
-    const { server } = await createServer({});
-    const res = await request(server).get('/api/tasks/apple/doc/new').send();
+    const { mockServer } = await createServer({});
+    const res = await request(mockServer).get('/api/tasks/apple/doc/new').send();
 
     expect(res.status).toBe(200);
     expect(res.body).toMatchInlineSnapshot(`"a response"`);
     expect(res.headers).toEqual(
         expect.objectContaining({
-            'content-type': 'application/json',
+            'content-type': 'application/json; charset=utf-8',
             'x-client-headers': 'some-headers',
         }),
     );

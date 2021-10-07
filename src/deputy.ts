@@ -36,7 +36,7 @@ const logInfo = (config) => {
             const protocol = isTLSEnabled() ? 'https' : 'http';
 
             routes.forEach(([desc, url]) => {
-                table.push([desc, `${protocol}://${it.address}:${config.port}${url}`]);
+                table.push([desc, `http://${it.address}:${config.port}${url}`]);
             });
 
             console.info(table.toString());

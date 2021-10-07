@@ -43,7 +43,7 @@ export const ServerProvider = ({ children }) => {
 
     useEffect(() => {
         const protocol = window.location.protocol.includes('https') ? 'wss' : 'ws';
-        const host = process.env.NODE_ENV === 'development' ? 'localhost:8080' : window.location.host;
+        const host = process.env.NODE_ENV === 'development' ? 'localhost:8081' : window.location.host;
         const ws = new WebSocket(`${protocol}://${host}`);
         ws.onerror = (ev: Event) => setState({ error: ev.toString(), connected: true, records: [], mocks: [] });
         ws.onclose = (ev: Event) => setState({ error: null, records: [], mocks: [], connected: false });

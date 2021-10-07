@@ -1,6 +1,6 @@
 import fs from 'fs';
 import request from 'supertest';
-import { createServer } from '../../server';
+import { createServer } from '..';
 
 jest.mock('fs', () => {
     return {
@@ -25,11 +25,11 @@ test('return accepted http 202', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    await request(server).post('/tasks').send();
-    await request(server).get('/tasks?finished=true').send();
+    const { mockServer, apiServer } = await createServer({});
+    await request(mockServer).post('/tasks').send();
+    await request(mockServer).get('/tasks?finished=true').send();
 
-    const res = await request(server).get('/_/api/records');
+    const res = await request(apiServer).get('/_/api/records');
 
     expect(res.status).toBe(200);
 
@@ -56,12 +56,12 @@ test('all records are cleared', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    await request(server).post('/tasks').send();
-    await request(server).get('/tasks?finished=true').send();
+    const { mockServer, apiServer } = await createServer({});
+    await request(mockServer).post('/tasks').send();
+    await request(mockServer).get('/tasks?finished=true').send();
 
-    await request(server).post('/_/api/clear');
-    const res = await request(server).get('/_/api/records');
+    await request(apiServer).post('/_/api/clear');
+    const res = await request(apiServer).get('/_/api/records');
 
     expect(res.status).toBe(200);
 
@@ -79,13 +79,13 @@ test('reset server', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    await request(server).post('/tasks').send();
-    await request(server).get('/tasks?finished=true').send();
+    const { apiServer, mockServer } = await createServer({});
+    await request(mockServer).post('/tasks').send();
+    await request(mockServer).get('/tasks?finished=true').send();
 
-    await request(server).post('/_/api/reset');
-    const records = await request(server).get('/_/api/records');
-    const mocks = await request(server).get('/_/api/mocks');
+    await request(apiServer).post('/_/api/reset');
+    const records = await request(apiServer).get('/_/api/records');
+    const mocks = await request(apiServer).get('/_/api/mocks');
 
     expect(records.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
     expect(mocks.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
@@ -102,13 +102,13 @@ test('handle unsupported reset', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    await request(server).post('/tasks').send();
-    await request(server).get('/tasks?finished=true').send();
+    const { mockServer, apiServer } = await createServer({});
+    await request(mockServer).post('/tasks').send();
+    await request(mockServer).get('/tasks?finished=true').send();
 
-    const res = await request(server).delete('/_/api/reset');
+    const res = await request(apiServer).delete('/_/api/reset');
 
-    expect(res.status).toBe(401);
+    expect(res.status).toBe(404);
 });
 
 test('handle unsupported method', async () => {
@@ -122,11 +122,11 @@ test('handle unsupported method', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    await request(server).post('/tasks').send();
-    await request(server).get('/tasks?finished=true').send();
+    const { mockServer, apiServer } = await createServer({});
+    await request(mockServer).post('/tasks').send();
+    await request(mockServer).get('/tasks?finished=true').send();
 
-    const res = await request(server).delete('/_/api/records');
+    const res = await request(apiServer).delete('/_/api/records');
 
-    expect(res.status).toBe(401);
+    expect(res.status).toBe(404);
 });

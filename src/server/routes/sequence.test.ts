@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { createServer } from '../../server';
+import { createServer } from '..';
 import request from 'supertest';
 
 jest.mock('fs', () => {
@@ -31,8 +31,8 @@ test('return a 406  for requests less than 2', async () => {
             response:
                 body: Query worked
     `);
-    const { server } = await createServer({});
-    const res = await request(server)
+    const { apiServer } = await createServer({});
+    const res = await request(apiServer)
         .put('/_/api/requests/sequence')
         .set('content-type', 'application/x-yaml')
         .send(`-`);
@@ -65,9 +65,10 @@ test('return the error from a failed verification', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
+    const { apiServer } = await createServer({});
 
-    const res = await request(server).put('/_/api/requests/sequence').set('content-type', 'application/x-yaml').send(`
+    const res = await request(apiServer).put('/_/api/requests/sequence').set('content-type', 'application/x-yaml')
+        .send(`
         - path: /tasks
           method: POST
         
@@ -107,12 +108,13 @@ test('return accepted http 202', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
+    const { apiServer, mockServer } = await createServer({});
 
-    await request(server).post('/tasks');
-    await request(server).get('/tasks');
+    await request(mockServer).post('/tasks');
+    await request(mockServer).get('/tasks');
 
-    const res = await request(server).put('/_/api/requests/sequence').set('content-type', 'application/x-yaml').send(`
+    const res = await request(apiServer).put('/_/api/requests/sequence').set('content-type', 'application/x-yaml')
+        .send(`
         - path: /tasks
           method: POST
         
@@ -141,11 +143,12 @@ test('return error for unmatched sequence', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    await request(server).get('/tasks');
-    await request(server).get('/tasks');
+    const { mockServer, apiServer } = await createServer({});
+    await request(mockServer).get('/tasks');
+    await request(mockServer).get('/tasks');
 
-    const res = await request(server).put('/_/api/requests/sequence').set('content-type', 'application/x-yaml').send(`
+    const res = await request(apiServer).put('/_/api/requests/sequence').set('content-type', 'application/x-yaml')
+        .send(`
         - path: /tasks
           method: POST
         

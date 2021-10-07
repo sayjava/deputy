@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { createServer } from '../../server';
+import { createServer } from '..';
 import request from 'supertest';
 
 jest.mock('fs', () => {
@@ -25,9 +25,9 @@ test('return the error from a failed existence verification', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
+    const { apiServer } = await createServer({});
 
-    const res = await request(server).put('/_/api/requests/assert').set('content-type', 'application/x-yaml').send(`
+    const res = await request(apiServer).put('/_/api/requests/assert').set('content-type', 'application/x-yaml').send(`
             - request:
                 path: '/tasks'
                 method: 'POST'
@@ -76,11 +76,11 @@ test('return accepted http 202', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    await request(server).post('/tasks').send();
-    await request(server).get('/tasks').send();
+    const { mockServer, apiServer } = await createServer({});
+    await request(mockServer).post('/tasks').send();
+    await request(mockServer).get('/tasks').send();
 
-    const res = await request(server).put('/_/api/requests/assert').set('content-type', 'application/x-yaml').send(`
+    const res = await request(apiServer).put('/_/api/requests/assert').set('content-type', 'application/x-yaml').send(`
             - request:
                 path: '/tasks'
                 method: 'POST'
@@ -111,11 +111,11 @@ test('return error for unmatched existence', async () => {
                 body: Query worked
     `);
 
-    const { server } = await createServer({});
-    await request(server).get('/tasks').send();
-    await request(server).get('/tasks').send();
+    const { mockServer, apiServer } = await createServer({});
+    await request(mockServer).get('/tasks').send();
+    await request(mockServer).get('/tasks').send();
 
-    const res = await request(server).put('/_/api/requests/assert').set('content-type', 'application/x-yaml').send(`
+    const res = await request(apiServer).put('/_/api/requests/assert').set('content-type', 'application/x-yaml').send(`
             - request:
                 path: /tasks
                 method: POST
