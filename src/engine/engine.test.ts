@@ -367,13 +367,13 @@ test('match string body request', () => {
       `);
 });
 
-test('Mock: add results in error', () => {
+test('mock: add results in error', () => {
     const engine = new Engine([], {});
     const add = () => engine.addMock({ request: {} } as any);
     expect(add).toThrowError('Request requires a path');
 });
 
-test('Mock: add', () => {
+test('mock: add', () => {
     const engine = new Engine([], {});
     const add = () =>
         engine.addMock({
@@ -398,7 +398,7 @@ test('Mock: add', () => {
       `);
 });
 
-test('Mock: remove', () => {
+test('mock: remove', () => {
     const engine = new Engine([], {});
     engine.addMock({
         id: 'new',
@@ -410,7 +410,7 @@ test('Mock: remove', () => {
     expect(engine.mocks).toMatchInlineSnapshot(`Array []`);
 });
 
-test(`Clear all records`, () => {
+test(`records: clear all records`, () => {
     const mocks: Mock[] = [
         {
             id: 'exp1',
@@ -443,7 +443,7 @@ test(`Clear all records`, () => {
     expect(engine.mocks).toMatchInlineSnapshot(`Array []`);
 });
 
-test('update an existing mock', () => {
+test('mock: update an existing mock', () => {
     const mocks: Mock[] = [
         {
             id: 'exp1',
@@ -496,7 +496,7 @@ test('update an existing mock', () => {
     `);
 });
 
-test('ignore  a non-existing mock', () => {
+test('mock: update: ignore a non-existing mock', () => {
     const mocks: Mock[] = [
         {
             id: 'exp1',
@@ -567,7 +567,7 @@ test('ignore  a non-existing mock', () => {
     `);
 });
 
-test('re-order mocks', () => {
+test('mocks re-orders', () => {
     const mocks: Mock[] = [
         {
             id: 'mock1',

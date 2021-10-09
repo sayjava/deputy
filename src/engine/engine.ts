@@ -108,13 +108,15 @@ export class Engine extends EventEmitter {
     }
 
     private verifyRequest(request: Request): Record[] {
-        return this.$records
-            .filter((rec) => methodMatcher(request, rec.request) === true)
-            .filter((rec) => rec.request.path === request.path)
-            .filter((rec) => headerMatcher(request, rec.request) === true)
-            .filter((rec) => bodyMatcher(request, rec.request) === true)
-            .filter((rec) => rec.matches.length > 0)
-            .sort((a, b) => a.timestamp - b.timestamp);
+        return (
+            this.$records
+                .filter((rec) => methodMatcher(request, rec.request))
+                .filter((rec) => rec.request.path === request.path)
+                .filter((rec) => headerMatcher(request, rec.request))
+                .filter((rec) => bodyMatcher(request, rec.request))
+                // .filter((rec) => rec.matches.length > 0)
+                .sort((a, b) => a.timestamp - b.timestamp)
+        );
     }
 
     private createProxy = (request: Request): Proxy => {
@@ -130,14 +132,13 @@ export class Engine extends EventEmitter {
     private createProxyRequest = ({ req, proxy }: { req: Request; proxy: Proxy }): ProxyRequest => {
         const port = proxy.port || (proxy.protocol === 'https' ? 443 : 80);
         const url = `${proxy.protocol || 'http'}://${proxy.host}:${port}${req.path}`;
-        const hostHeaders = !proxy.keepHost ? { Host: proxy.host } : {};
 
         return {
             path: req.path,
             url,
-            headers: Object.assign({}, req.headers, proxy.headers || {}, hostHeaders),
+            headers: Object.assign({}, req.headers, proxy.headers || {}),
             method: req.method,
-            params: req.queryParams,
+            params: req.queryParams || {},
             data: req.body,
         };
     };
@@ -177,7 +178,7 @@ export class Engine extends EventEmitter {
         } catch (error) {
             const defaultResponse = {
                 status: 500,
-                headers: { 'content-type': 'text/text' },
+                headers: { 'content-type': 'application/text' },
                 data: error.toString(),
             };
             const { response = defaultResponse } = error;
