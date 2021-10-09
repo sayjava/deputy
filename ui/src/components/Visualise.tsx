@@ -1,4 +1,4 @@
-import { Alert, Button, Col, Modal, Row, Space } from 'antd';
+import { Alert, Button, Col, Modal, Row, Space, Empty } from 'antd';
 import Checkbox from 'antd/lib/checkbox/Checkbox';
 import mermaid from 'mermaid';
 import { useEffect, useState } from 'react';
@@ -127,25 +127,37 @@ export const Visualise = () => {
                 title="Visualizations"
                 footer={[]}
             >
+                {state.warn && (
+                    <Alert type="warning" message={`Only a maximum of ${MAX_RECORDS} are rendered`} showIcon />
+                )}
                 <Space direction="vertical" style={{ width: '100%' }}>
-                    <Row justify="center" style={{ width: '100%' }}>
-                        <Col>
-                            <Checkbox onChange={switchByUrl} checked={state.byUrl}>
-                                Path based services
-                            </Checkbox>
-                        </Col>
-                        <Col>
-                            <Checkbox onChange={switchProxy} checked={state.withProxy} style={{ display: 'none' }}>
-                                Show proxy
-                            </Checkbox>
-                        </Col>
-                    </Row>
-
-                    {state.warn && (
-                        <Alert type="warning" message={`Only a maximum of ${MAX_RECORDS} are rendered`} showIcon />
+                    {records.length === 0 && (
+                        <>
+                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Records" />
+                        </>
                     )}
 
-                    {state.code && <Diagram code={state.code} />}
+                    {records.length !== 0 && (
+                        <>
+                            <Row justify="center" style={{ width: '100%' }}>
+                                <Col>
+                                    <Checkbox onChange={switchByUrl} checked={state.byUrl}>
+                                        Path based services
+                                    </Checkbox>
+                                </Col>
+                                <Col>
+                                    <Checkbox
+                                        onChange={switchProxy}
+                                        checked={state.withProxy}
+                                        style={{ display: 'none' }}
+                                    >
+                                        Show proxy
+                                    </Checkbox>
+                                </Col>
+                            </Row>
+                            {state.code && <Diagram code={state.code} />}
+                        </>
+                    )}
                 </Space>
             </Modal>
         </div>
