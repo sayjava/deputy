@@ -132,3 +132,10 @@ export interface Record {
     timestamp: number;
     proxyRequest?: ProxyRequest;
 }
+
+export interface DeputyConfig {
+    port?: number;
+    mocksDirectory?: string;
+    tlsEnabled?: boolean;
+    proxy?: boolean;
+}

@@ -12,7 +12,7 @@ export interface RecordsState {
 const startState: RecordsState = {
     records: [],
     mocks: [],
-    connected: false,
+    connected: true,
     error: null,
 };
 

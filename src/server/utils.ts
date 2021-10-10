@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Mock, validateMock } from '../engine';
 import cookie from 'cookie';
-import { existsSync, readFileSync } from 'fs';
 import { IncomingMessage, ServerResponse } from 'http';
 import path from 'path';
 import { match } from 'path-to-regexp';
 import qs from 'qs';
 import Yaml from 'yaml';
 import logger from './logger';
-export interface DeputyConfig {
-    fromFile?: string;
-    mock?: Array<Mock>;
-    debug?: boolean;
-}
+import fs from 'fs';
+import { DeputyConfig } from '../types';
 
 export const parseMocks = (mock: string): Array<Mock> => {
     const strMocks: Array<any> = Yaml.parse(mock);
@@ -25,24 +21,27 @@ export const parseMocks = (mock: string): Array<Mock> => {
 };
 
 export const loadMocks = (args: DeputyConfig): Array<any> => {
-    const { fromFile = 'mocks.yml' } = args;
+    const { mocksDirectory = 'mocks' } = args;
+    const stats = fs.statSync(mocksDirectory);
 
-    const filePath = path.join(path.resolve(process.cwd(), fromFile));
-    const fileExists = existsSync(filePath);
-
-    if (!fileExists) {
+    let mocks = [];
+    if (stats.isDirectory()) {
+        const files = fs.readdirSync(mocksDirectory).filter((file) => file.endsWith('.yml'));
+        files.forEach((file) => {
+            try {
+                const filePath = path.join(mocksDirectory, file);
+                const fileContent = fs.readFileSync(path.resolve(filePath), 'utf-8');
+                mocks = [...mocks, ...parseMocks(JSON.stringify(Yaml.parse(fileContent)))];
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    } else {
         logger.warn('No mock was loaded');
         logger.warn('see the docs at https://sayjava.github.com/deputy');
-        return [];
     }
 
-    try {
-        const fileContent = readFileSync(filePath, 'utf-8');
-        return parseMocks(JSON.stringify(Yaml.parse(fileContent)));
-    } catch (error) {
-        console.error(error);
-        return [];
-    }
+    return mocks;
 };
 
 interface JSONProps {

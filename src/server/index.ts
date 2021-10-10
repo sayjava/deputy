@@ -2,7 +2,7 @@ import cors from 'cors';
 import express, { Express } from 'express';
 import * as bodyParser from 'body-parser';
 import morgan from 'morgan';
-import { Mock, Engine } from '../engine';
+import { Engine } from '../engine';
 import { WebSocketServer } from 'ws';
 
 import https from 'https';
@@ -12,19 +12,12 @@ import { isTLSEnabled, loadSSLCerts } from './ssl';
 import { createAPIRouter } from './routes/api';
 import { createMocksRouter } from './routes/mocks';
 import { errorHandler, responseHandler } from './routes/middleware';
-
-export interface DeputyConfig {
-    port?: number;
-    fromFile?: string;
-    mocks?: Array<Mock>;
-    tlsEnabled?: boolean;
-    proxy?: boolean;
-}
+import { DeputyConfig } from '../types';
 
 const defaultConfig: DeputyConfig = {
     port: 8080,
     proxy: true,
-    fromFile: 'mocks.yml',
+    mocksDirectory: 'mocks',
 };
 
 const createExpress = (): Express => {

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import Table from 'cli-table';
-import { existsSync, watchFile } from 'fs';
+import { existsSync, watch } from 'fs';
 import os from 'os';
 import path from 'path';
 import yargs from 'yargs';
@@ -55,11 +55,11 @@ const args = yargs(hideBin(process.argv))
         describe: 'Automatically proxy non matching requests',
         default: true,
     })
-    .option('from-file', {
+    .option('mocks-directory', {
         type: 'string',
-        alias: 'f',
-        describe: '.yml file containing array of mocks',
-        default: process.env.MOCK_FILE || 'mocks.yaml',
+        alias: 'd',
+        describe: 'A directory containing .yml files  definitions',
+        default: process.env.MOCKS_DIRECTORY || 'mocks',
     }).argv;
 
 const startServer = async () => {
@@ -72,11 +72,11 @@ const startServer = async () => {
 const start = async () => {
     try {
         let serverApp = await startServer();
-        const mockFile = path.join(process.cwd(), args['from-file']);
-        if (existsSync(mockFile)) {
-            watchFile(mockFile, async () => {
+        const mocksDirectory = path.resolve(args['mocks-directory']);
+        if (existsSync(mocksDirectory)) {
+            watch(mocksDirectory, async () => {
                 try {
-                    logger.info(`${mockFile} has changed and restarting the server`);
+                    logger.info(`${mocksDirectory} has changed and restarting the server`);
                     serverApp.stop();
                     serverApp = await startServer();
                 } catch (error) {
