@@ -1,0 +1,9 @@
+[
+    {
+        "name": "Events",
+        "request": {
+            "path": "/events",
+            "method": "GET"
+        }
+    }
+]

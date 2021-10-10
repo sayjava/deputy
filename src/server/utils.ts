@@ -10,8 +10,18 @@ import logger from './logger';
 import fs from 'fs';
 import { DeputyConfig } from '../types';
 
-export const parseMocks = (mock: string): Array<Mock> => {
+export const parseYamlMocks = (mock: string): Array<Mock> => {
     const strMocks: Array<any> = Yaml.parse(mock);
+
+    if (!Array.isArray(strMocks)) {
+        return [validateMock(strMocks as Mock)];
+    }
+    const validatedMocks = strMocks.map(validateMock);
+    return validatedMocks;
+};
+
+export const parseJsonMocks = (mock: string): Array<Mock> => {
+    const strMocks: Array<any> = JSON.parse(mock);
 
     if (!Array.isArray(strMocks)) {
         return [validateMock(strMocks as Mock)];
@@ -26,34 +36,23 @@ export const loadMocks = (args: DeputyConfig): Array<any> => {
 
     let mocks = [];
     if (stats.isDirectory()) {
-        const files = fs.readdirSync(mocksDirectory).filter((file) => file.endsWith('.yml'));
+        const files = fs.readdirSync(mocksDirectory).filter((file) => file.endsWith('.yml') || file.endsWith('.json'));
         files.forEach((file) => {
             try {
                 const filePath = path.join(mocksDirectory, file);
                 const fileContent = fs.readFileSync(path.resolve(filePath), 'utf-8');
-                mocks = [...mocks, ...parseMocks(JSON.stringify(Yaml.parse(fileContent)))];
+                const parseMocks = file.endsWith('.yml') ? parseYamlMocks : parseJsonMocks;
+                mocks = [...mocks, ...parseMocks(fileContent)];
             } catch (error) {
                 console.error(error);
             }
         });
     } else {
-        logger.warn('No mock was loaded');
+        logger.warn(`No mock was loaded from: ${mocksDirectory}`);
         logger.warn('see the docs at https://sayjava.github.com/deputy');
     }
 
     return mocks;
-};
-
-interface JSONProps {
-    status: number;
-    res: ServerResponse;
-    body: any;
-}
-
-export const sendJson = ({ status, res, body }: JSONProps): void => {
-    res.writeHead(status, { 'Content-Type': 'application/json' });
-    res.write(JSON.stringify(body));
-    return res.end();
 };
 
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
