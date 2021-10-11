@@ -1,0 +1,4 @@
+- request:
+    path: /hi
+  response:
+    body: Hello World

@@ -5,42 +5,35 @@ title: Quick Start
 ## Start Server
 
 ```shell
-docker run -p 8080:8080 ghcr.io/sayjava/deputy
+docker run -p 8080:8080 -p 8081:8081 sayjava/deputy
 ```
 
-This will start the server on port `8080` and ready to receive requests at `http://localhost:8080`.
+- This will start the server on port `8080` and ready to receive requests at [`http://localhost:8080`](`http://localhost:8080`)
+- The dashboard will be accessible at [`http://localhost:8081`](`http://localhost:8081`)
 
 ## Server Options
 
 | Configuration         | Env Variable | Default        | Description     |
 | :------------------   | :----------- | :------------- | :-------------  |
-| \--from-file, -f      |  DEPUTY_FILE | mocks.yml      | Path to a YAML file containing defined mocks  |
-| \--port, -p           |  DEPUTY_PORT | 8080           | The port the se |
+| \--d, -mocks-directory      |  DEPUTY_MOCKS_DIRECTORY       | mocks           | Path to a folder containing yaml/json mock definition files |
+| \--port, -p           |  DEPUTY_PORT | 8080           | The port the mock sever runs on |
 
 ## Initialize Mocks
 
-When started, the server will look for a filed called `mocks.yaml` in the current working directory and will load all the behaviors defined in the file see the [Mock Definition](/guide).
+When started, the server scan the mocks folder in the current working directory and will load all the `.yml` or `.json` files. See the [Mock Definition](/guide).
 
-an example `mocks.yaml` file looks like:
+an example `hello_world.yml` file looks like:  
 
-```yaml
-- request:
-    path: /hi
-  response:
-    body: Hello World
-```
+<<< @/mocks/hello_world.yml
 
-by just running
+now the server can be started by mounting the current folder into the server directory
 
 ```shell
 docker run \
 -p 8080:8080 \
--v "${PWD}:/app/mocks/fixtures" \
---rm --name deputy \
- ghcr.io/sayjava/deputy
+-p 8081:8081 \
+-v "${PWD}:/app/mocks" sayjava/deputy
 ```
-
-The server will auto load the behaviors in the file.
 
 [Learn more about behaviors](/guide)
 
@@ -53,53 +46,44 @@ The server uses the environmental variable `NODE_LOG_LEVEL` to enable logging. P
 -   `ERROR`
 
 
-## Sample Setups
-There are different ways to setup a dev environment with Deputy. Here are a few example
+## Use case scenarios
 
-### A Simple NodeJS Application
-```javascript
-  const http = require('https')
+There are different ways to setup a dev/test environment with Deputy. Here are a few examples
 
-  http.get('httsp')
+### As a standalone test/dev server
+
+![media/test_environment](./media/test_environment.png)
+
+
+```shell
+docker run -p 8080:8080 -p 8081:8081 sayjava/deputy
 ```
-
-```bash
-curl -X GET app
-```
-
-<!-- ![NodeJS](./media/nodejs.svg) -->
-
-### Docker Compose Environment
-```yaml
-version: '3'
-
-services:
-  deputy:
-    image: sayjava/deputy:latest
-    environment: 
-      DEPUTY_PORT: 8080
-    ports: 
-      - 8080:8080
-```
-### Enable HTTPS
+This can also be used to just to inspect network calls made by the application
 
 
-<!-- ## Programmatic
+### Transparent Mix Of Mocks & Remote APIs (Docker Compose)
 
-Behave can also be used as an express middleware in an existing application.
+![media/dev_environment](./media/dev_environment.png)
 
-```javascript
-const express = require('express');
-const { behaveHandler } = require('@sayjava/behave');
+Using deputy transparently with an application without modifying the code base
+of the application. See the https://github.com/sayjava/deputy/tree/main/examples.
 
-const app = express();
+<<< @/examples/docker-compose.yml
 
-app.get('/', (req, res) => res.render('index', { title: 'Hey', message: 'Hello there!' }));
+## Enable HTTPS
 
-app.use(behaveHandler({ config: { fromFile: 'behaviors.yaml' } }));
+If deputy detects a folder called `ssl` it's current directory, it will auto start in https mode.
+The ssl folder must contain certification and key files named as:
 
-// can also be mounted on a path
-app.use('/api', behaveHandler({ config: { fromFile: 'api.yaml' } }));
+- `key.pem`
+- `cert.pem`
 
-app.listen(3000, () => console.info(`App started on 3000`)); -->
-```
+An example HTTPS server looks like this example.
+
+<<< @/examples/docker-compose.secure.yml{11}
+
+In this example, the deputy server will be available on https://localhost:8080
+
+::: tip
+The API and Dashboard endpoints are always running on http. i.e http://localhost/_/dashboard
+:::

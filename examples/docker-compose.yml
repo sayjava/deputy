@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  deputy:
+    image: @sayjava/deputy:latest 
+    environment: 
+      DEPUTY_PORT: 8080
+    volumes: 
+      - ./mocks:/app/mocks
+    ports: 
+      - 8080:8080
+      - 8081:8081

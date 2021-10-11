@@ -59,7 +59,7 @@ const args = yargs(hideBin(process.argv))
         type: 'string',
         alias: 'd',
         describe: 'A directory containing .yml files  definitions',
-        default: process.env.MOCKS_DIRECTORY || 'mocks',
+        default: process.env.DEPUTY_MOCKS_DIRECTORY || 'mocks',
     }).argv;
 
 const startServer = async () => {
