@@ -7,9 +7,9 @@ export const errorHandler = (err, req, res, next) => {
     });
 };
 
-export const responseHandler = (req, res, next) => {
+export const responseHandler = (req, res) => {
     if (Object.keys(res.locals).length === 0) {
-        return res.status(404).json({ message: `${req.url} Not Found` });
+        return res.status(404).json({ message: `${req.method}: ${req.url} Not Found` });
     }
     return res.status(res.locals.code || 200).json(res.locals.body || {});
 };

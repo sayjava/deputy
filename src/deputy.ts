@@ -21,7 +21,7 @@ const logInfo = (config) => {
 
     const routes = [
         ['Dashboard', '/_/dashboard'],
-        ['List Behaviors', '/_/api/mocks'],
+        ['List Mocks', '/_/api/mocks'],
         ['List Records', '/_/api/records'],
         ['Assert Request Sequence', '/_/api/sequence'],
         ['Assert Requests Existences & Counts', '/_/api/requests/assert'],
@@ -33,7 +33,7 @@ const logInfo = (config) => {
             const protocol = isTLSEnabled() ? 'https' : 'http';
             const table = new Table({ head: ['Description', 'Url'] });
             routes.forEach(([desc, url]) => {
-                table.push([desc, `http://${it.address}:${config.port}${url}`]);
+                table.push([desc, `http://${it.address}:${config.port + 1}${url}`]);
             });
 
             console.info(`|------ Deputy Server Started on port ${protocol}://${it.address}:${config.port} -------|`);
