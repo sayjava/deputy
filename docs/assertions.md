@@ -6,7 +6,7 @@ slug: /assertions
 has_toc: true
 sidebarDepth: 3
 ---
-# Request Assertions
+## Request Assertions
 
 `behave` includes a feature to validate requests that it has received and matched successfully. Requests that are not matched by any configured Behavior on the server will result in a validation fail.
 

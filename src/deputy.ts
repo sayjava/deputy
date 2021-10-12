@@ -49,9 +49,9 @@ const args = yargs(hideBin(process.argv))
         describe: 'server port',
         default: process.env.DEPUTY_PORT || 8080,
     })
-    .option('proxy', {
+    .option('auto-proxy', {
         type: 'boolean',
-        alias: 'pr',
+        alias: 'px',
         describe: 'Automatically proxy non matching requests',
         default: true,
     })

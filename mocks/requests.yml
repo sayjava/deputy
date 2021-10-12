@@ -1,4 +1,0 @@
-- name: Todo
-  request:
-    path: /todos
-    method: GET

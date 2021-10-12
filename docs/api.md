@@ -7,19 +7,19 @@ has_toc: true
 nav_order: 4
 ---
 
-## Behave Server API
+## Deputy Server API
 
 Behave Server exposes a set of APIs that are useful for manipulating behaviors or retrieving records from
 Behave Server.
 
-## Behaviors
+## Mocks
 
 ### List
 
-`GET /_/api/behaviors` will list all the configured behaviors on the server for example:
+`GET /_/api/mocks` will list all the configured behaviors on the server for example:
 
 ```shell script
-curl http://localhost:8080/_/api/behaviors 
+curl http://localhost:8080/_/api/mocks 
 ```
 
 ### Create

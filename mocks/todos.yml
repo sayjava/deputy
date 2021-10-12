@@ -1,6 +1,0 @@
-- name: Todos
-  request:
-    path: /todos
-    method: GET
-  response:
-    statusCode: 200

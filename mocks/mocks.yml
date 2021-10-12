@@ -2,7 +2,7 @@
   id: first_behavior
   request:
     path: "/todo/[0-9]+"
-    method: GET
+    method: (GET|POST|DELETE|PUT)
   response:
     body:
       id: 2
@@ -11,8 +11,8 @@
 - name: Failed todo
   id: last_behavior
   request:
-    path: "/todo/[a-z]+"
-    method: GET
+    path: "/customer"
+    method: (GET|POST|DELETE|PUT)
   response:
     statusCode: 500
     body: Server blew up

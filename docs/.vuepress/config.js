@@ -62,8 +62,6 @@ module.exports = {
             '/guide',
             '/assertions',
             '/api',
-            '/proxy',
-            '/https'
         ]
     },
 

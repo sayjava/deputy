@@ -15,7 +15,7 @@ docker run -p 8080:8080 -p 8081:8081 sayjava/deputy
 
 | Configuration         | Env Variable | Default        | Description     |
 | :------------------   | :----------- | :------------- | :-------------  |
-| \--d, -mocks-directory      |  DEPUTY_MOCKS_DIRECTORY       | mocks           | Path to a folder containing yaml/json mock definition files |
+| \--mocks-directory, -d      |  DEPUTY_MOCKS_DIRECTORY       | mocks           | Path to a folder containing yaml/json mock definition files |
 | \--port, -p           |  DEPUTY_PORT | 8080           | The port the mock sever runs on |
 
 ## Initialize Mocks
@@ -37,14 +37,35 @@ docker run \
 
 [Learn more about behaviors](/guide)
 
+
+## Dashboard
+
+Deputy starts a Dashboard and API on the mock server port + 1. i.e if the mock server is started on port `8080`, then the REST API and Dashboard are on `http://localhost:8081/_/dashboard` for the UI and `http://localhost:8081/_/api` for the REST APIs
+
+### Logs
+
+The UI list the requests received with the most recent at the top
+![logs](./media/logs.png)
+
+### Visualization
+
+The requests can also be visualized by an auto-generated sequence diagram with support for services behind gateways
+
+![Visualize](./media/visualize.png)
+
+### Enable/Disable Mocks
+
+Mocks can easily be created/deleted/edited/cloned from the UI and they can also be temporarily disabled
+
+![disable](./media/disable_mocks.png)
+
 ## Logging
 
 The server uses the environmental variable `NODE_LOG_LEVEL` to enable logging. Possible values
 
--   `INFO`
--   `DEBUG`
--   `ERROR`
-
+- `INFO`
+- `DEBUG`
+- `ERROR`
 
 ## Use case scenarios
 
@@ -54,12 +75,11 @@ There are different ways to setup a dev/test environment with Deputy. Here are a
 
 ![media/test_environment](./media/test_environment.png)
 
-
 ```shell
 docker run -p 8080:8080 -p 8081:8081 sayjava/deputy
 ```
-This can also be used to just to inspect network calls made by the application
 
+This can also be used to just to inspect network calls made by the application
 
 ### Transparent Mix Of Mocks & Remote APIs (Docker Compose)
 

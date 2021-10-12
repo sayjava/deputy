@@ -4,68 +4,56 @@ title: Guide
 sidebarDepth: 3
 ---
 
-# Behavior Guide
-
-The `Behave` server uses behaviors to respond to http requests it receives. The server matches the requests it receives to the list of configured behaviors. It will use the first matched behavior as a response to the request and when it can't match a request to a behavior, it will return an http `404` response back to the client
-
-## Definition
-
-A Behavior is a configuration object that describes how the `behave` server should respond to http requests it receives.
-
-Behaviors can be created on the server by sending an http request to the behavior endpoint of the server. e.g
-
-```shell
-curl -X POST "http://localhost:8080/_/api/behaviors" -H "content-type:application/json" -d '
-- request:
-    path: /some/path
-  response:
-    statusCode: 200
-    headers:
-      content-type: application/json
-    body:
-      message: some response
-'
-```
-
-The server can also be initialized with a set of behaviors at start up as described [here](guide.md#configure)
-
-Here is a full sample of a Behavior document in YAML.
+## Mock Definition
 
 ```yaml
 # Optional
-name: Name of this behavior
+id: mock-id
 
 # Optional
-description: Description for this behavior
+name: Name of this mock
+
+# Optional
+description: Description for this mock
 
 # Required
 request:
+
+  # Optional: defaults to matching any method
+  # Regex: true
+  method: GET|POST|PUT|DELETE
   
-  # Required: the path to match this behavior to
+  # Required: the path to match this mock to
+  # Regex: true
   path: a/path/to/match
   
   # Optional: list of header values to use for matching requests
+  # Regex: true
   headers:
     x-some-custom-header: any value
   
-  # Optional: JSON/Text used to match incoming requests to this behavior
+  # Optional: JSON/Text used to match incoming requests to this mock
+  # Regex: true
   body: json/text
 
+# Optional: Defines a destination to forward the request to instead
 proxy:
-  # The protocol to use to forward request
+  # Optional: The protocol to use to forward request. Defaults to the original request protocol
   protocol: https|http
   
-  # remote port of the server
+  # Optional: remote port of the server. Defaults to the original request port
   port: number
   
-  # follow redirect
+  #  Optional
   followRedirect: boolean
   
+  # Optional
   skipVerifyTLS: boolean
 
-  #  extra headers to forward to the remote host
+  # Optional:  extra headers to forward to the remote host
   headers: map
 
+# Optional
 response:
   # Optional: Defaults to 200
   statusCode: any http status code
@@ -84,17 +72,18 @@ response:
   delay: seconds to delay the response. defaults to 0
 
 # Optional: defaults to unlimited
-limit: how many times this behavior should be used. defaults to unlimited
+limit: (number|unlimited). how many times this mock should be used. defaults to unlimited
 
 ```
 
-## Request
+Mocks can either be created by initialization see [Start Guide](./start), the [REST API](./api) or via the dashboard
 
-To be able to match a Behavior and respond appropriately, a Behavior document needs a request property that describes how the server should match the http requests it receives.
+
+## Request Definition
 
 ### Simple Path
 
-The `behave` server will default to `HTTP GET` method and `HTTP 200` response code for matched Behaviors if they are omitted from the Behavior document.
+Deputy server will default to `.*` i.e match all methods and `HTTP 200` response code for matched Behaviors if they are omitted from the Behavior document.
 
 ```yaml
 - request:
@@ -186,7 +175,7 @@ The server can match requests based on http request header values. The configure
 request:
   path: /tasks/[0-9]+
   headers:
-    X-Behave-Id: behave-[a-z]+
+    X-Mock-Id: mock-[a-z]+
 response:
   body:
     name: match header values
@@ -194,7 +183,7 @@ response:
 
 ```shell
 # Responds with a 200
-curl -X GET http://localhost:8080/tasks/123 -H "X-Behave-Id: behave-abcde"
+curl -X GET http://localhost:8080/tasks/123 -H "X-Mock-Id: mock-abcde"
 
 # Responds with a 404
 curl -X GET http://localhost:8080/tasks/123
