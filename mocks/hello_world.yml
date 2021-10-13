@@ -1,4 +1,4 @@
 - request:
-    path: /hi
+    path: /who-am-i
   response:
-    body: Hello World
+    body: I am deputy, an HTTP Mocking Server

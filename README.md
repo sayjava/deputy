@@ -28,207 +28,65 @@ Deputy can also act as a testing server to validate what requests made by system
 # Quick Start
 
 ```shell
-npx @sayjava/deputy
+docker run -p 8080:8080 -p 8081:8081 ghcr.io/sayjava/deputy
 ```
 
-or
+and test a sample endpoint
 
 ```shell
-docker run -p 8080:8080 ghcr.io/sayjava/deputy
-```
-
-
-and test the endpoint
-
-```shell
-curl -X GET http://localhost:8080/hello
+curl http://localhost:8080/who-am-i
 ```
 
 # Features
 
--   [Declarative request matching and response](https://sayjava.github.io/deputy/guide)
--   [Regex based request matching](https://sayjava.github.io/deputy/guide) (request path, headers and body matchers)
--   [Alternate and limit responses on same request](https://sayjava.github.io/deputy/guide)
--   [Templated based response](https://sayjava.github.io/deputy/guide), e.g `"Task is {{req.queryParams.name}}"`
--   [NodeJS HTTP/Express Middleware](https://sayjava.github.io/deputy/start)
--   [HTTP request validations](https://sayjava.github.io/deputy/assertions)
--   [Simulate response delays and network failures](https://sayjava.github.io/deputy/guide)
--   [Serverless compatible](https://sayjava.github.io/deputy)
+- [Declarative request matching and response](https://sayjava.github.io/deputy/guide)
+- [Regex based request matching](https://sayjava.github.io/deputy/guide) (request path, headers and body matchers)
+- [Alternate and limit responses on same request](https://sayjava.github.io/deputy/guide)
+- [HTTP request validations](https://sayjava.github.io/deputy/assertions)
+- [Simulate response delays and network failures](https://sayjava.github.io/deputy/guide)
+- [Inspect HTTP Requests and Response in realtime](https://sayjava.github.io/deputy/start)
 
-# Examples
 
-Here are some scenarios where `Deputy` can be used to mock endpoints. Start the server on the default 8080 port
+# Scenarios
 
-```shell
-npx @sayjava/deputy
-```
+Here are some scenarios that Deputy can aid in your next development
 
-### Regex paths
+## Transparently Mock & Forward API requests
 
-```shell
-npx @sayjava/deputy -b '[
-  {
-    "name": "Match any task with id",
-    "request": { "path": "/tasks/[0-9]+" },
-    "response": {
-      "body": "found it"
-    }
-  }
-]
-'
-```
+Simulate unready APIs by mocking some APIs and have other requests transparently forwarded to remote APIs
+See the examples/commerce folder using that uses the [next/commerce](next/commerces) + deputy
 
-to match requests like these:
+![Dev](./docs/media/dev_environment.png)
 
-```shell
-curl http://localhost:8080/tasks/2
-curl http://localhost:8080/tasks/10
-```
+## Application Testing
 
-### Request headers
+Simulate complex HTTP requests and response scenarios in test environments
 
-e.g `{"user-a∫gent": "Chrome|Apple*"}`
-
-```shell
-npx @sayjava/deputy -b '[
-  {
-    "name": "Match requests coming from Apple devices or Chrome",
-    "request": {
-      "path": "/tasks/[0-9]+",
-      "headers": {
-        "user-agent": "Chrome|Apple*"
-      }
-    },
-    "response": {
-      "body": "Found on a mac or chrome"
-    }
-  }
-]
-'
-```
-
-to match requests like:
-
-```shell
-curl http://localhost:8080/tasks/2 -H 'user-agent: Chrome'
-```
-
-### Templated response
-
-HTTP response can be templated using Handlebars syntax
-
-```shell
-@sayava/deputy -b `[
-  {
-    "request": {
-      "path": "/greet/:name",
-      "pathParams": {
-        "name": "[a-z]+"
-      }
-    },
-    "response": {
-      "body": "Hello {{req.pathParams.name}}"
-    }
-  }
-]`
-```
-
-to match requests and respond with the template:
-
-```shell
-curl http://localhost:8080/greet/jane
-```
-
-and respond with `Hello jane`
-
-### Request body matchers
-
-e.g `{"user":"john_[a-z]+"}`
-
-```shell
-@sayjava/deputy -b '[{
-  "name": "Match requests with users with names like john_xxx",
-  "request": {
-    "path": "/tasks",
-    "method": "POST",
-    "body": {
-      "user": "john_[a-z]+"
-    }
-  },
-  "response": {
-    "statusCode": "201",
-    "body": "Task created by {{req.body.user}}"
-  }
-}]
-'
-```
-
-to match requests like:
-
-```shell
-curl -X POST http://localhost:8080/tasks -H "content-type:application/json" -d '{ "user": "john_doe", "name": "pay up" }'
-```
-
-### Asserts received requests
-
-Asserts that Deputy has received a request with that path at least twice and at most 10 times
-
-```shell
-curl -X PUT http://localhost:8080/_/api/requests/assert -H "content-type:application/json" -d '[
-  {
-    "request": {
-      "path": "/todo/2",
-       "count": {
-          "atLeast": 2,
-          "atMost": 10
-        }
-    }
-  }
-]'
-```
-
-### Asserts the sequence requests are received
-
-Asserts that Deputy has received a request with that path at least twice and at most 10 times
-
-```shell
-curl -X PUT http://localhost:8080/_/api/requests/sequence -H "content-type:application/json" -d '[
-  {
-    "request": {
-      "path": "/todo/2"
-    }
-  },
-  {
-    "request": {
-      "path": "/todosdss/20"
-    }
-  }
-]'
-```
+![Test](./docs/media/test_environment.png)
 
 see the [Mock Guide](http://sayjava.github.com/deputy)
 
-### Programmatically Use cases (Express Middleware / NodeJS HTTP Middleware)
+## Deputy UI
 
-```javascript
-const express = require('express');
-const { deputyHandler } = require('@sayjava/deputy');
+By default, Deputy server can be reached at `http://localhost:8081`.
 
-const app = express();
-app.use(express.static(__dirname + '/views'));
+### Logs View
 
-// Existing route
-app.get('/', (req, res) => res.render('index', { title: 'Hey', message: 'Hello there!' }));
+View and inspect http requests and responses from the Logs interface in realtime as requests are received
 
-// Mount the middleware on /api.
-app.use('/api', deputyHandler({ config: { fromFile: 'api.json' } }));
+![Logs](./docs/media/logs.png)
 
-app.listen(3000, () => console.info(`App started on 3000`));
-```
+### Visualize
 
-### Serverless Mock Server
+Deputy automatically creates a sequence diagram of requests it receives
 
-See [Serverless Deployment](examples/deputy-with-lambda/README.md)
+![Visualize](./docs/media/visualize.png)
+
+### Mocking Interface
+
+Mocks can be imported, exported, edited, cloned, disabled, and enabled from Deputy UI
+
+![Mocking Interface](./docs/media/disable_mocks.png)
 
 ### Full Documentation
 

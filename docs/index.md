@@ -21,11 +21,11 @@ Selectively mock APIs, Deputy server will transparently forward unmatched reques
 
 ### Quick Start
 ```bash
-docker run -p 8080:8080 ghcr.io/sayjava/deputy
+docker run -p 8080:8080 -p 8081:8081 ghcr.io/sayjava/deputy
 ```
 
 ```bash
-$ curl http://localhost:8080/whoami
+$ curl http://localhost:8080/who-am-i
 ```
 
-Visit the dashboard at `http://localhost:8080/_/dashboard`
+Visit the dashboard at `http://localhost:8081/_/dashboard`
