@@ -13,10 +13,11 @@ docker run -p 8080:8080 -p 8081:8081 sayjava/deputy
 
 ## Server Options
 
-| Configuration         | Env Variable | Default        | Description     |
-| :------------------   | :----------- | :------------- | :-------------  |
-| \--mocks-directory, -d      |  DEPUTY_MOCKS_DIRECTORY       | mocks           | Path to a folder containing yaml/json mock definition files |
-| \--port, -p           |  DEPUTY_PORT | 8080           | The port the mock sever runs on |
+| Configuration             | Env Variable | Default         | Description     |
+| :----------------------   | :----------------------------- | :-------------  | :-------------  |
+| \--mocks-directory, -d    |  DEPUTY_MOCKS_DIRECTORY        | mocks                             | Path to a folder containing yaml/json mock definition files |
+| \--port, -p               |  DEPUTY_PORT | 8080            | The port the mock sever runs on   |  
+| \--auto-proxy, -px        |  DEPUTY_AUTO_PROXY | true      | Auto proxy requests   |  
 
 ## Initialize Mocks
 
