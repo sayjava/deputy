@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { Verification, Engine } from '../../engine';
-import Yaml from 'yaml';
 
 interface Props {
     engine: Engine;
@@ -15,7 +14,8 @@ const createMocksRouter = ({ engine }: Props) => {
     });
 
     router.post('/', (req, res, next) => {
-        const body = Yaml.parse(req.body);
+        // @ts-ignore
+        const body = req.payload;
 
         if (Array.isArray(body)) {
             body.forEach((mock) => engine.addMock(mock));
@@ -28,7 +28,8 @@ const createMocksRouter = ({ engine }: Props) => {
     });
 
     router.put('/', (req, res, next) => {
-        const body = Yaml.parse(req.body);
+        // @ts-ignore
+        const body = req.payload;
 
         if (Array.isArray(body)) {
             body.forEach((mock) => engine.updateMock(mock));
@@ -41,14 +42,16 @@ const createMocksRouter = ({ engine }: Props) => {
     });
 
     router.delete('/', (req, res, next) => {
-        const body = Yaml.parse(req.body);
+        // @ts-ignore
+        const body = req.payload;
         engine.removeMock(body.id);
         res.locals = { body: { message: 'ok' }, code: 201 };
         next();
     });
 
     router.post('/order', (req, res, next) => {
-        const { ids } = Yaml.parse(req.body);
+        // @ts-ignore
+        const { ids } = req.payload;
 
         if (Array.isArray(ids)) {
             engine.reorderMocks(ids);
@@ -109,7 +112,7 @@ const createRequestRouter = ({ engine }: Props) => {
     router.put('/assert', (req, res, next) => {
         try {
             // @ts-ignore
-            const mock = Yaml.parse(req.body);
+            const mock = req.payload;
             const verified = mock.map((verify: Verification) => engine.assert(verify));
             const passed = verified.filter((res) => typeof res !== 'boolean');
 
@@ -129,7 +132,7 @@ const createRequestRouter = ({ engine }: Props) => {
     router.put('/sequence', (req, res, next) => {
         try {
             // @ts-ignore
-            const requests = Yaml.parse(req.body);
+            const requests = req.payload;
             const result = engine.assertSequence(requests);
 
             if (result === true) {

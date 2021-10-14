@@ -11,8 +11,9 @@ import { loadMocks } from './utils';
 import { isTLSEnabled, loadSSLCerts } from './ssl';
 import { createAPIRouter } from './routes/api';
 import { createMocksRouter } from './routes/mocks';
-import { errorHandler, responseHandler } from './routes/middleware';
+import { errorHandler, responseHandler, parseBodyHandler } from './routes/middleware';
 import { DeputyConfig } from '../types';
+import logger from './logger';
 
 const defaultConfig: DeputyConfig = {
     port: 8080,
@@ -51,6 +52,7 @@ export const createEngine = (config: DeputyConfig) => {
 
 export const createAPIServer = ({ engine }) => {
     const server = createExpress();
+    server.use(parseBodyHandler);
     server.use('/_/', createAPIRouter({ engine }));
     server.use('/_/dashboard', express.static('ui/build/'));
 
@@ -65,11 +67,14 @@ export const createMockServer = ({ engine }) => {
     server.use(responseHandler);
     server.use(errorHandler);
 
+    const SERVER_TIMEOUT = 4000;
+    const onTimeOut = () => logger.error('Request Timeout');
+
     if (isTLSEnabled()) {
         const { cert, key } = loadSSLCerts();
-        return https.createServer({ key, cert }, server);
+        return https.createServer({ key, cert }, server).setTimeout(SERVER_TIMEOUT, onTimeOut);
     } else {
-        return http.createServer(server);
+        return http.createServer(server).setTimeout(SERVER_TIMEOUT, onTimeOut);
     }
 };
 
