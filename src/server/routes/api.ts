@@ -112,8 +112,8 @@ const createRequestRouter = ({ engine }: Props) => {
     router.put('/assert', (req, res, next) => {
         try {
             // @ts-ignore
-            const mock = req.payload;
-            const verified = mock.map((verify: Verification) => engine.assert(verify));
+            const verifications = req.payload;
+            const verified = verifications.map((verify: Verification) => engine.assert(verify));
             const passed = verified.filter((res) => typeof res !== 'boolean');
 
             if (passed.length !== 0) {

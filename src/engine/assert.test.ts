@@ -43,7 +43,7 @@ test('at most 1 time and at least 1 time', async () => {
         headers: {},
     };
 
-    await engine.execute(get);
+    await engine.execute(post);
     await engine.execute(get);
 
     const verificationPost: Verification = {
@@ -57,7 +57,7 @@ test('at most 1 time and at least 1 time', async () => {
         request: get,
         limit: { atLeast: 1 },
     };
-    const verifiedGet = engine.assert(verificationGet);
+    const verifiedGet: any = engine.assert(verificationGet);
     expect(verifiedGet).toMatchInlineSnapshot(`true`);
 });
 

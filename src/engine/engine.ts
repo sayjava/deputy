@@ -108,15 +108,12 @@ export class Engine extends EventEmitter {
     }
 
     private verifyRequest(request: Request): Record[] {
-        return (
-            this.$records
-                .filter((rec) => methodMatcher(request, rec.request))
-                .filter((rec) => rec.request.path === request.path)
-                .filter((rec) => headerMatcher(request, rec.request))
-                .filter((rec) => bodyMatcher(request, rec.request))
-                // .filter((rec) => rec.matches.length > 0)
-                .sort((a, b) => a.timestamp - b.timestamp)
-        );
+        return this.$records
+            .filter((rec) => methodMatcher(request, rec.request))
+            .filter((rec) => rec.request.path === request.path)
+            .filter((rec) => headerMatcher(request, rec.request))
+            .filter((rec) => bodyMatcher(request, rec.request))
+            .sort((a, b) => a.timestamp - b.timestamp);
     }
 
     private createProxy = (request: Request): Proxy => {
@@ -226,7 +223,7 @@ export class Engine extends EventEmitter {
         const matches = this.verifyRequest(request);
 
         // set the lower and upper limits
-        const verifyLimit = Object.assign({ atMost: 'unlimited', atLeast: limit.atMost ? 0 : 1 }, limit);
+        const verifyLimit = Object.assign({ atMost: 'unlimited', atLeast: 1 }, limit);
 
         // lower limit check with an unlimited upper limit
         if (verifyLimit.atMost === 'unlimited' && matches.length >= verifyLimit.atLeast) {
