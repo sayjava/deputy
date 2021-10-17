@@ -33,7 +33,7 @@ const logInfo = (config) => {
             const protocol = isTLSEnabled() ? 'https' : 'http';
             const table = new Table({ head: ['Description', 'Url'] });
             routes.forEach(([desc, url]) => {
-                table.push([desc, `http://${it.address}:${config.port + 1}${url}`]);
+                table.push([desc, `http://${it.address}:${config.apiPort}${url}`]);
             });
 
             console.info(`|------ Deputy Server Started on port ${protocol}://${it.address}:${config.port} -------|`);
@@ -48,6 +48,12 @@ const args = yargs(hideBin(process.argv))
         alias: 'p',
         describe: 'server port',
         default: process.env.DEPUTY_PORT || 8080,
+    })
+    .option('api-port', {
+        type: 'number',
+        alias: 'ap',
+        describe: 'api and ui port number',
+        default: process.env.DEPUTY_API_PORT || 8081,
     })
     .option('auto-proxy', {
         type: 'boolean',

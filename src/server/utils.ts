@@ -32,6 +32,12 @@ export const parseJsonMocks = (mock: string): Array<Mock> => {
 
 export const loadMocks = (args: DeputyConfig): Array<any> => {
     const { mocksDirectory = 'mocks' } = args;
+
+    if (!fs.existsSync(mocksDirectory)) {
+        logger.warn(`${mocksDirectory} can not be found.`);
+        return [];
+    }
+
     const stats = fs.statSync(mocksDirectory);
 
     let mocks = [];

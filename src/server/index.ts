@@ -17,6 +17,7 @@ import logger from './logger';
 
 const defaultConfig: DeputyConfig = {
     port: 8080,
+    apiPort: 8081,
     proxy: true,
     mocksDirectory: 'mocks',
 };
@@ -89,10 +90,11 @@ export const createServer = async (argConfig: DeputyConfig): Promise<App> => {
         mockServer,
         apiServer,
         start: async () => {
-            const port = Number.parseInt(config.port.toString()) || 8080;
+            const port = config.port || 8080;
+            const apiPort = config.apiPort || 8081;
             createWebSocket({ server: apiServer, engine });
             mockServer.listen(port, () => console.info(`Deputy Mock Server started on ${port}`));
-            apiServer.listen(port + 1, () => console.info(`Deputy UI Server started on ${port + 1}`));
+            apiServer.listen(apiPort, () => console.info(`Deputy UI Server started on ${apiPort}`));
         },
         stop: () => {
             mockServer.close();

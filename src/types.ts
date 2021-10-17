@@ -134,6 +134,7 @@ export interface Record {
 }
 
 export interface DeputyConfig {
+    apiPort?: number;
     port?: number;
     mocksDirectory?: string;
     tlsEnabled?: boolean;
