@@ -41,7 +41,7 @@ docker run \
 
 ## Dashboard
 
-Deputy starts a Dashboard and API on the mock server port + 1. i.e if the mock server is started on port `8080`, then the REST API and Dashboard are on `http://localhost:8081/_/dashboard` for the UI and `http://localhost:8081/_/api` for the REST APIs
+Deputy starts a Dashboard and API on the mock server port + 1. i.e if the mock server is started on port `8080`, then the REST API and Dashboard are on `http://localhost:8081/dashboard` for the UI and `http://localhost:8081/api` for the REST APIs
 
 ### Logs
 
@@ -106,5 +106,5 @@ An example HTTPS server looks like this example.
 In this example, the deputy server will be available on https://localhost:8080
 
 ::: tip
-The API and Dashboard endpoints are always running on http. i.e http://localhost/_/dashboard
+The API and Dashboard endpoints are always running on http. i.e http://localhost/dashboard
 :::

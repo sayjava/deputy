@@ -8,10 +8,7 @@ sidebarDepth: 3
 ---
 ## Request Assertions
 
-`behave` includes a feature to validate requests that it has received and matched successfully. Requests that are not matched by any configured Behavior on the server will result in a validation fail.
-
-There are two types of validations that `behave` supports, `assertions` and `sequence` validations.
-
+In a test environment, Deputy can be used to  
 ## Assertions
 
 The server can validate how many times a request is received and matched if at all.
@@ -24,9 +21,11 @@ Check if the requests have been received and matched at least once
 
 ```shell
 # Responds with 201
-curl -X PUT http://localhost:8080/_/api/requests/assert -d '
-- path: /tasks/123
-- path: /tasks/12
+curl -X PUT -H "Content-Type: application/x-yaml" http://localhost:8081/api/requests/assert -d '
+- request:
+    path: /tasks/123
+- request:
+    path: /tasks/12
 '
 ```
 
@@ -36,9 +35,10 @@ Check if the requests have been received and matched `at most` twice
 
 ```shell
 # Responds with 201 if it were matched
-curl -X PUT http://localhost:8080/_/api/requests/assert -d '
-- path: /tasks/123
-  count:
+curl -X PUT -H "Content-Type: application/x-yaml" http://localhost:8081/api/requests/assert -d '
+- request:
+    path: /tasks/123
+  limit:
     atMost: 2
 '
 ```
@@ -49,9 +49,10 @@ Check if the requests have been received and matched `at least` twice
 
 ```shell
 # Responds with 201 if it were matched
-curl -X PUT http://localhost:8080/_/api/requests/assert -d '
-- path: /tasks/123
-  count:
+curl -X PUT -H "Content-Type: application/x-yaml" http://localhost:8081/api/requests/assert -d '
+- request:
+    path: /tasks/123
+  limit:
     atLeast: 2
 '
 ```
@@ -62,11 +63,12 @@ Check if the requests have been received exactly twice
 
 ```shell
 # Responds with 201 if it were matched
-curl -X PUT http://localhost:8080/_/api/requests/assert -d '
-- path: /tasks/123
-  count:
-    atMost: 2
+curl -X PUT -H "Content-Type: application/x-yaml" http://localhost:8081/api/requests/assert -d '
+- request:
+    path: /tasks/123
+  limit:
     atLeast: 2
+    atMost: 2
 '
 ```
 
@@ -76,9 +78,10 @@ Check if the requests was never matched
 
 ```shell
 # Responds with 201 if it were matched
-curl -X PUT http://localhost:8080/_/api/requests/assert -d '
-- path: /tasks/123
-  count:
+curl -X PUT -H "Content-Type: application/x-yaml" http://localhost:8081/api/requests/assert -d '
+- request:
+    path: /tasks/123
+  limit:
     atMost: 0
 '
 ```
@@ -90,7 +93,7 @@ Check if this request was received more than once and at least `time` in seconds
 ```shell
 # Check that requests were received at least 10 seconds apart
 # Responds with 201 if it were matched
-curl -X PUT http://localhost:8080/_/api/requests/interval -d '
+curl -X PUT -H "Content-Type: application/x-yaml" http://localhost:8081/api/requests/interval -d '
 requests:
   - path: /users/123
   - path: /tasks/123
@@ -106,7 +109,7 @@ Check if this request was received more than once and at least `time` in seconds
 ```shell
 # Check that requests were received at most 10 seconds apart
 # Responds with 201 if it were matched
-curl -X PUT http://localhost:8080/_/api/requests/assert -d '
+curl -X PUT -H "Content-Type: application/x-yaml" http://localhost:8081/api/requests/assert -d '
 - path: /tasks/123
   interval:
     atMost: 10
@@ -115,7 +118,7 @@ curl -X PUT http://localhost:8080/_/api/requests/assert -d '
 
 ## Request Sequence Assertions
 
-The `behave` can also match the order in which requests are received by the server.
+Request can also matched int the order in which they are received by the server.
 
 ### Requests were received in a particular order
 
@@ -123,7 +126,7 @@ Check if the requests were received in the specific order
 
 ```shell
 # Responds with 201 if it were matched
-curl -X PUT http://localhost:8080/_/api/requests/sequence -d '
+curl -X PUT -H "Content-Type: application/x-yaml" http://localhost:8081/api/requests/sequence -d '
 - path: /tasks/123
 - path: /tasks/123/docs/icon.png
 '

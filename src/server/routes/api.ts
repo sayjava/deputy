@@ -153,10 +153,10 @@ const createRequestRouter = ({ engine }: Props) => {
 export const createAPIRouter = ({ engine }: Props): Router => {
     const router = Router();
 
-    router.use('/api/records', createRecordsRouter({ engine }));
-    router.use('/api/mocks', createMocksRouter({ engine }));
-    router.use('/api/requests', createRequestRouter({ engine }));
-    router.use('/api', createMiscRouter({ engine }));
+    router.use('/records', createRecordsRouter({ engine }));
+    router.use('/mocks', createMocksRouter({ engine }));
+    router.use('/requests', createRequestRouter({ engine }));
+    router.use(createMiscRouter({ engine }));
 
     return router;
 };

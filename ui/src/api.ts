@@ -1,7 +1,7 @@
 export const mock = () => {
     return {
         load: async () => {
-            const res = await fetch(`/_/api/mocks`);
+            const res = await fetch(`/api/mocks`);
 
             if (res.ok) {
                 const mocks = await res.json();
@@ -11,7 +11,7 @@ export const mock = () => {
             throw new Error(`Error - ${res.statusText}`);
         },
         create: async (mocks: string) => {
-            const res = await fetch('/_/api/mocks', {
+            const res = await fetch('/api/mocks', {
                 method: 'POST',
                 body: mocks,
                 headers: {
@@ -27,7 +27,7 @@ export const mock = () => {
             throw new Error(JSON.stringify(result));
         },
         delete: async (behavior: string) => {
-            const res = await fetch('/_/api/mocks', {
+            const res = await fetch('/api/mocks', {
                 method: 'DELETE',
                 body: behavior,
                 headers: {
@@ -43,7 +43,7 @@ export const mock = () => {
             throw new Error(JSON.stringify(result));
         },
         update: async (behavior: string) => {
-            const res = await fetch('/_/api/mocks', {
+            const res = await fetch('/api/mocks', {
                 method: 'PUT',
                 body: behavior,
                 headers: {
@@ -59,7 +59,7 @@ export const mock = () => {
             throw new Error(JSON.stringify(result));
         },
         reset: async () => {
-            const res = await fetch('/_/api/reset', {
+            const res = await fetch('/api/reset', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
@@ -74,7 +74,7 @@ export const mock = () => {
             throw new Error(JSON.stringify(result));
         },
         clear: async () => {
-            const res = await fetch('/_/api/clear', {
+            const res = await fetch('/api/clear', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',

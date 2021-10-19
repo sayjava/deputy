@@ -16,19 +16,19 @@ Behave Server.
 
 ### List
 
-`GET /_/api/mocks` will list all the configured behaviors on the server for example:
+`GET /api/mocks` will list all the configured behaviors on the server for example:
 
 ```shell script
-curl http://localhost:8080/_/api/mocks 
+curl http://localhost:8081/api/mocks 
 ```
 
 ### Create
 
-`PUT http://localhost:8080/_/api/behaviors` will create new behaviors on the server, for example:
+`PUT http://localhost:8081/api/behaviors` will create new behaviors on the server, for example:
 
 ```shell script
 # Responds with a 201
-curl -X PUT http://localhost:8080/_/api/behaviors -d '
+curl -X PUT http://localhost:8081/api/behaviors -d '
 - requests:
     path: "/hi"
 - requests:
@@ -40,11 +40,11 @@ see more about [Behaviors](guide.md) here
 
 ### Delete
 
-`DELETE http://localhost:8080/_/api/behaviors/:id` will delete the behavior with the specified id, for example:
+`DELETE http://localhost:8081/api/behaviors/:id` will delete the behavior with the specified id, for example:
 
 ```shell
 # Responds with a 201
-curl -X DELETE http://localhost:8080/_/api/behaviors/:id
+curl -X DELETE http://localhost:8081/api/behaviors/:id
 ```
 
 see more about [Behaviors](guide.md) here
@@ -56,17 +56,17 @@ The server stores all the received requests alongside the matched Behaviors in m
 
 ### List
 
-`GET http://localhost:8080/_/api/records` will list all the records received by the server, for example:
+`GET http://localhost:8081/api/records` will list all the records received by the server, for example:
 
 ```shell
 # Responds with a 200 and a list of requests and matched behaviors
-curl -X GET http://localhost:8080/_/api/records
+curl -X GET http://localhost:8081/api/records
 ```
 
 ## Delete
-`PUT http://localhost:8080/_/api/reset` will delete all the records and behaviors, for example:
+`PUT http://localhost:8081/api/reset` will delete all the records and behaviors, for example:
 
 ```shell
 # Clear all records and behaviors
-curl -X PUT http://localhost:8080/_/api/reset
+curl -X PUT http://localhost:8081/api/reset
 ```

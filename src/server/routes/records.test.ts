@@ -16,7 +16,7 @@ beforeEach(() => {
     fs.readFileSync.mockReset();
 });
 
-test('return accepted http 202', async () => {
+test('retrieve records', async () => {
     // @ts-ignore: Jest Mock
     fs.readFileSync.mockReturnValueOnce(`
         -   name: test expectations
@@ -31,7 +31,7 @@ test('return accepted http 202', async () => {
     await request(mockServer).post('/tasks').send();
     await request(mockServer).get('/tasks?finished=true').send();
 
-    const res = await request(apiServer).get('/_/api/records');
+    const res = await request(apiServer).get('/api/records');
 
     expect(res.status).toBe(200);
 
@@ -62,8 +62,8 @@ test('all records are cleared', async () => {
     await request(mockServer).post('/tasks').send();
     await request(mockServer).get('/tasks?finished=true').send();
 
-    await request(apiServer).post('/_/api/clear');
-    const res = await request(apiServer).get('/_/api/records');
+    await request(apiServer).post('/api/clear');
+    const res = await request(apiServer).get('/api/records');
 
     expect(res.status).toBe(200);
 
@@ -85,9 +85,9 @@ test('reset server', async () => {
     await request(mockServer).post('/tasks').send();
     await request(mockServer).get('/tasks?finished=true').send();
 
-    await request(apiServer).post('/_/api/reset');
-    const records = await request(apiServer).get('/_/api/records');
-    const mocks = await request(apiServer).get('/_/api/mocks');
+    await request(apiServer).post('/api/reset');
+    const records = await request(apiServer).get('/api/records');
+    const mocks = await request(apiServer).get('/api/mocks');
 
     expect(records.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
     expect(mocks.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
@@ -108,7 +108,7 @@ test('handle unsupported reset', async () => {
     await request(mockServer).post('/tasks').send();
     await request(mockServer).get('/tasks?finished=true').send();
 
-    const res = await request(apiServer).delete('/_/api/reset');
+    const res = await request(apiServer).delete('/api/reset');
 
     expect(res.status).toBe(404);
 });
@@ -128,7 +128,7 @@ test('handle unsupported method', async () => {
     await request(mockServer).post('/tasks').send();
     await request(mockServer).get('/tasks?finished=true').send();
 
-    const res = await request(apiServer).delete('/_/api/records');
+    const res = await request(apiServer).delete('/api/records');
 
     expect(res.status).toBe(404);
 });

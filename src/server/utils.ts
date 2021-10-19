@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Mock, validateMock } from '../engine';
 import cookie from 'cookie';
-import { IncomingMessage, ServerResponse } from 'http';
+import { IncomingMessage } from 'http';
 import path from 'path';
 import { match } from 'path-to-regexp';
 import qs from 'qs';

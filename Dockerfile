@@ -13,7 +13,7 @@ RUN yarn build
 RUN yarn --production
 
 # Build Dashboard
-ENV PUBLIC_URL=/_/dashboard
+ENV PUBLIC_URL=/dashboard
 ENV NODE_ENV=development
 RUN cd ui && npm i
 RUN cd ui && npm run build

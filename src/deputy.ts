@@ -20,12 +20,12 @@ const logInfo = (config) => {
     } = os.networkInterfaces();
 
     const routes = [
-        ['Dashboard', '/_/dashboard'],
-        ['List Mocks', '/_/api/mocks'],
-        ['List Records', '/_/api/records'],
-        ['Assert Request Sequence', '/_/api/sequence'],
-        ['Assert Requests Existences & Counts', '/_/api/requests/assert'],
-        ['Reset Server', '/_/api/reset'],
+        ['Dashboard', '/dashboard'],
+        ['List Mocks', '/api/mocks'],
+        ['List Records', '/api/records'],
+        ['Assert Request Sequence', '/api/sequence'],
+        ['Assert Requests Existences & Counts', '/api/requests/assert'],
+        ['Reset Server', '/api/reset'],
     ];
 
     eth0.forEach((it) => {

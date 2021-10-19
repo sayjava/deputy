@@ -35,7 +35,7 @@ test('return a 406  for requests less than 2', async () => {
     `);
     const { apiServer } = await createServer({});
     const res = await request(apiServer)
-        .put('/_/api/requests/sequence')
+        .put('/api/requests/sequence')
         .set('content-type', 'application/x-yaml')
         .send(`-`);
     expect(res.status).toBe(406);
@@ -69,8 +69,7 @@ test('return the error from a failed verification', async () => {
 
     const { apiServer } = await createServer({});
 
-    const res = await request(apiServer).put('/_/api/requests/sequence').set('content-type', 'application/x-yaml')
-        .send(`
+    const res = await request(apiServer).put('/api/requests/sequence').set('content-type', 'application/x-yaml').send(`
         - path: /tasks
           method: POST
         
@@ -115,8 +114,7 @@ test('return accepted http 202', async () => {
     await request(mockServer).post('/tasks');
     await request(mockServer).get('/tasks');
 
-    const res = await request(apiServer).put('/_/api/requests/sequence').set('content-type', 'application/x-yaml')
-        .send(`
+    const res = await request(apiServer).put('/api/requests/sequence').set('content-type', 'application/x-yaml').send(`
         - path: /tasks
           method: POST
         
@@ -149,8 +147,7 @@ test('return error for unmatched sequence', async () => {
     await request(mockServer).get('/tasks');
     await request(mockServer).get('/tasks');
 
-    const res = await request(apiServer).put('/_/api/requests/sequence').set('content-type', 'application/x-yaml')
-        .send(`
+    const res = await request(apiServer).put('/api/requests/sequence').set('content-type', 'application/x-yaml').send(`
         - path: /tasks
           method: POST
         

@@ -28,4 +28,4 @@ docker run -p 8080:8080 -p 8081:8081 ghcr.io/sayjava/deputy
 $ curl http://localhost:8080/who-am-i
 ```
 
-Visit the dashboard at `http://localhost:8081/_/dashboard`
+Visit the dashboard at `http://localhost:8081/dashboard`

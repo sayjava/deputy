@@ -54,8 +54,8 @@ export const createEngine = (config: DeputyConfig) => {
 export const createAPIServer = ({ engine }) => {
     const server = createExpress();
     server.use(parseBodyHandler);
-    server.use('/_/', createAPIRouter({ engine }));
-    server.use('/_/dashboard', express.static('ui/build/'));
+    server.use('/dashboard', express.static('ui/build/'));
+    server.use('/api', createAPIRouter({ engine }));
 
     server.use(responseHandler);
     server.use(errorHandler);

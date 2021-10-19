@@ -31,7 +31,7 @@ test('add a successful mock', async () => {
     `);
 
     const { apiServer } = await createServer({});
-    const res = await request(apiServer).post('/_/api/mocks').set('content-type', 'application/x-yaml').send(`
+    const res = await request(apiServer).post('/api/mocks').set('content-type', 'application/x-yaml').send(`
          -  name: test mocks
             request:
                 path: /tasks
@@ -61,7 +61,7 @@ test('add a single mock', async () => {
     `);
 
     const { apiServer } = await createServer({});
-    const res = await request(apiServer).post('/_/api/mocks').set('content-type', 'application/x-yaml').send(`
+    const res = await request(apiServer).post('/api/mocks').set('content-type', 'application/x-yaml').send(`
             name: test mocks
             request: 
                 path: tasks
@@ -86,7 +86,7 @@ test('fail adding a non valid mock', async () => {
     `);
 
     const { apiServer } = await createServer({});
-    const res = await request(apiServer).post('/_/api/mocks').set('content-type', 'application/x-yaml').send(`
+    const res = await request(apiServer).post('/api/mocks').set('content-type', 'application/x-yaml').send(`
             - name: test mocks
               request: 
                 method: POST
@@ -101,7 +101,7 @@ test('fail adding a non valid mock', async () => {
     `);
 });
 
-test('remove an mock', async () => {
+test('remove a mock', async () => {
     // @ts-ignore: Jest Mock
     fs.readFileSync.mockReturnValueOnce(`
         -   id: sample-mock
@@ -114,7 +114,7 @@ test('remove an mock', async () => {
     `);
     const { apiServer } = await createServer({});
     const res = await request(apiServer)
-        .delete('/_/api/mocks')
+        .delete('/api/mocks')
         .set('content-type', 'application/x-yaml')
         .send(`id: sample-mock`);
 
@@ -139,15 +139,15 @@ test('update a mock', async () => {
     `);
     const { apiServer } = await createServer({});
 
-    await request(apiServer).put('/_/api/mocks').set('content-type', 'application/x-yaml').send(` 
-            id: 'sample-mock' 
+    await request(apiServer).put('/api/mocks').set('content-type', 'application/x-yaml').send(` 
+            id: sample-mock 
             request: 
-                path: '/somewhere' 
+                path: /somewhere
             response: 
                 statusCode: 200
         `);
 
-    const res = await request(apiServer).get('/_/api/mocks');
+    const res = await request(apiServer).get('/api/mocks');
 
     expect(res.body).toMatchInlineSnapshot(`
         Array [
@@ -165,7 +165,7 @@ test('update a mock', async () => {
     `);
 });
 
-test('update a mocks', async () => {
+test('update many mocks', async () => {
     // @ts-ignore: Jest Mock
     fs.readFileSync.mockReturnValueOnce(`
         -   id: mock1
@@ -185,7 +185,7 @@ test('update a mocks', async () => {
     `);
     const { apiServer } = await createServer({});
 
-    await request(apiServer).put('/_/api/mocks').set('content-type', 'application/x-yaml').send(` 
+    await request(apiServer).put('/api/mocks').set('content-type', 'application/x-yaml').send(` 
             - id: mock1
               request: 
                 path: /somewhere 
@@ -198,7 +198,7 @@ test('update a mocks', async () => {
                 statusCode: 200
         `);
 
-    const res = await request(apiServer).get('/_/api/mocks');
+    const res = await request(apiServer).get('/api/mocks');
 
     expect(res.body).toMatchInlineSnapshot(`
         Array [
@@ -246,7 +246,7 @@ test('re-order mocks', async () => {
     `);
     const { apiServer } = await createServer({});
 
-    const res = await request(apiServer).post('/_/api/mocks/order').set('content-type', 'application/x-yaml').send(` 
+    const res = await request(apiServer).post('/api/mocks/order').set('content-type', 'application/x-yaml').send(` 
             ids:
                 - mock2
                 - mock1
@@ -254,7 +254,7 @@ test('re-order mocks', async () => {
 
     expect(res.status).toBe(201);
 
-    const { body: mocks } = await request(apiServer).get('/_/api/mocks');
+    const { body: mocks } = await request(apiServer).get('/api/mocks');
     expect(mocks).toMatchInlineSnapshot(`
         Array [
           Object {
@@ -294,7 +294,7 @@ test('retrieve all mocks', async () => {
     `);
 
     const { apiServer } = await createServer({});
-    const res = await request(apiServer).get('/_/api/mocks');
+    const res = await request(apiServer).get('/api/mocks');
 
     expect(res.status).toBe(200);
     expect(res.body).toMatchInlineSnapshot(`
