@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Quick Start | Deputy</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="A robust HTTP mock sever for development, inspecting and proxying API endpoints. Suitable also for micro-services testing">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/deputy/assets/css/0.styles.db835a3c.css" as="style"><link rel="preload" href="/deputy/assets/js/app.0edc0e57.js" as="script"><link rel="preload" href="/deputy/assets/js/2.273bc14e.js" as="script"><link rel="preload" href="/deputy/assets/js/3.e6fac4a1.js" as="script"><link rel="prefetch" href="/deputy/assets/js/10.2f391a09.js"><link rel="prefetch" href="/deputy/assets/js/11.0ab1cf96.js"><link rel="prefetch" href="/deputy/assets/js/4.84dce35e.js"><link rel="prefetch" href="/deputy/assets/js/5.d73b8ea5.js"><link rel="prefetch" href="/deputy/assets/js/6.eb003fbb.js"><link rel="prefetch" href="/deputy/assets/js/7.088cc93d.js"><link rel="prefetch" href="/deputy/assets/js/8.abb19fb3.js"><link rel="prefetch" href="/deputy/assets/js/9.8a6dfbc0.js">
+    <link rel="stylesheet" href="/deputy/assets/css/0.styles.db835a3c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/deputy/" class="home-link router-link-active"><img src="/deputy/assets/img/landing.svg" alt="Deputy" class="logo"> <span class="site-name can-hide">Deputy</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/deputy/start.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  Start
+</a></div><div class="nav-item"><a href="/deputy/guide.html" class="nav-link">
+  Guide
+</a></div><div class="nav-item"><a href="/deputy/assertions.html" class="nav-link">
+  Assertions
+</a></div><div class="nav-item"><a href="/deputy/api.html" class="nav-link">
+  API
+</a></div> <a href="https://github.com/sayjava/deputy" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/deputy/start.html" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  Start
+</a></div><div class="nav-item"><a href="/deputy/guide.html" class="nav-link">
+  Guide
+</a></div><div class="nav-item"><a href="/deputy/assertions.html" class="nav-link">
+  Assertions
+</a></div><div class="nav-item"><a href="/deputy/api.html" class="nav-link">
+  API
+</a></div> <a href="https://github.com/sayjava/deputy" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/deputy/" aria-current="page" class="sidebar-link">Home</a></li><li><a href="/deputy/start.html" aria-current="page" class="active sidebar-link">Quick Start</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/deputy/start.html#start-server" class="sidebar-link">Start Server</a></li><li class="sidebar-sub-header"><a href="/deputy/start.html#server-options" class="sidebar-link">Server Options</a></li><li class="sidebar-sub-header"><a href="/deputy/start.html#initialize-mocks" class="sidebar-link">Initialize Mocks</a></li><li class="sidebar-sub-header"><a href="/deputy/start.html#dashboard" class="sidebar-link">Dashboard</a></li><li class="sidebar-sub-header"><a href="/deputy/start.html#logging" class="sidebar-link">Logging</a></li><li class="sidebar-sub-header"><a href="/deputy/start.html#use-case-scenarios" class="sidebar-link">Use case scenarios</a></li><li class="sidebar-sub-header"><a href="/deputy/start.html#enable-https" class="sidebar-link">Enable HTTPS</a></li></ul></li><li><a href="/deputy/guide.html" class="sidebar-link">Guide</a></li><li><a href="/deputy/assertions.html" class="sidebar-link">Assertions</a></li><li><a href="/deputy/api.html" class="sidebar-link">API</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h2 id="start-server"><a href="#start-server" class="header-anchor">#</a> Start Server</h2> <div class="language-shell extra-class"><pre class="language-shell"><code>docker run -p <span class="token number">8080</span>:8080 -p <span class="token number">8081</span>:8081 sayjava/deputy
+</code></pre></div><ul><li>This will start the server on port <code>8080</code> and ready to receive requests at <a href="%60http://localhost:8080%60"><code>http://localhost:8080</code></a></li> <li>The dashboard will be accessible at <a href="%60http://localhost:8081%60"><code>http://localhost:8081</code></a></li></ul> <h2 id="server-options"><a href="#server-options" class="header-anchor">#</a> Server Options</h2> <table><thead><tr><th style="text-align:left;">Configuration</th> <th style="text-align:left;">Env Variable</th> <th style="text-align:left;">Default</th> <th style="text-align:left;">Description</th></tr></thead> <tbody><tr><td style="text-align:left;">--mocks-directory, -d</td> <td style="text-align:left;">DEPUTY_MOCKS_DIRECTORY</td> <td style="text-align:left;">mocks</td> <td style="text-align:left;">Path to a folder containing yaml/json mock definition files</td></tr> <tr><td style="text-align:left;">--port, -p</td> <td style="text-align:left;">DEPUTY_PORT</td> <td style="text-align:left;">8080</td> <td style="text-align:left;">The port the mock sever runs on</td></tr> <tr><td style="text-align:left;">--auto-proxy, -px</td> <td style="text-align:left;">DEPUTY_AUTO_PROXY</td> <td style="text-align:left;">true</td> <td style="text-align:left;">Auto proxy requests</td></tr></tbody></table> <h2 id="initialize-mocks"><a href="#initialize-mocks" class="header-anchor">#</a> Initialize Mocks</h2> <p>When started, the server scan the mocks folder in the current working directory and will load all the <code>.yml</code> or <code>.json</code> files. See the <a href="/guide">Mock Definition</a>.</p> <p>an example <code>hello_world.yml</code> file looks like:</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token punctuation">-</span> <span class="token key atrule">request</span><span class="token punctuation">:</span>
+    <span class="token key atrule">path</span><span class="token punctuation">:</span> /who<span class="token punctuation">-</span>am<span class="token punctuation">-</span>i
+  <span class="token key atrule">response</span><span class="token punctuation">:</span>
+    <span class="token key atrule">body</span><span class="token punctuation">:</span> I am deputy<span class="token punctuation">,</span> an HTTP Mocking Server</code></pre></div><p>now the server can be started by mounting the current folder into the server directory</p> <div class="language-shell extra-class"><pre class="language-shell"><code>docker run <span class="token punctuation">\</span>
+-p <span class="token number">8080</span>:8080 <span class="token punctuation">\</span>
+-p <span class="token number">8081</span>:8081 <span class="token punctuation">\</span>
+-v <span class="token string">&quot;<span class="token variable">${<span class="token environment constant">PWD</span>}</span>:/app/mocks&quot;</span> sayjava/deputy
+</code></pre></div><p><a href="/guide">Learn more about behaviors</a></p> <h2 id="dashboard"><a href="#dashboard" class="header-anchor">#</a> Dashboard</h2> <p>Deputy starts a Dashboard and API on the mock server port + 1. i.e if the mock server is started on port <code>8080</code>, then the REST API and Dashboard are on <code>http://localhost:8081/dashboard</code> for the UI and <code>http://localhost:8081/api</code> for the REST APIs</p> <h3 id="logs"><a href="#logs" class="header-anchor">#</a> Logs</h3> <p>The UI list the requests received with the most recent at the top
+<img src="/deputy/assets/img/logs.f4e9ddc0.png" alt="logs"></p> <h3 id="visualization"><a href="#visualization" class="header-anchor">#</a> Visualization</h3> <p>The requests can also be visualized by an auto-generated sequence diagram with support for services behind gateways</p> <p><img src="/deputy/assets/img/visualize.99c9b65a.png" alt="Visualize"></p> <h3 id="enable-disable-mocks"><a href="#enable-disable-mocks" class="header-anchor">#</a> Enable/Disable Mocks</h3> <p>Mocks can easily be created/deleted/edited/cloned from the UI and they can also be temporarily disabled</p> <p><img src="/deputy/assets/img/disable_mocks.6831949e.png" alt="disable"></p> <h2 id="logging"><a href="#logging" class="header-anchor">#</a> Logging</h2> <p>The server uses the environmental variable <code>NODE_LOG_LEVEL</code> to enable logging. Possible values</p> <ul><li><code>INFO</code></li> <li><code>DEBUG</code></li> <li><code>ERROR</code></li></ul> <h2 id="use-case-scenarios"><a href="#use-case-scenarios" class="header-anchor">#</a> Use case scenarios</h2> <p>There are different ways to setup a dev/test environment with Deputy. Here are a few examples</p> <h3 id="as-a-standalone-test-dev-server"><a href="#as-a-standalone-test-dev-server" class="header-anchor">#</a> As a standalone test/dev server</h3> <p><img src="/deputy/assets/img/test_environment.8e9be735.png" alt="media/test_environment"></p> <div class="language-shell extra-class"><pre class="language-shell"><code>docker run -p <span class="token number">8080</span>:8080 -p <span class="token number">8081</span>:8081 sayjava/deputy
+</code></pre></div><p>This can also be used to just to inspect network calls made by the application</p> <h3 id="transparent-mix-of-mocks-remote-apis-docker-compose"><a href="#transparent-mix-of-mocks-remote-apis-docker-compose" class="header-anchor">#</a> Transparent Mix Of Mocks &amp; Remote APIs (Docker Compose)</h3> <p><img src="/deputy/assets/img/dev_environment.2e3caec8.png" alt="media/dev_environment"></p> <p>Using deputy transparently with an application without modifying the code base
+of the application. See the https://github.com/sayjava/deputy/tree/main/examples.</p> <div class="language-yml extra-class"><pre class="language-yml"><code><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">deputy</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> @sayjava/deputy<span class="token punctuation">:</span>latest 
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span> 
+      <span class="token key atrule">DEPUTY_PORT</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span> 
+      <span class="token punctuation">-</span> ./mocks<span class="token punctuation">:</span>/app/mocks
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span> 
+      <span class="token punctuation">-</span> 8080<span class="token punctuation">:</span><span class="token number">8080</span>
+      <span class="token punctuation">-</span> 8081<span class="token punctuation">:</span><span class="token number">8081</span></code></pre></div><h2 id="enable-https"><a href="#enable-https" class="header-anchor">#</a> Enable HTTPS</h2> <p>If deputy detects a folder called <code>ssl</code> it's current directory, it will auto start in https mode.
+The ssl folder must contain certification and key files named as:</p> <ul><li><code>key.pem</code></li> <li><code>cert.pem</code></li></ul> <p>An example HTTPS server looks like this example.</p> <div class="language-yml extra-class"><div class="highlight-lines"><br><br><br><br><br><br><br><br><br><br><div class="highlighted"> </div><br><br><br></div><pre class="language-yml"><code><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3'</span>
+
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">deputy</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> @sayjava/deputy<span class="token punctuation">:</span>latest 
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span> 
+      <span class="token key atrule">DEPUTY_PORT</span><span class="token punctuation">:</span> <span class="token number">8080</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span> 
+      <span class="token punctuation">-</span> ./mocks<span class="token punctuation">:</span>/app/mocks
+      <span class="token comment"># Mount key.pem and cert.pem files </span>
+      <span class="token punctuation">-</span> ./ssl<span class="token punctuation">:</span>/app/ssl
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span> 
+      <span class="token punctuation">-</span> 8080<span class="token punctuation">:</span><span class="token number">8080</span>
+      <span class="token punctuation">-</span> 8081<span class="token punctuation">:</span><span class="token number">8081</span></code></pre></div><p>In this example, the deputy server will be available on https://localhost:8080</p> <div class="custom-block tip"><p class="custom-block-title">TIP</p> <p>The API and Dashboard endpoints are always running on http. i.e http://localhost/dashboard</p></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/deputy/" class="prev router-link-active">
+        Home
+      </a></span> <span class="next"><a href="/deputy/guide.html">
+        Guide
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/deputy/assets/js/app.0edc0e57.js" defer></script><script src="/deputy/assets/js/2.273bc14e.js" defer></script><script src="/deputy/assets/js/3.e6fac4a1.js" defer></script>
+  </body>
+</html>
