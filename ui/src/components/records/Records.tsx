@@ -1,4 +1,4 @@
-import { Space, Table, Tooltip, Alert, Button, Row } from 'antd';
+import { Space, Table, Tooltip, Alert, Button, Row, Tag } from 'antd';
 import { ApiOutlined, PlusCircleFilled } from '@ant-design/icons';
 import { Record } from '../../../../src/engine';
 import { RequestPath } from './RequestPath';
@@ -15,16 +15,12 @@ const columns = [
     {
         title: '',
         dataIndex: 'proxy',
-        width: '5%',
+        width: '7%',
         render: (_: any, record: Record) => {
             if (record.proxyRequest) {
                 const headers = record.request.headers || {};
                 const host = headers['host'];
-                return (
-                    <Tooltip title={host}>
-                        <ApiOutlined color="green" />
-                    </Tooltip>
-                );
+                return <Tag>proxied</Tag>;
             }
             return null;
         },

@@ -58,5 +58,14 @@ const fillCustomer = async (max) => {
     }
 };
 
+const github = async () => {
+    const url = `${BASE_URL}/users/sayjava`;
+
+    await axios(url, {
+        headers: { host: 'api.github.com' }
+    });
+}
+
 fillTodos(5);
 fillCustomer(2);
+github();
