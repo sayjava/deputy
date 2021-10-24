@@ -5,6 +5,8 @@ interface Props {
     engine: Engine;
 }
 
+const FILTERED_HEADERS = ['transfer-encoding', 'connection'];
+
 export const createMocksRouter = ({ engine }: Props): Router => {
     const router = Router();
 
@@ -27,7 +29,9 @@ export const createMocksRouter = ({ engine }: Props): Router => {
 
             const record = await engine.execute(engineRequest);
             Object.entries(record.response.headers || {}).forEach(([key, value]) => {
-                res.setHeader(key, value as string);
+                if (!FILTERED_HEADERS.includes(key.toLocaleLowerCase())) {
+                    res.setHeader(key, value as string);
+                }
             });
 
             res.locals = { body: record.response.body || {}, code: record.response.statusCode || 200 };
