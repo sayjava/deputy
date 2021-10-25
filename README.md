@@ -39,13 +39,12 @@ curl http://localhost:8080/who-am-i
 
 # Features
 
-- [Declarative request matching and response](https://sayjava.github.io/deputy/guide)
-- [Regex based request matching](https://sayjava.github.io/deputy/guide) (request path, headers and body matchers)
-- [Alternate and limit responses on same request](https://sayjava.github.io/deputy/guide)
-- [HTTP request validations](https://sayjava.github.io/deputy/assertions)
-- [Simulate response delays and network failures](https://sayjava.github.io/deputy/guide)
-- [Inspect HTTP Requests and Response in realtime](https://sayjava.github.io/deputy/start)
-
+-   [Declarative request matching and response](https://sayjava.github.io/deputy/guide)
+-   [Regex based request matching](https://sayjava.github.io/deputy/guide) (request path, headers and body matchers)
+-   [Alternate and limit responses on same request](https://sayjava.github.io/deputy/guide)
+-   [HTTP request validations](https://sayjava.github.io/deputy/assertions)
+-   [Simulate response delays and network failures](https://sayjava.github.io/deputy/guide)
+-   [Inspect HTTP Requests and Response in realtime](https://sayjava.github.io/deputy/start)
 
 # Scenarios
 

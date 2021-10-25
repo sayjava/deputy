@@ -1,68 +1,68 @@
 name: Build
 
 on:
-  push:
-    branches: [ main ]
+    push:
+        branches: [main]
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+    REGISTRY: ghcr.io
+    IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
+    build:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [14.x]
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      
-      - name: Dependencies
-        run: yarn
-      
-      - name: Build
-        run: yarn build
+        steps:
+            - uses: actions/checkout@v2
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
 
-      - name: Test
-        run: yarn test
+            - name: Dependencies
+              run: yarn
 
-  version:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+            - name: Build
+              run: yarn build
 
-      - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v5.6
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+            - name: Test
+              run: yarn test
 
-      - name: Setup Git
-        run: |
-          git config --global user.email "${{ github.actor }}@gmail.com"
-          git config --global user.name "${{ github.actor }}"
+    version:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
 
-      - name: UI Version
-        run: |
-          cd ui && npm version ${{ steps.tag_version.outputs.new_version }}
-          git add .
-          git commit -m "ui version ${{ steps.tag_version.outputs.new_version }}"
+            - name: Bump version and push tag
+              id: tag_version
+              uses: mathieudutour/github-tag-action@v5.6
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Server version
-        run: | 
-          npm version ${{ steps.tag_version.outputs.new_version }}
-          git push
+            - name: Setup Git
+              run: |
+                  git config --global user.email "${{ github.actor }}@gmail.com"
+                  git config --global user.name "${{ github.actor }}"
 
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
-          token: ${{ secrets.ACCESS_TOKEN }}
+            - name: UI Version
+              run: |
+                  cd ui && npm version ${{ steps.tag_version.outputs.new_version }}
+                  git add .
+                  git commit -m "ui version ${{ steps.tag_version.outputs.new_version }}"
+
+            - name: Server version
+              run: |
+                  npm version ${{ steps.tag_version.outputs.new_version }}
+                  git push
+
+            - name: Create a GitHub release
+              uses: ncipollo/release-action@v1
+              with:
+                  tag: ${{ steps.tag_version.outputs.new_tag }}
+                  name: Release ${{ steps.tag_version.outputs.new_tag }}
+                  body: ${{ steps.tag_version.outputs.changelog }}
+                  token: ${{ secrets.ACCESS_TOKEN }}

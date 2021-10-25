@@ -19,7 +19,7 @@ Behave Server.
 `GET /api/mocks` will list all the configured behaviors on the server for example:
 
 ```shell script
-curl http://localhost:8081/api/mocks 
+curl http://localhost:8081/api/mocks
 ```
 
 ### Create
@@ -49,7 +49,6 @@ curl -X DELETE http://localhost:8081/api/behaviors/:id
 
 see more about [Behaviors](guide.md) here
 
-
 ## Records
 
 The server stores all the received requests alongside the matched Behaviors in memory
@@ -64,6 +63,7 @@ curl -X GET http://localhost:8081/api/records
 ```
 
 ## Delete
+
 `PUT http://localhost:8081/api/reset` will delete all the records and behaviors, for example:
 
 ```shell

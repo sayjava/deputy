@@ -34,7 +34,8 @@
         "deputy": "lib/deputy.js"
     },
     "scripts": {
-        "lint": "eslint '*/**/src/*.ts'",
+        "pretty": "npx prettier --write '**/*.{ts,tsx,md,yml}'",
+        "lint": "eslint '*/**/src/*.ts|tsx'",
         "start": "node --inspect=5858 lib/deputy.js",
         "clean": "rm -rf lib",
         "build": "tsc",

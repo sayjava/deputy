@@ -8,22 +8,22 @@ title: Quick Start
 docker run -p 8080:8080 -p 8081:8081 sayjava/deputy
 ```
 
-- This will start the server on port `8080` and ready to receive requests at [`http://localhost:8080`](`http://localhost:8080`)
-- The dashboard will be accessible at [`http://localhost:8081`](`http://localhost:8081`)
+-   This will start the server on port `8080` and ready to receive requests at [`http://localhost:8080`](`http://localhost:8080`)
+-   The dashboard will be accessible at [`http://localhost:8081`](`http://localhost:8081`)
 
 ## Server Options
 
-| Configuration             | Env Variable | Default         | Description     |
-| :----------------------   | :----------------------------- | :-------------  | :-------------  |
-| \--mocks-directory, -d    |  DEPUTY_MOCKS_DIRECTORY        | mocks                             | Path to a folder containing yaml/json mock definition files |
-| \--port, -p               |  DEPUTY_PORT | 8080            | The port the mock sever runs on   |  
-| \--auto-proxy, -px        |  DEPUTY_AUTO_PROXY | true      | Auto proxy requests   |  
+| Configuration          | Env Variable           | Default | Description                                                 |
+| :--------------------- | :--------------------- | :------ | :---------------------------------------------------------- |
+| \--mocks-directory, -d | DEPUTY_MOCKS_DIRECTORY | mocks   | Path to a folder containing yaml/json mock definition files |
+| \--port, -p            | DEPUTY_PORT            | 8080    | The port the mock sever runs on                             |
+| \--auto-proxy, -px     | DEPUTY_AUTO_PROXY      | true    | Auto proxy requests                                         |
 
 ## Initialize Mocks
 
 When started, the server scan the mocks folder in the current working directory and will load all the `.yml` or `.json` files. See the [Mock Definition](/guide).
 
-an example `hello_world.yml` file looks like:  
+an example `hello_world.yml` file looks like:
 
 <<< @/mocks/hello_world.yml
 
@@ -37,7 +37,6 @@ docker run \
 ```
 
 [Learn more about behaviors](/guide)
-
 
 ## Dashboard
 
@@ -64,9 +63,9 @@ Mocks can easily be created/deleted/edited/cloned from the UI and they can also 
 
 The server uses the environmental variable `NODE_LOG_LEVEL` to enable logging. Possible values
 
-- `INFO`
-- `DEBUG`
-- `ERROR`
+-   `INFO`
+-   `DEBUG`
+-   `ERROR`
 
 ## Use case scenarios
 
@@ -96,8 +95,8 @@ of the application. See the https://github.com/sayjava/deputy/tree/main/examples
 If deputy detects a folder called `ssl` it's current directory, it will auto start in https mode.
 The ssl folder must contain certification and key files named as:
 
-- `key.pem`
-- `cert.pem`
+-   `key.pem`
+-   `cert.pem`
 
 An example HTTPS server looks like this example.
 

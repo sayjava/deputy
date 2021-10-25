@@ -6,9 +6,11 @@ slug: /assertions
 has_toc: true
 sidebarDepth: 3
 ---
+
 ## Request Assertions
 
-In a test environment, Deputy can be used to  
+In a test environment, Deputy can be used to
+
 ## Assertions
 
 The server can validate how many times a request is received and matched if at all.

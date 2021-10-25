@@ -6,7 +6,7 @@ actionText: Get Started →
 actionLink: /start/
 features:
     - title: Develop
-      details:  Transparently mock non-ready/remote HTTP APIs with an easy declarative system
+      details: Transparently mock non-ready/remote HTTP APIs with an easy declarative system
     - title: Proxy & Inspect
       details: Automatically proxy requests to remote servers. Developers can inspect and visualize network requests by application under test
     - title: Test
@@ -20,6 +20,7 @@ Selectively mock APIs, Deputy server will transparently forward unmatched reques
 ![media/dev_environment](./media/dev_environment.png)
 
 ### Quick Start
+
 ```bash
 docker run -p 8080:8080 -p 8081:8081 ghcr.io/sayjava/deputy
 ```
