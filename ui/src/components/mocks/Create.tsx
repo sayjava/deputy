@@ -1,5 +1,5 @@
 import { Alert, Button, notification, Space } from 'antd';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
 import Yaml from 'yaml';
 import { mock as mockApi } from '../../api';
@@ -7,29 +7,42 @@ import { mock as mockApi } from '../../api';
 export const Create = ({ onDone, mock }: { onDone: any; mock: any }) => {
     const [error, setError] = useState<any>(null);
     const api = mockApi();
+    const editorRef = useRef(null);
 
-    let yamlValue = typeof mock !== 'string' ? Yaml.stringify(mock, { sortMapEntries: false }) : mock;
+    const editorOptions = {
+        minimap: {
+            enabled: false,
+        },
+        lineSuggest: {
+            enabled: true,
+        },
+        smoothScrolling: true,
+    };
 
-    const onCodeChange = (value: any) => {
-        yamlValue = value;
+    const handleEditorDidMount = (editor) => {
+        const yamlValue = typeof mock !== 'string' ? Yaml.stringify(mock, { sortMapEntries: false }) : mock;
+        editorRef.current = editor;
+        editor.setValue(yamlValue);
+        editor.setScrollPosition({ scrollTop: 0, scrollLeft: 0 });
     };
 
     const createMock = async () => {
         setError(null);
         try {
             let description = 'Mock created';
-            const mocks = Yaml.parse(yamlValue);
+            const editorValue = editorRef.current.getValue();
+            const mocks = Yaml.parse(editorValue);
 
             if (!Array.isArray(mocks)) {
                 if (mocks.id) {
-                    await api.update(yamlValue);
+                    await api.update(editorValue);
                     description = `${mocks.request.path} updated`;
                 } else {
-                    await api.create(yamlValue);
+                    await api.create(editorValue);
                     description = `${mocks.request.path} created`;
                 }
             } else {
-                await api.create(yamlValue);
+                await api.create(editorValue);
                 description = `${mocks.length} mocks successfully created`;
             }
 
@@ -51,12 +64,11 @@ export const Create = ({ onDone, mock }: { onDone: any; mock: any }) => {
                 {error && <Alert type="error" message="Mock Error" description={error.toString()} />}
                 <Editor
                     height="60vh"
-                    value={yamlValue}
-                    onChange={onCodeChange}
+                    onMount={handleEditorDidMount}
                     theme="vs-dark"
                     path="mocks.yml"
                     language="yaml"
-                    options={{ minimap: { enabled: false } }}
+                    options={editorOptions}
                 />
                 <Button type="primary" onClick={createMock}>
                     Save

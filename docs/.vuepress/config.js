@@ -1,8 +1,7 @@
-const { description } = require('../../package')
-const { version } = require('../../package')
+const { description } = require('../../package');
+const { version } = require('../../package');
 
 module.exports = {
-
     base: '/deputy/',
 
     /**
@@ -22,7 +21,7 @@ module.exports = {
     head: [
         ['meta', { name: 'theme-color', content: '#3eaf7c' }],
         ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
-        ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]
+        ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
     ],
 
     /**
@@ -45,33 +44,24 @@ module.exports = {
             },
             {
                 text: 'Guide',
-                link: '/guide'
+                link: '/guide',
             },
             {
                 text: 'Assertions',
-                link: '/assertions'
+                link: '/assertions',
             },
             {
                 text: 'API',
-                link: '/api'
-            }
+                link: '/api',
+            },
         ],
-        sidebar: [
-            '/',
-            '/start',
-            '/guide',
-            '/assertions',
-            '/api',
-        ]
+        sidebar: ['/', '/start', '/guide', '/assertions', '/api'],
     },
 
     /**
      * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
      */
-    plugins: [
-        '@vuepress/plugin-back-to-top',
-        '@vuepress/plugin-medium-zoom',
-    ],
+    plugins: ['@vuepress/plugin-back-to-top', '@vuepress/plugin-medium-zoom'],
 
-    evergreen: true
-}
+    evergreen: true,
+};

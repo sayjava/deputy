@@ -1,5 +1,5 @@
-import { Space, Table, Tooltip, Alert, Button, Row, Tag } from 'antd';
-import { ApiOutlined, PlusCircleFilled } from '@ant-design/icons';
+import { Space, Table, Alert, Button, Row, Tag } from 'antd';
+import { PlusCircleFilled } from '@ant-design/icons';
 import { Record } from '../../../../src/engine';
 import { RequestPath } from './RequestPath';
 import { StatusCode } from './StatusCode';
@@ -80,7 +80,6 @@ const ExpandedRow = ({ record }) => {
 
                 <ViewMock record={record} />
             </Row>
-
             <RecordRow record={record} />
         </Space>
     );
