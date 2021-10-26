@@ -58,7 +58,7 @@ const columns = [
     },
     {
         title: 'Status',
-        dataIndex: 'request.path',
+        dataIndex: ['request', 'path'],
         width: '10%',
         render: (_: any, record: Record) => <StatusCode record={record} />,
     },

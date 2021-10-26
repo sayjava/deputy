@@ -60,7 +60,7 @@ test('return the error from a failed existence verification', async () => {
     );
 });
 
-test('return accepted http 202', async () => {
+test('JSON return accepted http 202', async () => {
     // @ts-ignore: Jest Mock
     fs.readFileSync.mockReturnValueOnce(`
         -   name: test expectations
@@ -82,14 +82,21 @@ test('return accepted http 202', async () => {
     await request(mockServer).post('/tasks').send();
     await request(mockServer).get('/tasks').send();
 
-    const res = await request(apiServer).put('/api/requests/assert').set('content-type', 'application/x-yaml').send(`
-            - request:
-                path: '/tasks'
-                method: 'POST'
-                
-            - request: 
-                path: '/tasks'
-                method: 'GET'                
+    const res = await request(apiServer).put('/api/requests/assert').set('content-type', 'application/json').send(`
+        [
+            {
+                "request": {
+                    "path": "/tasks",
+                    "method": "POST"
+                }
+            },
+            {
+                "request": {
+                    "path": "/tasks",
+                    "method": "GET"
+                }
+            }
+        ]          
         `);
 
     expect(res.status).toBe(202);

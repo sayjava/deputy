@@ -1,7 +1,6 @@
 import { Alert, Button, notification, Space } from 'antd';
 import { useRef, useState } from 'react';
 import Editor from '@monaco-editor/react';
-import Yaml from 'yaml';
 import { mock as mockApi } from '../../api';
 
 export const Create = ({ onDone, mock }: { onDone: any; mock: any }) => {
@@ -19,19 +18,12 @@ export const Create = ({ onDone, mock }: { onDone: any; mock: any }) => {
         smoothScrolling: true,
     };
 
-    const handleEditorDidMount = (editor) => {
-        const yamlValue = typeof mock !== 'string' ? Yaml.stringify(mock, { sortMapEntries: false }) : mock;
-        editorRef.current = editor;
-        editor.setValue(yamlValue);
-        editor.setScrollPosition({ scrollTop: 0, scrollLeft: 0 });
-    };
-
     const createMock = async () => {
         setError(null);
         try {
             let description = 'Mock created';
             const editorValue = editorRef.current.getValue();
-            const mocks = Yaml.parse(editorValue);
+            const mocks = JSON.parse(editorValue);
 
             if (!Array.isArray(mocks)) {
                 if (mocks.id) {
@@ -63,12 +55,14 @@ export const Create = ({ onDone, mock }: { onDone: any; mock: any }) => {
             <Space title="New Mock" direction="vertical" size="middle" style={{ width: '100%' }}>
                 {error && <Alert type="error" message="Mock Error" description={error.toString()} />}
                 <Editor
+                    value={JSON.stringify(mock, null, 2)}
                     height="60vh"
-                    onMount={handleEditorDidMount}
                     theme="vs-dark"
-                    path="mocks.yml"
-                    language="yaml"
+                    language="json"
                     options={editorOptions}
+                    onMount={(editor) => {
+                        editorRef.current = editor;
+                    }}
                 />
                 <Button type="primary" onClick={createMock}>
                     Save

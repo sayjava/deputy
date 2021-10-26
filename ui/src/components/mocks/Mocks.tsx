@@ -57,7 +57,6 @@ export const MocksView = () => {
                     <Row justify="space-between">
                         <Col>
                             <Space>
-                                {/* <NewMock /> */}
                                 <Button
                                     color="blue"
                                     icon={<PlusSquareOutlined />}

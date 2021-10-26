@@ -29,8 +29,7 @@ export const FileImport = () => {
 
         try {
             const mocks = await (await Promise.all(reads)).join('\n');
-            // @ts-ignore: Missing types ignore
-            create(mocks);
+            create(JSON.parse(mocks));
         } catch (error) {
             notification.error({
                 message: error.toString(),
@@ -44,7 +43,7 @@ export const FileImport = () => {
             <Button icon={<ImportOutlined />} onClick={doImport}>
                 Import
             </Button>
-            <input onChange={onFilesChange} ref={refImport} type="file" style={{ display: 'none' }} accept=".yaml" />
+            <input onChange={onFilesChange} ref={refImport} type="file" style={{ display: 'none' }} accept=".json" />
         </>
     );
 };

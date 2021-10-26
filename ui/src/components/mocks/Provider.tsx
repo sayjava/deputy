@@ -4,7 +4,6 @@ import { Mock } from '../../../../src/engine';
 import { Create } from './Create';
 import { mock } from '../../api';
 import { nanoid } from 'nanoid';
-import Yaml from 'yaml';
 
 export interface MockState {
     mocks: Array<any>;
@@ -62,7 +61,7 @@ export const EditMockProvider = ({ children }) => {
 
     const deleteMock = async (mock: Mock) => {
         try {
-            await api.delete(Yaml.stringify(mock));
+            await api.delete(JSON.stringify(mock));
             notification.success({
                 message: 'Success',
                 description: `${mock.request.path} deleted`,

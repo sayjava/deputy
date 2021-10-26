@@ -15,7 +15,7 @@ export const responseHandler = (req, res) => {
     return res.status(res.locals.code || 200).json(res.locals.body || {});
 };
 
-export const parseBodyHandler = (req, res, next) => {
+export const parseBodyHandler = (req, _, next) => {
     const contentType = req.headers['content-type'] || '';
     if (contentType.includes('application/x-yaml')) {
         try {
@@ -24,6 +24,8 @@ export const parseBodyHandler = (req, res, next) => {
         } catch (error) {
             return next(error);
         }
+    } else {
+        req.payload = req.body;
     }
 
     return next();

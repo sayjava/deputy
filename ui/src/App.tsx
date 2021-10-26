@@ -30,7 +30,7 @@ const App = () => {
                                 <span style={{ color: 'white', padding: '0 10px' }}>Deputy v{version}</span>
                                 <ServerStatus />
                             </Row>
-                            <Typography.Link href="https://sayjava.github.io/behave/" target="_blank">
+                            <Typography.Link href="https://sayjava.github.io/deputy/" target="_blank">
                                 Docs
                             </Typography.Link>
                         </Row>
@@ -59,7 +59,7 @@ const App = () => {
                             </Space>
                         </div>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>Behave UI Server</Footer>
+                    <Footer style={{ textAlign: 'center' }}>Deputy </Footer>
                 </Layout>
             </EditMockProvider>
         </ServerProvider>

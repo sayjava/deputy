@@ -15,7 +15,7 @@ export const mock = () => {
                 method: 'POST',
                 body: mocks,
                 headers: {
-                    'content-type': 'application/x-yaml',
+                    'content-type': 'application/json',
                 },
             });
 
@@ -31,7 +31,7 @@ export const mock = () => {
                 method: 'DELETE',
                 body: behavior,
                 headers: {
-                    'content-type': 'application/x-yaml',
+                    'content-type': 'application/json',
                 },
             });
 
@@ -47,7 +47,7 @@ export const mock = () => {
                 method: 'PUT',
                 body: behavior,
                 headers: {
-                    'content-type': 'application/x-yaml',
+                    'content-type': 'application/json',
                 },
             });
 

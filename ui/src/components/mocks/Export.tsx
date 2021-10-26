@@ -1,6 +1,5 @@
 import { ExportOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import Yaml from 'yaml';
 
 import { useServerState } from '../Provider';
 
@@ -8,9 +7,9 @@ export const MockExport = () => {
     const {
         state: { mocks },
     } = useServerState();
-    const fileContent = Yaml.stringify(mocks, { indent: 4, mapAsMap: true });
+    const fileContent = JSON.stringify(mocks, null, 2);
     return (
-        <Button icon={<ExportOutlined />} download="mocks.yml" href={URL.createObjectURL(new Blob([fileContent]))}>
+        <Button icon={<ExportOutlined />} download="mocks.json" href={URL.createObjectURL(new Blob([fileContent]))}>
             Export
         </Button>
     );

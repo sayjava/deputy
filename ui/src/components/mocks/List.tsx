@@ -4,7 +4,6 @@ import { useServerState } from '../Provider';
 import { CheckOutlined, CloseOutlined, CopyOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useEditMocks } from './Provider';
 import { mock as api } from '../../api';
-import Yaml from 'yaml';
 import { Create } from './Create';
 
 const noop = () => {};
@@ -41,7 +40,7 @@ const ToggleMock = ({ mock }: { mock: Mock }) => {
             mock.limit = 0;
         }
 
-        await api().update(Yaml.stringify(mock));
+        await api().update(JSON.stringify(mock, null, 2));
     };
 
     return (
