@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+    deputy:
+        image: deputy
+        environment:
+            DEPUTY_PORT: 443
+        volumes:
+            - ./fixtures:/app/mocks
+            - ./ssl:/app/ssl
+        ports:
+            - 8081:8081
+    commerce:
+        build:
+            context: .
+        ports:
+            - 3000:3000
+        links:
+            - deputy:store-deputy.myshopify.com
+        environment:
+            NODE_TLS_REJECT_UNAUTHORIZED: 0
+            COMMERCE_PROVIDER: shopify
+            NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN: test-token
+            NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN: store-deputy.myshopify.com

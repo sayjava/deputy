@@ -1,0 +1,248 @@
+[
+    {
+        "name": "getAllProductVendors",
+        "request": {
+            "path": "/api/2021-07/graphql.json",
+            "method": "POST",
+            "headers": {
+                "x-shopify-storefront-access-token": "*",
+                "content-type": "application/json",
+                "host": "store-deputy.myshopify.com",
+                "accept": "*/*",
+                "accept-encoding": "gzip,deflate"
+            },
+            "body": {
+                "query": "\n  query getAllProductVendors($first: Int = 250, $cursor: String) {\n    products(first: $first, after: $cursor) {\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n      }\n      edges {\n        node {\n          vendor\n        }\n        cursor\n      }\n    }\n  }\n",
+                "variables": {
+                    "first": 250
+                }
+            }
+        },
+        "id": "0jX-ijbZx",
+        "limit": "unlimited",
+        "response": {
+            "statusCode": 200,
+            "headers": {
+                "date": "Thu, 28 Oct 2021 19:28:26 GMT",
+                "content-type": "application/json; charset=utf-8",
+                "transfer-encoding": "chunked",
+                "x-sorting-hat-podid": "226",
+                "x-sorting-hat-shopid": "60696297699",
+                "vary": "Accept-Encoding",
+                "access-control-allow-origin": "*",
+                "x-frame-options": "DENY",
+                "x-shopid": "60696297699",
+                "x-shardid": "226",
+                "content-language": "en",
+                "x-shopify-api-version": "2021-07",
+                "strict-transport-security": "max-age=7889238",
+                "x-shopify-stage": "production",
+                "content-security-policy": "frame-ancestors 'none'; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=api%2Fgraphql&source%5Bsection%5D=api&source%5Buuid%5D=3e7cad39-6b87-4e72-bcf6-a49c0b8322e8",
+                "x-content-type-options": "nosniff",
+                "x-download-options": "noopen",
+                "x-permitted-cross-domain-policies": "none",
+                "x-xss-protection": "1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=api%2Fgraphql&source%5Bsection%5D=api&source%5Buuid%5D=3e7cad39-6b87-4e72-bcf6-a49c0b8322e8",
+                "x-dc": "gcp-europe-west1,gcp-us-east1,gcp-us-east1",
+                "x-request-id": "3e7cad39-6b87-4e72-bcf6-a49c0b8322e8",
+                "cf-cache-status": "DYNAMIC",
+                "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                "server": "cloudflare",
+                "cf-ray": "6a569136ed3b75e3-LHR",
+                "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-27=\":443\"; ma=86400"
+            },
+            "body": {
+                "data": {
+                    "products": {
+                        "pageInfo": {
+                            "hasNextPage": false,
+                            "hasPreviousPage": false
+                        },
+                        "edges": [
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMyMTU5NzE1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzMjE1OTcxNSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMyMzIzNTU1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzMjMyMzU1NSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMyNDU0NjI3LCJsYXN0X3ZhbHVlIjoiNzM0NDkzMjQ1NDYyNyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMyNTg1Njk5LCJsYXN0X3ZhbHVlIjoiNzM0NDkzMjU4NTY5OSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMyNzQ5NTM5LCJsYXN0X3ZhbHVlIjoiNzM0NDkzMjc0OTUzOSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "PALLADIUM"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMyODQ3ODQzLCJsYXN0X3ZhbHVlIjoiNzM0NDkzMjg0Nzg0MyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "ASICS TIGER"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMyOTc4OTE1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzMjk3ODkxNSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "PUMA"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMzMTQyNzU1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzMzE0Mjc1NSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "SUPRA"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMzMzcyMTMxLCJsYXN0X3ZhbHVlIjoiNzM0NDkzMzM3MjEzMSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "ADIDAS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMzNTAzMjAzLCJsYXN0X3ZhbHVlIjoiNzM0NDkzMzUwMzIwMyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMzNjY3MDQzLCJsYXN0X3ZhbHVlIjoiNzM0NDkzMzY2NzA0MyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTMzODYzNjUxLCJsYXN0X3ZhbHVlIjoiNzM0NDkzMzg2MzY1MSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM0MDkzMDI3LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNDA5MzAyNyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM0MzIyNDAzLCJsYXN0X3ZhbHVlIjoiNzM0NDkzNDMyMjQwMyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "TIMBERLAND"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM0NDg2MjQzLCJsYXN0X3ZhbHVlIjoiNzM0NDkzNDQ4NjI0MyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "NIKE"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM0NzQ4Mzg3LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNDc0ODM4NyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "DR MARTENS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM0ODc5NDU5LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNDg3OTQ1OSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "DR MARTENS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM1MDEwNTMxLCJsYXN0X3ZhbHVlIjoiNzM0NDkzNTAxMDUzMSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "DR MARTENS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM1MTA4ODM1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNTEwODgzNSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "CONVERSE"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM1MjM5OTA3LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNTIzOTkwNyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "CONVERSE"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM1NDM2NTE1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNTQzNjUxNSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "CONVERSE"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM1NjAwMzU1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNTYwMDM1NSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "NIKE"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM1Nzk2OTYzLCJsYXN0X3ZhbHVlIjoiNzM0NDkzNTc5Njk2MyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "ADIDAS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM1OTI4MDM1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNTkyODAzNSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "VANS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM2MTI0NjQzLCJsYXN0X3ZhbHVlIjoiNzM0NDkzNjEyNDY0MyJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "HERSCHEL"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM2MjU1NzE1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNjI1NTcxNSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "FLEX FIT"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM2NDE5NTU1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNjQxOTU1NSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "NIKE"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM2NjQ4OTMxLCJsYXN0X3ZhbHVlIjoiNzM0NDkzNjY0ODkzMSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "ADIDAS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM2NzQ3MjM1LCJsYXN0X3ZhbHVlIjoiNzM0NDkzNjc0NzIzNSJ9"
+                            },
+                            {
+                                "node": {
+                                    "vendor": "ADIDAS"
+                                },
+                                "cursor": "eyJsYXN0X2lkIjo3MzQ0OTM2OTQzODQzLCJsYXN0X3ZhbHVlIjoiNzM0NDkzNjk0Mzg0MyJ9"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "delay": 0
+    }
+]

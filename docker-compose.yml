@@ -1,14 +1,13 @@
 version: '3'
 
 services:
-  deputy:
-    build: 
-      dockerfile: Dockerfile
-      context: .
-    environment: 
-      DEPUTY_PORT: 8080
-      DEPUTY_TLS_ENABLED: 'true'
-    volumes: 
-      - ./ssl:/app/ssl
-    ports: 
-      - 8080:8080
+    deputy:
+        build:
+            dockerfile: Dockerfile
+            context: .
+        environment:
+            DEPUTY_PORT: 8080
+        volumes:
+            - ./ssl:/app/ssl
+        ports:
+            - 8080:8080

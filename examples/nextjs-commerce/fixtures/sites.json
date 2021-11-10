@@ -1,0 +1,184 @@
+[
+    {
+        "name": "getSiteCollections",
+        "request": {
+            "path": "/api/2021-07/graphql.json",
+            "method": "POST",
+            "headers": {
+                "x-shopify-storefront-access-token": "*",
+                "accept-language": "en-US",
+                "content-type": "application/json",
+                "host": "store-deputy.myshopify.com",
+                "accept": "*/*",
+                "accept-encoding": "gzip,deflate"
+            },
+            "body": {
+                "query": "\n  query getSiteCollections($first: Int!) {\n    collections(first: $first) {\n      edges {\n        node {\n          id\n          title\n          handle\n        }\n      }\n    }\n  }\n",
+                "variables": {
+                    "first": 250
+                }
+            }
+        },
+        "id": "vfI6qjwmjO",
+        "limit": "unlimited",
+        "response": {
+            "statusCode": 200,
+            "headers": {
+                "date": "Thu, 28 Oct 2021 19:28:26 GMT",
+                "content-type": "application/json; charset=utf-8",
+                "transfer-encoding": "chunked",
+                "x-sorting-hat-podid": "226",
+                "x-sorting-hat-shopid": "60696297699",
+                "vary": "Accept-Encoding",
+                "access-control-allow-origin": "*",
+                "x-frame-options": "DENY",
+                "x-shopid": "60696297699",
+                "x-shardid": "226",
+                "content-language": "en",
+                "x-shopify-api-version": "2021-07",
+                "strict-transport-security": "max-age=7889238",
+                "x-shopify-stage": "production",
+                "content-security-policy": "frame-ancestors 'none'; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=api%2Fgraphql&source%5Bsection%5D=api&source%5Buuid%5D=705bae2b-055b-4c6b-9b94-98e9cea9ec8a",
+                "x-content-type-options": "nosniff",
+                "x-download-options": "noopen",
+                "x-permitted-cross-domain-policies": "none",
+                "x-xss-protection": "1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=api%2Fgraphql&source%5Bsection%5D=api&source%5Buuid%5D=705bae2b-055b-4c6b-9b94-98e9cea9ec8a",
+                "x-dc": "gcp-europe-west1,gcp-us-east1,gcp-us-east1",
+                "x-request-id": "705bae2b-055b-4c6b-9b94-98e9cea9ec8a",
+                "cf-cache-status": "DYNAMIC",
+                "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                "server": "cloudflare",
+                "cf-ray": "6a569136eac77427-LHR",
+                "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-27=\":443\"; ma=86400"
+            },
+            "body": {
+                "data": {
+                    "collections": {
+                        "edges": [
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NDk0MjY0MTM3OQ==",
+                                    "title": "Home page",
+                                    "handle": "frontpage"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxODg1OTc0Nw==",
+                                    "title": "VANS",
+                                    "handle": "vans"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxODg5MjUxNQ==",
+                                    "title": "ADIDAS",
+                                    "handle": "adidas"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxODkyNTI4Mw==",
+                                    "title": "NIKE",
+                                    "handle": "nike"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxODk1ODA1MQ==",
+                                    "title": "CONVERSE",
+                                    "handle": "converse"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxODk5MDgxOQ==",
+                                    "title": "ASICS TIGER",
+                                    "handle": "asics-tiger"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTAyMzU4Nw==",
+                                    "title": "PALLADUIM",
+                                    "handle": "palladuim"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTA1NjM1NQ==",
+                                    "title": "PUMA",
+                                    "handle": "puma"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTA4OTEyMw==",
+                                    "title": "SUPRA",
+                                    "handle": "supra"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTEyMTg5MQ==",
+                                    "title": "TIMBERLAND",
+                                    "handle": "timberland"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTE1NDY1OQ==",
+                                    "title": "DR MARTENS",
+                                    "handle": "dr-martens"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTE4NzQyNw==",
+                                    "title": "HERSCHEL",
+                                    "handle": "herschel"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTIyMDE5NQ==",
+                                    "title": "FLEX FIT",
+                                    "handle": "flex-fit"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTI1Mjk2Mw==",
+                                    "title": "MEN",
+                                    "handle": "men"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTI4NTczMQ==",
+                                    "title": "WOMEN",
+                                    "handle": "women"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTMxODQ5OQ==",
+                                    "title": "KID",
+                                    "handle": "kid"
+                                }
+                            },
+                            {
+                                "node": {
+                                    "id": "Z2lkOi8vc2hvcGlmeS9Db2xsZWN0aW9uLzM0NTAxOTM1MTI2Nw==",
+                                    "title": "SALE",
+                                    "handle": "sale"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "delay": 0
+    }
+]

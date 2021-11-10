@@ -1,0 +1,166 @@
+[
+    {
+        "name": "Product",
+        "request": {
+            "path": "/api/2021-07/graphql.json",
+            "method": "POST",
+            "headers": {
+                "x-shopify-storefront-access-token": "*",
+                "accept-language": "en-US",
+                "content-type": "application/json",
+                "host": "store-deputy.myshopify.com",
+                "accept": "*/*",
+                "accept-encoding": "gzip,deflate"
+            },
+            "body": {
+                "query": "\n  query getProductBySlug($slug: String!) {\n    productByHandle(handle: $slug) {\n      id\n      handle\n      availableForSale\n      title\n      productType\n      vendor\n      description\n      descriptionHtml\n      options {\n        id\n        name\n        values\n      }\n      priceRange {\n        maxVariantPrice {\n          amount\n          currencyCode\n        }\n        minVariantPrice {\n          amount\n          currencyCode\n        }\n      }\n      variants(first: 250) {\n        pageInfo {\n          hasNextPage\n          hasPreviousPage\n        }\n        edges {\n          node {\n            id\n            title\n            sku\n            availableForSale\n            requiresShipping\n            selectedOptions {\n              name\n              value\n            }\n            priceV2 {\n              amount\n              currencyCode\n            }\n            compareAtPriceV2 {\n              amount\n              currencyCode\n            }\n          }\n        }\n      }\n      images(first: 250) {\n        pageInfo {\n          hasNextPage\n          hasPreviousPage\n        }\n        edges {\n          node {\n            originalSrc\n            altText\n            width\n            height\n          }\n        }\n      }\n    }\n  }\n",
+                "variables": {
+                    "slug": "nike-swoosh-pro-flat-peak-cap"
+                }
+            }
+        },
+        "id": "iFYej5NaT",
+        "limit": "unlimited",
+        "response": {
+            "statusCode": 200,
+            "headers": {
+                "date": "Thu, 28 Oct 2021 19:51:02 GMT",
+                "content-type": "application/json; charset=utf-8",
+                "transfer-encoding": "chunked",
+                "x-sorting-hat-podid": "226",
+                "x-sorting-hat-shopid": "60696297699",
+                "vary": "Accept-Encoding",
+                "access-control-allow-origin": "*",
+                "x-frame-options": "DENY",
+                "x-shopid": "60696297699",
+                "x-shardid": "226",
+                "content-language": "en",
+                "x-shopify-api-version": "2021-07",
+                "x-shopify-api-deprecated-reason": "https://help.shopify.com/api/getting-started/api-deprecations",
+                "strict-transport-security": "max-age=7889238",
+                "x-shopify-stage": "production",
+                "content-security-policy": "frame-ancestors 'none'; report-uri /csp-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=api%2Fgraphql&source%5Bsection%5D=api&source%5Buuid%5D=9f873b29-3357-431f-a71e-69d53d700b95",
+                "x-content-type-options": "nosniff",
+                "x-download-options": "noopen",
+                "x-permitted-cross-domain-policies": "none",
+                "x-xss-protection": "1; mode=block; report=/xss-report?source%5Baction%5D=query&source%5Bapp%5D=Shopify&source%5Bcontroller%5D=api%2Fgraphql&source%5Bsection%5D=api&source%5Buuid%5D=9f873b29-3357-431f-a71e-69d53d700b95",
+                "x-dc": "gcp-europe-west1,gcp-us-east1,gcp-us-east1",
+                "x-request-id": "9f873b29-3357-431f-a71e-69d53d700b95",
+                "cf-cache-status": "DYNAMIC",
+                "expect-ct": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\"",
+                "server": "cloudflare",
+                "cf-ray": "6a56b24edb9f547b-LHR",
+                "alt-svc": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400, h3-28=\":443\"; ma=86400, h3-27=\":443\"; ma=86400"
+            },
+            "body": {
+                "data": {
+                    "productByHandle": {
+                        "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzczNDQ5MzY2NDg5MzE=",
+                        "handle": "nike-swoosh-pro-flat-peak-cap",
+                        "availableForSale": true,
+                        "title": "NIKE | SWOOSH PRO FLAT PEAK CAP",
+                        "productType": "ACCESSORIES",
+                        "vendor": "NIKE",
+                        "description": "The Nike Swoosh Pro Flat Snapback features an embroidered logo for style and wool construction with an adjustable closure for a comfortable fit.",
+                        "descriptionHtml": "The Nike Swoosh Pro Flat Snapback features an embroidered logo for style and wool construction with an adjustable closure for a comfortable fit.",
+                        "options": [
+                            {
+                                "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzk0MzkyNjQ5OTc2MDM=",
+                                "name": "Size",
+                                "values": ["OS"]
+                            },
+                            {
+                                "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0T3B0aW9uLzk0MzkyNjUwMzAzNzE=",
+                                "name": "Color",
+                                "values": ["white"]
+                            }
+                        ],
+                        "priceRange": {
+                            "maxVariantPrice": {
+                                "amount": "30.0",
+                                "currencyCode": "GBP"
+                            },
+                            "minVariantPrice": {
+                                "amount": "30.0",
+                                "currencyCode": "GBP"
+                            }
+                        },
+                        "variants": {
+                            "pageInfo": {
+                                "hasNextPage": false,
+                                "hasPreviousPage": false
+                            },
+                            "edges": [
+                                {
+                                    "node": {
+                                        "id": "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MTkzOTI5NzczMDc4Nw==",
+                                        "title": "OS / white",
+                                        "sku": "NK-03-white-OS",
+                                        "availableForSale": true,
+                                        "requiresShipping": true,
+                                        "selectedOptions": [
+                                            {
+                                                "name": "Size",
+                                                "value": "OS"
+                                            },
+                                            {
+                                                "name": "Color",
+                                                "value": "white"
+                                            }
+                                        ],
+                                        "priceV2": {
+                                            "amount": "30.0",
+                                            "currencyCode": "GBP"
+                                        },
+                                        "compareAtPriceV2": null
+                                    }
+                                }
+                            ]
+                        },
+                        "images": {
+                            "pageInfo": {
+                                "hasNextPage": false,
+                                "hasPreviousPage": false
+                            },
+                            "edges": [
+                                {
+                                    "node": {
+                                        "originalSrc": "https://cdn.shopify.com/s/files/1/0606/9629/7699/products/58262e66c5e9731050280eb16880d5a4.jpg?v=1635154178",
+                                        "altText": null,
+                                        "width": 635,
+                                        "height": 560
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "originalSrc": "https://cdn.shopify.com/s/files/1/0606/9629/7699/products/0c431da3011f1bc086cb561266367207.jpg?v=1635154178",
+                                        "altText": null,
+                                        "width": 635,
+                                        "height": 560
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "originalSrc": "https://cdn.shopify.com/s/files/1/0606/9629/7699/products/93c1c61ff207aac853d1f482e03fcd3c.jpg?v=1635154178",
+                                        "altText": null,
+                                        "width": 635,
+                                        "height": 560
+                                    }
+                                },
+                                {
+                                    "node": {
+                                        "originalSrc": "https://cdn.shopify.com/s/files/1/0606/9629/7699/products/c1a864cb74de0e0fd0004872d6a00edd.jpg?v=1635154178",
+                                        "altText": null,
+                                        "width": 635,
+                                        "height": 560
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "delay": 0
+    }
+]
