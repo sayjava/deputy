@@ -8,7 +8,7 @@ import { WebSocketServer } from 'ws';
 import https from 'https';
 import http from 'http';
 import { loadMocks } from './utils';
-import { isTLSEnabled, loadSSLCerts } from './ssl';
+import { loadSSLCerts } from './ssl';
 import { createAPIRouter } from './routes/api';
 import { createMocksRouter } from './routes/mocks';
 import { errorHandler, responseHandler, parseBodyHandler } from './routes/middleware';
@@ -20,6 +20,8 @@ const defaultConfig: DeputyConfig = {
     apiPort: 8081,
     proxy: true,
     mocksDirectory: 'mocks',
+    tlsEnabled: false,
+    tslDomains: [],
 };
 
 const createExpress = (): Express => {
@@ -62,7 +64,7 @@ export const createAPIServer = ({ engine }) => {
     return http.createServer(server);
 };
 
-export const createMockServer = ({ engine }) => {
+export const createMockServer = async ({ engine, config }) => {
     const server = createExpress();
     server.use(createMocksRouter({ engine }));
     server.use(responseHandler);
@@ -71,8 +73,8 @@ export const createMockServer = ({ engine }) => {
     const SERVER_TIMEOUT = 4000;
     const onTimeOut = () => logger.error('Request Timeout');
 
-    if (isTLSEnabled()) {
-        const { cert, key } = loadSSLCerts();
+    if (config.tlsEnabled) {
+        const { cert, key } = await loadSSLCerts({ domains: config.tlsDomains });
         return https.createServer({ key, cert }, server).setTimeout(SERVER_TIMEOUT, onTimeOut);
     } else {
         return http.createServer(server).setTimeout(SERVER_TIMEOUT, onTimeOut);
@@ -83,7 +85,7 @@ export const createServer = async (argConfig: DeputyConfig): Promise<App> => {
     const config = Object.assign({}, defaultConfig, argConfig);
     const engine = createEngine(config);
 
-    const mockServer = createMockServer({ engine });
+    const mockServer = await createMockServer({ engine, config });
     const apiServer = createAPIServer({ engine });
 
     return {

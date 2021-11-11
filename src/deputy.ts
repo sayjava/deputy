@@ -5,7 +5,6 @@ import os from 'os';
 import path from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { isTLSEnabled } from './server/ssl';
 import logger from './server/logger';
 import { createServer } from './server';
 
@@ -30,7 +29,7 @@ const logInfo = (config) => {
 
     eth0.forEach((it) => {
         if (it.family === 'IPv4') {
-            const protocol = isTLSEnabled() ? 'https' : 'http';
+            const protocol = config.tlsEnabled ? 'https' : 'http';
             const table = new Table({ head: ['Description', 'Url'] });
             routes.forEach(([desc, url]) => {
                 table.push([desc, `http://${it.address}:${config.apiPort}${url}`]);
@@ -66,6 +65,18 @@ const args = yargs(hideBin(process.argv))
         alias: 'd',
         describe: 'A directory containing .yml files  definitions',
         default: process.env.DEPUTY_MOCKS_DIRECTORY || 'mocks',
+    })
+    .option('tls-enabled', {
+        type: 'boolean',
+        alias: 'tls',
+        describe: 'Enable HTTPS, Auto generate ssl certificates',
+        default: process.env.DEPUTY_TSL_ENABLED || false,
+    })
+    .option('tls-domains', {
+        type: 'array',
+        alias: 'domain',
+        describe: 'Specify domain to auto-generate certification for. localhost is auto included',
+        default: process.env.DEPUTY_TSL_DOMAINS ? process.env.DEPUTY_TSL_DOMAINS.split(',') : [],
     }).argv;
 
 const startServer = async () => {

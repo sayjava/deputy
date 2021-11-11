@@ -6,8 +6,11 @@ services:
             dockerfile: Dockerfile
             context: .
         environment:
+            DEPUTY_TSL_ENABLED: true
+            DEPUTY_TSL_DOMAINS: 'localhost,test.duputy.com'
             DEPUTY_PORT: 8080
         volumes:
             - ./ssl:/app/ssl
         ports:
             - 8080:8080
+ 

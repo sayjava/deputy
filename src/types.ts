@@ -139,4 +139,5 @@ export interface DeputyConfig {
     mocksDirectory?: string;
     tlsEnabled?: boolean;
     proxy?: boolean;
+    tslDomains?: Array<string>;
 }
