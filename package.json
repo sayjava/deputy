@@ -13,7 +13,7 @@
         "name": "Raymond Ottun",
         "url": "https://twitter.com/sayjava"
     },
-    "description": "A robust HTTP mock sever for development, inspecting and proxying API endpoints. Suitable also for micro-services testing",
+    "description": "Deputy is a robust HTTP(s) mocking sever suitable for api stubbing in development and testing. Declarative and HTTP based APIs, automatic proxying and sequence diagraming",
     "repository": "git@github.com:sayjava/deputy.git",
     "license": "MIT",
     "keywords": [
