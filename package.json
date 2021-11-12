@@ -17,19 +17,19 @@
     "repository": "git@github.com:sayjava/deputy.git",
     "license": "MIT",
     "keywords": [
-        "mock http server",
-        "mock http api",
-        "simulate http api",
-        "http stub",
-        "http tester",
-        "debug http",
-        "inspect http"
+        "mock-server",
+        "stubbing",
+        "mocking",
+        "http-mock",
+        "api-mocks",
+        "prototyping",
+        "mocking-server"
     ],
     "files": [
         "lib/**",
         "dashboard/**"
     ],
-    "main": "lib/deputy.js",
+    "main": "lib/index.js",
     "bin": {
         "deputy": "lib/deputy.js"
     },
