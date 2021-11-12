@@ -27,7 +27,7 @@
     ],
     "files": [
         "lib/**",
-        "dashboard/**"
+        "ui/build/**"
     ],
     "main": "lib/index.js",
     "bin": {
