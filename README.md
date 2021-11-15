@@ -21,12 +21,18 @@ The easiest and quickest way to mock HTTP endpoints for development and testing 
 
 # What is Deputy?
 
-Deputy is an HTTP API mock server that can aid in rapid application development by mocking endpoints and configuring responses from configurations.
+Deputy is an HTTP API mocking server that can aid in rapid application development by mocking endpoints and configuring responses from configurations.
 
 Deputy can also act as a testing server to validate what requests made by system under test.
 
-# Quick Start
 
+## Quick Start
+With nodejs
+```shell
+npx @sayjava/deputy
+```
+
+With docker
 ```shell
 docker run -p 8080:8080 -p 8081:8081 ghcr.io/sayjava/deputy
 ```
@@ -37,7 +43,7 @@ and test a sample endpoint
 curl http://localhost:8080/who-am-i
 ```
 
-# Features
+## Features
 
 -   [Declarative request matching and response](https://sayjava.github.io/deputy/guide)
 -   [Regex based request matching](https://sayjava.github.io/deputy/guide) (request path, headers and body matchers)
@@ -46,18 +52,32 @@ curl http://localhost:8080/who-am-i
 -   [Simulate response delays and network failures](https://sayjava.github.io/deputy/guide)
 -   [Inspect HTTP Requests and Response in realtime](https://sayjava.github.io/deputy/start)
 
-# Scenarios
+## Examples
 
-Here are some scenarios that Deputy can aid in your next development
+- [with-nextjs-commerce](examples/with-nextjs-commerce)
+- [with-nextjs-middleware](examples/with-nextjs-commerce)
 
-## Transparently Mock & Forward API requests
+## Programitcally
+```javascript
+const express = require('express')
+const { createExpressMiddleware } = require('@sayjava/deputy')
+
+// mount the mock on a middleware endpoint
+const app = express()
+app.use('/api', createExpressMiddleware({ mocksFolder: 'fixtures' }))
+app.listen(3000, () => console.log('server started'))
+```
+
+## Usage Scenarios
+Here are some setup scenarios that deputy can be used to aid development and testing
+### Transparently Mock & Forward API requests
 
 Simulate unready APIs by mocking some APIs and have other requests transparently forwarded to remote APIs
 See the examples/commerce folder using that uses the [next/commerce](next/commerces) + deputy
 
 ![Dev](./docs/media/dev_environment.png)
 
-## Application Testing
+### Application Testing
 
 Simulate complex HTTP requests and response scenarios in test environments
 
