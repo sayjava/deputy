@@ -12,7 +12,7 @@ import { loadSSLCerts } from './ssl';
 import { createAPIRouter } from './routes/api';
 import { createMocksRouter } from './routes/mocks';
 import { errorHandler, responseHandler, parseBodyHandler } from './routes/middleware';
-import { DeputyConfig } from '../types';
+import { DeputyConfig, MiddlewareConfig } from '../types';
 import logger from './logger';
 
 const defaultConfig: DeputyConfig = {
@@ -103,4 +103,13 @@ export const createServer = async (argConfig: DeputyConfig): Promise<App> => {
             apiServer.close();
         },
     };
+};
+
+export const createMiddleware = (argConfig: MiddlewareConfig) => {
+    const config = Object.assign({}, defaultConfig, argConfig);
+    const engine = createEngine(config);
+    const apiRouter = createMocksRouter({ engine });
+    apiRouter.use(responseHandler);
+    apiRouter.use(errorHandler);
+    return apiRouter;
 };

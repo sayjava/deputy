@@ -141,3 +141,7 @@ export interface DeputyConfig {
     proxy?: boolean;
     tslDomains?: Array<string>;
 }
+
+export interface MiddlewareConfig extends DeputyConfig {
+    enableAPI?: boolean;
+}
