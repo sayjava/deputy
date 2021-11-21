@@ -113,6 +113,9 @@ const createRequestRouter = ({ engine }: Props) => {
         try {
             // @ts-ignore
             const verifications = req.payload;
+            if (!Array.isArray(verifications)) {
+                return next(new Error('Request body must be an array'));
+            }
             const verified = verifications.map((verify: Verification) => engine.assert(verify));
             const passed = verified.filter((res) => typeof res !== 'boolean');
 

@@ -73,8 +73,8 @@ const args = yargs(hideBin(process.argv))
         default: process.env.DEPUTY_TSL_ENABLED || false,
     })
     .option('tls-domains', {
-        type: 'array',
-        alias: 'domain',
+        type: 'string',
+        alias: 'domains',
         describe: 'Specify domain to auto-generate certification for. localhost is auto included',
         default: process.env.DEPUTY_TSL_DOMAINS ? process.env.DEPUTY_TSL_DOMAINS.split(',') : [],
     }).argv;

@@ -21,7 +21,7 @@ const defaultConfig: DeputyConfig = {
     proxy: true,
     mocksDirectory: 'mocks',
     tlsEnabled: false,
-    tslDomains: [],
+    tslDomains: '',
 };
 
 const createExpress = (): Express => {
@@ -82,7 +82,8 @@ export const createMockServer = async ({ engine, config }) => {
 };
 
 export const createServer = async (argConfig: DeputyConfig): Promise<App> => {
-    const config = Object.assign({}, defaultConfig, argConfig);
+    const tlsDomains = (argConfig.tslDomains || '').split(',');
+    const config = Object.assign({}, defaultConfig, argConfig, { tlsDomains });
     const engine = createEngine(config);
 
     const mockServer = await createMockServer({ engine, config });
