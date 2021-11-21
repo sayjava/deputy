@@ -1,0 +1,10 @@
+{
+  "title": "HTTP Mocking Server",
+  "url": "https://sayjava.github.io/deputy",
+  "logo": {
+    "light": "/logo-light.svg",
+    "dark": "/logo-dark.svg"
+  },
+  "github": "sayjava/deputy",
+  "twitter": "@sayjava"
+}

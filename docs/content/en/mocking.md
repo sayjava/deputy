@@ -1,10 +1,11 @@
 ---
-id: guide
-title: Guide
-sidebarDepth: 3
+title: Mocking Definition
+menuTitle: Mocking
+position: 4
 ---
 
-## Mock Definition
+<code-group>
+  <code-block label="YAML">
 
 ```yaml
 # Optional
@@ -18,61 +19,96 @@ description: Description for this mock
 
 # Required
 request:
-    # Optional: defaults to matching any method
-    # Regex: true
-    method: GET|POST|PUT|DELETE
+  # Optional: defaults to matching any method
+  # Regex: true
+  method: GET|POST|PUT|DELETE
 
-    # Required: the path to match this mock to
-    # Regex: true
-    path: a/path/to/match
+  # Required: the path to match this mock to
+  # Regex: true
+  path: a/path/to/match
 
-    # Optional: list of header values to use for matching requests
-    # Regex: true
-    headers:
-        x-some-custom-header: any value
+  # Optional: list of header values to use for matching requests
+  # Regex: true
+  headers:
+    x-some-custom-header: any value
 
-    # Optional: JSON/Text used to match incoming requests to this mock
-    # Regex: true
-    body: json/text
+  # Optional: JSON/Text used to match incoming requests to this mock
+  # Regex: true
+  body: json/text
 
 # Optional: Defines a destination to forward the request to instead
 proxy:
-    # Optional: The protocol to use to forward request. Defaults to the original request protocol
-    protocol: https|http
+  # Optional: The protocol to use to forward request. Defaults to the original request protocol
+  protocol: https|http
 
-    # Optional: remote port of the server. Defaults to the original request port
-    port: number
+  # Optional: remote port of the server. Defaults to the original request port
+  port: number
 
-    #  Optional
-    followRedirect: boolean
+  #  Optional
+  followRedirect: boolean
 
-    # Optional
-    skipVerifyTLS: boolean
+  # Optional
+  skipVerifyTLS: boolean
 
-    # Optional:  extra headers to forward to the remote host
-    headers: map
+  # Optional:  extra headers to forward to the remote host
+  headers: map
 
 # Optional
 response:
-    # Optional: Defaults to 200
-    statusCode: any http status code
+  # Optional: Defaults to 200
+  status: any http status code
 
-    #Optional: Defaults to empty string
-    body: json object/text
+  #Optional: Defaults to empty string
+  body: json object/text
 
-    # Optional: defaults to null
-    file: read the response from a file on the server instead of the inline response
+  # Optional: Response headers, key-value pairs
+  headers:
+    some_header: some_header_value_like_cookies
 
-    # Optional: Response headers
-    headers:
-        some_header: some_header_value_like_cookies
-
-    # Optional: defaults to immediately
-    delay: seconds to delay the response. defaults to 0
+  # Optional: defaults to immediately
+  delay: seconds to delay the response. defaults to 0
 
 # Optional: defaults to unlimited
 limit: (number|unlimited). how many times this mock should be used. defaults to unlimited
 ```
+
+  </code-block>
+  <code-block label="JSON">
+
+```json
+{
+  "id": "mock-id",
+  "name": "Name of this mock",
+  "description": "Description for this mock",
+  "request": {
+    "method": "GET|POST|PUT|DELETE",
+    "path": "a/path/to/match",
+    "headers": {
+      "x-some-custom-header": "any value"
+    },
+    "body": "json/text"
+  },
+  "proxy": {
+    "protocol": "https|http",
+    "port": "number",
+    "followRedirect": "boolean",
+    "skipVerifyTLS": "boolean",
+    "headers": "map"
+  },
+  "response": {
+    "status": "any http status code",
+    "body": "json object/text",
+    "headers": {
+      "some_header": "some_header_value_like_cookies"
+    },
+    "delay": "seconds to delay the response. defaults to 0"
+  },
+  "limit": "(number|unlimited). how many times this mock should be used. defaults to unlimited"
+}
+```
+
+  </code-block>
+</code-group>
 
 Mocks can either be created by initialization see [Start Guide](./start), the [REST API](./api) or via the dashboard
 
@@ -82,12 +118,19 @@ Mocks can either be created by initialization see [Start Guide](./start), the [R
 
 Deputy server will default to `.*` i.e match all methods and `HTTP 200` response code for matched Behaviors if they are omitted from the Behavior document.
 
-```yaml
-- request:
-      path: /tasks/a_simple_task
-  response:
-      body:
-          name: A simple task
+```json
+[
+  {
+    "request": {
+      "path": "/tasks/a_simple_task"
+    },
+    "response": {
+      "body": {
+        "name": "A simple task"
+      }
+    }
+  }
+]
 ```
 
 ```shell
@@ -102,12 +145,19 @@ curl -X GET http://localhost:8080/tasks/another_task
 
 Behaviors can use regex paths for matching a request to a configured Behavior. e.g
 
-```yaml
-- request:
-      path: /tasks/[0-9]+
-  response:
-      body:
-          name: Regex based url
+```json
+[
+  {
+    "request": {
+      "path": "/tasks/[0-9]+"
+    },
+    "response": {
+      "body": {
+        "name": "Regex based url"
+      }
+    }
+  }
+]
 ```
 
 ```shell
@@ -125,15 +175,16 @@ curl -X GET http://localhost:8080/tasks/a_simple_taks
 
 The server can match http requests using dynamic path parameters e.g
 
-```yaml
-- request:
-      path: /tasks/{id}/docs/{docId}
-      pathParams:
-          id: '[0-9]+'
-          docId: '[a-z]+.jpg'
-  response:
-      body:
-          name: Task doc
+```json
+[
+  {
+    "request": {
+      "path": "/tasks/{id}/docs/{docId}",
+      "pathParams": { "id": "[0-9]+", "docId": "[a-z]+.jpg" }
+    },
+    "response": { "body": { "name": "Task doc" } }
+  }
+]
 ```
 
 ```shell
@@ -148,14 +199,22 @@ curl -X GET http://localhost:8080/tasks/123/doc/cat.png
 
 The server can also match dynamic query parameters. e.g
 
-```yaml
-- request:
-      path: /tasks/[0-9]+/?completed={isCompleted}
-      queryParams:
-          isCompleted: true|false
-  response:
-      body:
-          name: Some completed tasks
+```json
+[
+  {
+    "request": {
+      "path": "/tasks/[0-9]+/?completed={isCompleted}",
+      "queryParams": {
+        "isCompleted": "true|false"
+      }
+    },
+    "response": {
+      "body": {
+        "name": "Some completed tasks"
+      }
+    }
+  }
+]
 ```
 
 ```shell
@@ -167,14 +226,20 @@ curl -X GET http://localhost:8080/tasks/123?isCompleted=true
 
 The server can match requests based on http request header values. The configured request header values will matched as a subset of the received request headers.
 
-```yaml
-request:
-    path: /tasks/[0-9]+
-    headers:
-        X-Mock-Id: mock-[a-z]+
-response:
-    body:
-        name: match header values
+```json
+{
+  "request": {
+    "path": "/tasks/[0-9]+",
+    "headers": {
+      "X-Mock-Id": "mock-[a-z]+"
+    }
+  },
+  "response": {
+    "body": {
+      "name": "match header values"
+    }
+  }
+}
 ```
 
 ```shell
@@ -187,13 +252,20 @@ curl -X GET http://localhost:8080/tasks/123
 
 ### Request Methods
 
-```yaml
-- request:
-      path: /tasks/[0-9]+
-      method: DELETE
-  response:
-      body:
-          name: Task has been deleted
+```json
+[
+  {
+    "request": {
+      "path": "/tasks/[0-9]+",
+      "method": "DELETE"
+    },
+    "response": {
+      "body": {
+        "name": "Task has been deleted"
+      }
+    }
+  }
+]
 ```
 
 ```shell
@@ -212,16 +284,24 @@ Behaviors can also be matched using the request body. The server will inspect th
 
 Http requests with a `Content-Type: application/json` header will have its body treated like a json object. The request body will be matched as a superset of the Behavior body. e.g
 
-```yaml
-- request:
-      path: /tasks
-      method: POST
-      body:
-          user: john_doe
-  response:
-      statusCode: 200
-      body:
-          name: Task has been deleted
+```json
+[
+  {
+    "request": {
+      "path": "/tasks",
+      "method": "POST",
+      "body": {
+        "user": "john_doe"
+      }
+    },
+    "response": {
+      "statusCode": 200,
+      "body": {
+        "name": "Task has been deleted"
+      }
+    }
+  }
+]
 ```
 
 ```shell
@@ -236,13 +316,19 @@ curl -X POST http://localhost:8080/tasks -d '{ "name": "simple-task" }' -H "Cont
 
 Requests without a specified `Content-Type` will default to string
 
-```yaml
-- request:
-      path: /tasks
-      body: john_doe
-  response:
-      statusCode: 200
-      body: no tasks for this person
+```json
+[
+  {
+    "request": {
+      "path": "/tasks",
+      "body": "john_doe"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": "no tasks for this person"
+    }
+  }
+]
 ```
 
 ```shell
@@ -257,15 +343,23 @@ curl -X POST http://localhost:8080/tasks -d 'someone_else'
 
 Behaviors can also be matched using a regex body either as a json document or plain text. e.g
 
-```yaml
-- request:
-      path: /tasks
-      method: POST
-      body:
-          name: task-[0-9]+
-  response:
-      body:
-          name: Task has been deleted
+```json
+[
+  {
+    "request": {
+      "path": "/tasks",
+      "method": "POST",
+      "body": {
+        "name": "task-[0-9]+"
+      }
+    },
+    "response": {
+      "body": {
+        "name": "Task has been deleted"
+      }
+    }
+  }
+]
 ```
 
 ```shell
@@ -311,10 +405,10 @@ The default response limit is `unlimited`. e.g
 
 ```yaml
 - request:
-      path: /tasks/123
+    path: /tasks/123
   response:
-      statusCode: 200
-      body: Task 123
+    statusCode: 200
+    body: Task 123
   limit: 2
 ```
 
@@ -333,23 +427,35 @@ Response limits can be combined to create some interesting scenarios, e.g first 
 
 The first 2 requests will be successful
 
-```yaml
-- request:
-      path: /tasks/123
-  response:
-      statusCode: 200
-      body: Task 123
-  limit: 2
+```json
+[
+  {
+    "request": {
+      "path": "/tasks/123"
+    },
+    "response": {
+      "statusCode": 200,
+      "body": "Task 123"
+    },
+    "limit": 2
+  }
+]
 ```
 
 Subsequent requests should fail
 
-```yaml
-- request:
-      path: /tasks/123
-  response:
-      statusCode: 500
-      body: Sever blew up
+```json
+[
+  {
+    "request": {
+      "path": "/tasks/123"
+    },
+    "response": {
+      "statusCode": 500,
+      "body": "Sever blew up"
+    }
+  }
+]
 ```
 
 ```shell
@@ -368,12 +474,18 @@ curl -X GET http://localhost:8080/tasks/123
 
 By default, responses are sent immediately to the client when matched but the server can be instructed to delay in seconds when the server should send the response. e.g
 
-```yaml
-- request:
-      path: /tasks/123
-  response:
-      body: some tasks
-      delay: 120
+```json
+[
+  {
+    "request": {
+      "path": "/tasks/123"
+    },
+    "response": {
+      "body": "some tasks",
+      "delay": 120
+    }
+  }
+]
 ```
 
 ```shell

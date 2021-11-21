@@ -43,8 +43,6 @@
         "dev": "ts-node src/deputy.ts --mocks-directory=mocks",
         "dev:ui": "yarn --cwd ui dev",
         "build:ui": "yarn --cwd ui build",
-        "dev:docs": "vuepress dev docs",
-        "build:docs": "vuepress build docs",
         "test": "jest",
         "fill": "NODE_TLS_REJECT_UNAUTHORIZED=0 node random.js"
     },
@@ -65,8 +63,7 @@
         "supertest": "^6.0.1",
         "ts-jest": "^26.4.4",
         "ts-node": "^9.0.0",
-        "typescript": "^4.0.5",
-        "vuepress": "^1.8.2"
+        "typescript": "^4.0.5"
     },
     "dependencies": {
         "axios": "^0.21.4",
