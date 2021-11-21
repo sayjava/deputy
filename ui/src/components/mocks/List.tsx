@@ -67,7 +67,7 @@ const columns = [
     {
         key: 'id',
         title: 'Status',
-        render: (_: any, mock: Mock) => mock.response?.statusCode || 200,
+        render: (_: any, mock: Mock) => mock.response?.status || 200,
     },
     {
         key: 'id',

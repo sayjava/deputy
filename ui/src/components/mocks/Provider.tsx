@@ -18,7 +18,7 @@ export const DEFAULT_MOCK: Mock = {
         method: 'GET',
     },
     response: {
-        statusCode: 200,
+        status: 200,
         headers: {
             'content-type': 'application/json',
             'x-server': 'behave-server',

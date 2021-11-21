@@ -12,7 +12,7 @@ test('at most 1 time and at least 1 time', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 200,
+                status: 200,
             },
         },
         {
@@ -24,7 +24,7 @@ test('at most 1 time and at least 1 time', async () => {
                 method: 'POST',
             },
             response: {
-                statusCode: 200,
+                status: 200,
             },
         },
     ];
@@ -72,7 +72,7 @@ test('exactly 2 times', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 200,
+                status: 200,
             },
         },
     ];
@@ -112,7 +112,7 @@ test('matches at least once', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 200,
+                status: 200,
             },
             limit: 1,
         },
@@ -146,7 +146,7 @@ test('at least 1 times with other records', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 200,
+                status: 200,
             },
             limit: 1,
         },
@@ -181,7 +181,7 @@ test('at most 3 times', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 200,
+                status: 200,
             },
         },
     ];
@@ -218,7 +218,7 @@ test('at least 3 times', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 200,
+                status: 200,
             },
         },
     ];
@@ -253,7 +253,7 @@ test('empty record matches', () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 200,
+                status: 200,
             },
             limit: 1,
         },

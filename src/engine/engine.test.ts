@@ -471,7 +471,7 @@ test('mock: update an existing mock', () => {
             },
         },
         response: {
-            statusCode: 200,
+            status: 200,
             body: '',
         },
     });
@@ -489,7 +489,7 @@ test('mock: update an existing mock', () => {
             },
             "response": Object {
               "body": "",
-              "statusCode": 200,
+              "status": 200,
             },
           },
         ]
@@ -524,7 +524,7 @@ test('mock: update: ignore a non-existing mock', () => {
             },
         },
         response: {
-            statusCode: 200,
+            status: 200,
             body: '',
         },
     });
@@ -560,7 +560,7 @@ test('mock: update: ignore a non-existing mock', () => {
             },
             "response": Object {
               "body": "",
-              "statusCode": 200,
+              "status": 200,
             },
           },
         ]

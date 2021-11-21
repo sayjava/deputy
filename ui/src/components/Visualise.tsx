@@ -91,15 +91,15 @@ export const Visualise = () => {
                 if (state.withProxy) {
                     seqs.push(`App->>Proxy: ${request.method} ${request.path}`);
                     seqs.push(`Proxy->>${destination}: ${request.method} ${request.path}`);
-                    seqs.push(`${destination}->>Proxy: ${response.statusCode}`);
-                    seqs.push(`Proxy->>App: ${response.statusCode}`);
+                    seqs.push(`${destination}->>Proxy: ${response.status}`);
+                    seqs.push(`Proxy->>App: ${response.status}`);
                 } else {
                     seqs.push(`App->>${destination}: ${request.method} ${request.path}`);
-                    seqs.push(`${destination}->>App: ${response.statusCode}`);
+                    seqs.push(`${destination}->>App: ${response.status}`);
                 }
             } else {
                 seqs.push(`App->>${destination}: ${request.method} ${request.path}`);
-                seqs.push(`${destination}->>App: ${response.statusCode}`);
+                seqs.push(`${destination}->>App: ${response.status}`);
             }
         });
         const code = seqs.join('\n');

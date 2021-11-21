@@ -2,29 +2,29 @@ import { Tag } from 'antd';
 import { Record } from '../../../../src/engine';
 
 export const StatusCode = ({ record }: { record: Record }) => {
-    const renderTag = (statusCode: any) => {
-        if (statusCode === 404) {
-            return <Tag color="purple">{statusCode}</Tag>;
+    const renderTag = (status: any) => {
+        if (status === 404) {
+            return <Tag color="purple">{status}</Tag>;
         }
 
-        if (statusCode >= 500) {
-            return <Tag color="error">{statusCode}</Tag>;
+        if (status >= 500) {
+            return <Tag color="error">{status}</Tag>;
         }
 
-        if (statusCode >= 400 && statusCode < 500) {
-            return <Tag color="warning">{statusCode}</Tag>;
+        if (status >= 400 && status < 500) {
+            return <Tag color="warning">{status}</Tag>;
         }
 
-        if (statusCode <= 400) {
-            return <Tag color="success">{statusCode}</Tag>;
+        if (status <= 400) {
+            return <Tag color="success">{status}</Tag>;
         }
 
-        return <Tag>{statusCode}</Tag>;
+        return <Tag>{status}</Tag>;
     };
 
     const { response } = record;
     if (response) {
-        return renderTag(response.statusCode || 200);
+        return renderTag(response.status || 200);
     }
 
     return renderTag(404);

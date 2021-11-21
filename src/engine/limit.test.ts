@@ -33,7 +33,7 @@ test('matched 2 times only', async () => {
     expect(lastMatch.response).toMatchInlineSnapshot(`
         Object {
           "body": "No response found for /todos",
-          "statusCode": 404,
+          "status": 404,
         }
     `);
 });
@@ -49,7 +49,7 @@ test('multiple expectation matches', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 200,
+                status: 200,
                 body: 'First mock used',
             },
             limit: 1,
@@ -63,7 +63,7 @@ test('multiple expectation matches', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 500,
+                status: 500,
                 body: 'Second mock used',
             },
             limit: 'unlimited',
@@ -82,7 +82,7 @@ test('multiple expectation matches', async () => {
     expect(successExp.response).toMatchInlineSnapshot(`
         Object {
           "body": "First mock used",
-          "statusCode": 200,
+          "status": 200,
         }
     `);
 
@@ -90,7 +90,7 @@ test('multiple expectation matches', async () => {
     expect(failExp.response).toMatchInlineSnapshot(`
         Object {
           "body": "Second mock used",
-          "statusCode": 500,
+          "status": 500,
         }
     `);
 });
@@ -106,7 +106,7 @@ test('matches similar mock with different limit', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 200,
+                status: 200,
                 body: 'first mock',
             },
             limit: 1,
@@ -120,7 +120,7 @@ test('matches similar mock with different limit', async () => {
                 method: 'GET',
             },
             response: {
-                statusCode: 500,
+                status: 500,
                 body: 'second mock',
             },
             limit: 1,
@@ -143,7 +143,7 @@ test('matches similar mock with different limit', async () => {
     expect(resp1.response).toMatchInlineSnapshot(`
         Object {
           "body": "first mock",
-          "statusCode": 200,
+          "status": 200,
         }
     `);
 
@@ -151,14 +151,14 @@ test('matches similar mock with different limit', async () => {
     expect(resp2.response).toMatchInlineSnapshot(`
         Object {
           "body": "second mock",
-          "statusCode": 500,
+          "status": 500,
         }
     `);
 
     expect(resp3.response).toMatchInlineSnapshot(`
         Object {
           "body": "No response found for /todos",
-          "statusCode": 404,
+          "status": 404,
         }
     `);
 });

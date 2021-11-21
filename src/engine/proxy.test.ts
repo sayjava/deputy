@@ -79,7 +79,7 @@ describe('Proxy', () => {
                   "headers": Object {
                     "content-type": "application/json",
                   },
-                  "statusCode": 200,
+                  "status": 200,
                 }
             `);
         });
@@ -130,7 +130,7 @@ describe('Proxy', () => {
                   "headers": Object {
                     "content-type": "application/json",
                   },
-                  "statusCode": 503,
+                  "status": 503,
                 }
             `);
         });
@@ -175,7 +175,7 @@ describe('Proxy', () => {
                   "headers": Object {
                     "content-type": "application/text",
                   },
-                  "statusCode": 500,
+                  "status": 500,
                 }
             `);
         });

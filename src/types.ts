@@ -49,7 +49,7 @@ export interface Response {
     /**
      * HTTP Status code
      */
-    statusCode?: number;
+    status?: number;
 
     /**
      * Response body

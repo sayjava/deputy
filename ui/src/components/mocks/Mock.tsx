@@ -81,7 +81,7 @@ export const MockView = ({ mock, readonly }: Props) => {
                 <Col span={12} style={{ padding: '10px' }}>
                     <Space direction="vertical" style={{ width: '100%' }}>
                         <Row justify="space-between">
-                            <Col>{mock.response && <Tag color="blue">{mock.response.statusCode || '200'}</Tag>}</Col>
+                            <Col>{mock.response && <Tag color="blue">{mock.response.status || '200'}</Tag>}</Col>
                         </Row>
                         {mock.proxy && <ProxyRequestView proxy={mock.proxy} />}
                         {mock.response && <ResponseView response={mock.response} />}

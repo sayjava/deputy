@@ -144,7 +144,7 @@ test('update a mock', async () => {
             request: 
                 path: /somewhere
             response: 
-                statusCode: 200
+                status: 200
         `);
 
     const res = await request(apiServer).get('/api/mocks');
@@ -158,7 +158,7 @@ test('update a mock', async () => {
               "path": "/somewhere",
             },
             "response": Object {
-              "statusCode": 200,
+              "status": 200,
             },
           },
         ]
@@ -190,12 +190,12 @@ test('update many mocks', async () => {
               request: 
                 path: /somewhere 
               response: 
-                statusCode: 200
+                status: 200
             - id: mock2
               request: 
                 path: /another-place 
               response: 
-                statusCode: 200
+                status: 200
         `);
 
     const res = await request(apiServer).get('/api/mocks');
@@ -209,7 +209,7 @@ test('update many mocks', async () => {
               "path": "/somewhere",
             },
             "response": Object {
-              "statusCode": 200,
+              "status": 200,
             },
           },
           Object {
@@ -219,7 +219,7 @@ test('update many mocks', async () => {
               "path": "/another-place",
             },
             "response": Object {
-              "statusCode": 200,
+              "status": 200,
             },
           },
         ]

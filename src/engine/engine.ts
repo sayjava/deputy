@@ -61,7 +61,7 @@ export const validateMock = (mock: Mock): Mock => {
 
 const notFound = (path: string): Response => {
     return {
-        statusCode: 404,
+        status: 404,
         body: `No response found for ${path}`,
     };
 };
@@ -168,7 +168,7 @@ export class Engine extends EventEmitter {
             const res = await axios(req as any);
 
             return {
-                statusCode: res.status,
+                status: res.status,
                 headers: res.headers,
                 body: res.data,
             };
@@ -180,7 +180,7 @@ export class Engine extends EventEmitter {
             };
             const { response = defaultResponse } = error;
             return {
-                statusCode: response.status,
+                status: response.status,
                 headers: response.headers,
                 body: response.data,
             };
