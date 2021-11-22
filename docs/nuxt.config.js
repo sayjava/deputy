@@ -5,6 +5,6 @@ export default theme({
     primaryColor: '#00CD81'
   },
   router: {
-    base: '/sayjava/deputy/'
+    base: '/deputy/'
   }
 })
