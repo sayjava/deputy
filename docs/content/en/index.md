@@ -24,6 +24,25 @@ Deputy is a simulator for HTTP-based APIs that is useful in software development
 
 <img src="/landing.png" width="1280" height="640" alt=""/>
 
+## Quick Start
+
+<code-group>
+  <code-block label="NPM" active>
+
+```bash
+npx @sayjava/deputy
+```
+
+  </code-block>
+  <code-block label="Docker">
+
+```bash
+docker run -p 8080:8080 -p 8081:8081  ghcr.io/sayjava/deputy
+```
+
+  </code-block>
+</code-group>
+
 ## Why Use Deputy
 
 <list :items="reasons"></list>
@@ -31,25 +50,6 @@ Deputy is a simulator for HTTP-based APIs that is useful in software development
 ## Features
 
 <list :items="features"></list>
-
-## Quick Start
-
-<code-group>
-  <code-block label="NPM" active>
-
-```bash
-npx @sayjava/deputy@latest
-```
-
-  </code-block>
-  <code-block label="Docker">
-
-```bash
-docker run -p 8080:8080 -p 8081:8081 @sayjava/deputy
-```
-
-  </code-block>
-</code-group>
 
 ## Programmatic
 
