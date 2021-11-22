@@ -1,26 +1,32 @@
 ---
 title: Deputy
 menuTitle: Introduction
-description: "Deputy, an HTTP mocking server"
+description: 'Deputy, an HTTP mocking server'
 category: Getting Started
 position: 1
 features:
-  - Declarative Mock definition
-  - Integrated Web UI
-  - Rest API
-  - Functional Testing
-  - Forward Proxying
-  - HTTP/HTTPS support
-  - Express Middleware
+    - Declarative mock definitions
+    - Integrated Web UI
+    - Rest API
+    - Functional testing
+    - Forward Proxying
+    - HTTP/HTTPS support
+    - Express middleware
+reasons:
+    - Stay productive during development with simulated APIs
+    - Mock edge cases in test simulating responses
+    - Debug HTTP requests/response via UI
+    - Generate sequence diagrams for user journeys
+    - Easy setup `npx @sayjava/deputy`
 ---
 
-Mock your APIs for fast, robust and comprehensive testing
-
-Deputy is a simulator for HTTP-based APIs. Some might consider it a service virtualization tool or a mock server.
+Deputy is a simulator for HTTP-based APIs that is useful in software development and comprehensive testing.
 
 <img src="/landing.png" width="1280" height="640" alt=""/>
 
-It enables you to stay productive when an API you depend on doesn't exist or isn't complete. It supports testing of edge cases and failure modes that the real API won't reliably produce. And because it's fast it can reduce your build time from hours down to minutes
+## Why Use Deputy
+
+<list :items="reasons"></list>
 
 ## Features
 
@@ -48,13 +54,13 @@ docker run -p 8080:8080 -p 8081:8081 @sayjava/deputy
 ## Programmatic
 
 ```javascript
-const express = require("express");
-const { createExpressMiddleware } = require("@sayjava/deputy");
+const express = require('express');
+const { createExpressMiddleware } = require('@sayjava/deputy');
 
 const app = express();
-const mockAPI = createExpressMiddleware({ mocksFolder: "fixtures" });
+const mockAPI = createExpressMiddleware({ mocksFolder: 'fixtures' });
 
 // mount the mock on a middleware endpoint
-app.use("/api", mockAPI);
-app.listen(3000, () => console.log("server started"));
+app.use('/api', mockAPI);
+app.listen(3000, () => console.log('server started'));
 ```
