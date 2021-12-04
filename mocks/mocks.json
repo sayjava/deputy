@@ -1,28 +1,48 @@
 [
-	{
-		"name": "Successful todo",
-		"id": "first_behavior",
-		"request": {
-			"path": "/todo/[0-9]+",
-			"method": "(GET|POST|DELETE|PUT)"
-		},
-		"response": {
-			"body": {
-				"id": 2,
-				"text": "The todo body"
-			}
-		}
-	},
-	{
-		"name": "Failed todo",
-		"id": "last_behavior",
-		"request": {
-			"path": "/customer",
-			"method": "(GET|POST|DELETE|PUT)"
-		},
-		"response": {
-			"statusCode": 500,
-			"body": "Server blew up"
-		}
-	}
+    {
+        "name": "Successful todo",
+        "id": "first_behavior",
+        "request": {
+            "path": "/todo/[0-9]+",
+            "method": "(GET|POST|DELETE|PUT)"
+        },
+        "response": {
+            "body": {
+                "id": 2,
+                "text": "The todo body"
+            }
+        }
+    },
+    {
+        "name": "Failed todo",
+        "id": "last_behavior",
+        "request": {
+            "path": "/customer",
+            "method": "(GET|POST|DELETE|PUT)"
+        },
+        "response": {
+            "statusCode": 500,
+            "body": "Server blew up"
+        }
+    },
+    {
+        "request": {
+            "path": "/user/(\\d+)/slug/(.*)",
+            "params": {
+                "output_type": "json|xml"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": [
+                {
+                    "id": "slug-id",
+                    "content": "The post content"
+                }
+            ]
+        }
+    }
 ]

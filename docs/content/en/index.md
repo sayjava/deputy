@@ -22,9 +22,36 @@ reasons:
 
 Deputy is a simulator for HTTP-based APIs that is useful in software development and comprehensive testing.
 
-<img src="/landing.png" width="1280" height="640" alt=""/>
+<img src="landing.png" width="1280" height="640" alt=""/>
 
 ## Quick Start
+
+Create a mock file and put it in a folder called `mocks`
+
+```json
+[
+    {
+        "request": {
+            "path": "/user/(d+)/slug/(.*)",
+            "params": {
+                "output_type": "json|xml"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": [
+                {
+                    "id": "slug-id",
+                    "content": "The post content"
+                }
+            ]
+        }
+    }
+]
+```
 
 <code-group>
   <code-block label="NPM" active>
@@ -42,6 +69,10 @@ docker run -p 8080:8080 -p 8081:8081  ghcr.io/sayjava/deputy
 
   </code-block>
 </code-group>
+
+```bash
+curl -X GET http://localhost:8080/user/20/slug/super-dupa-content
+```
 
 ## Why Use Deputy
 
