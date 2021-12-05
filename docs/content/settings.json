@@ -2,8 +2,8 @@
   "title": "Deputy - HTTP Mocking Server",
   "url": "https://sayjava.github.io/deputy",
   "logo": {
-    "light": "/logo-light.svg",
-    "dark": "/logo-dark.svg"
+    "light": "/deputy/logo-light.svg",
+    "dark": "/deputy/logo-dark.svg"
   },
   "github": "sayjava/deputy",
   "twitter": "@sayjava"

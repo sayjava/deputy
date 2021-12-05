@@ -4,8 +4,8 @@ menuTitle: Start
 category: Getting Started
 position: 2
 features:
-  - Start mock API server at http://localhost:8080
-  - Dashboard and REST API server at http://localhost:8081
+    - Start mock API server at http://localhost:8080
+    - Dashboard and REST API server at http://localhost:8081
 ---
 
 ## Deputy Server
@@ -50,13 +50,13 @@ an example `hello_world.json` file looks like:
 
 ```json
 {
-  "request": {
-    "path": "/hello-word"
-  },
-  "response": {
-    "status": 200,
-    "body": "Hello"
-  }
+    "request": {
+        "path": "/hello-word"
+    },
+    "response": {
+        "status": 200,
+        "body": "Hello"
+    }
 }
 ```
 
@@ -111,5 +111,5 @@ Using the `--tls` flag will start the mock server in https mode at `https://loca
 
 If Deputy detects a folder called `ssl` in the current directory, it will use certificates in that folder with the names:
 
-- `key.pem`
-- `cert.pem`
+-   `key.pem`
+-   `cert.pem`

@@ -1,11 +1,11 @@
 ---
-title: Testing
+title: Assertions
 position: 10
 ---
 
 Deputy can be used to in a functional or user acceptance testing environment to validate an application's functionalities without/without making requests to external services.
 
-![Test Environment](/test_environment.png)
+<img src="test_environment.png" width="1280" height="640" alt="Test Environment"/>
 
 Requests made to/via Deputy are recorded and can be asserted against in a test environment.
 

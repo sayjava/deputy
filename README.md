@@ -25,14 +25,45 @@ Deputy is an HTTP API mocking server that can aid in rapid application developme
 
 Deputy can also act as a testing server to validate what requests made by system under test.
 
+![Dev](./docs/static/landing.png)
+
+Here is a sample mock definition
+
+```json
+[
+    {
+        "request": {
+            "path": "/user/(\\d+)/slug/(.*)",
+            "params": {
+                "output_type": "json|xml"
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "body": [
+                {
+                    "id": "slug-id",
+                    "content": "The post content"
+                }
+            ]
+        }
+    }
+]
+```
 
 ## Quick Start
+
 With nodejs
+
 ```shell
 npx @sayjava/deputy
 ```
 
 With docker
+
 ```shell
 docker run -p 8080:8080 -p 8081:8081 ghcr.io/sayjava/deputy
 ```
@@ -54,36 +85,39 @@ curl http://localhost:8080/who-am-i
 
 ## Examples
 
-- [with-nextjs-commerce](examples/with-nextjs-commerce)
-- [with-nextjs-middleware](examples/with-nextjs-commerce)
+-   [with-nextjs-commerce](examples/with-nextjs-commerce)
+-   [with-nextjs-middleware](examples/with-nextjs-commerce)
 
 ## Programitcally
+
 ```javascript
-const express = require('express')
-const { createExpressMiddleware } = require('@sayjava/deputy')
+const express = require('express');
+const { createExpressMiddleware } = require('@sayjava/deputy');
 
 // mount the mock on a middleware endpoint
-const app = express()
-app.use('/api', createExpressMiddleware({ mocksFolder: 'fixtures' }))
-app.listen(3000, () => console.log('server started'))
+const app = express();
+app.use('/api', createExpressMiddleware({ mocksFolder: 'fixtures' }));
+app.listen(3000, () => console.log('server started'));
 ```
 
 ## Usage Scenarios
+
 Here are some setup scenarios that deputy can be used to aid development and testing
+
 ### Transparently Mock & Forward API requests
 
 Simulate unready APIs by mocking some APIs and have other requests transparently forwarded to remote APIs
 See the examples/commerce folder using that uses the [next/commerce](next/commerces) + deputy
 
-![Dev](./docs/media/dev_environment.png)
+![Dev](./docs/static/dev_environment.png)
 
 ### Application Testing
 
 Simulate complex HTTP requests and response scenarios in test environments
 
-![Test](./docs/media/test_environment.png)
+![Test](./docs/static/test_environment.png)
 
-see the [Mock Guide](http://sayjava.github.com/deputy)
+see the [Mock Guide](http://sayjava.github.io/deputy/mocking)
 
 ## Deputy UI
 
@@ -93,19 +127,19 @@ By default, Deputy server can be reached at `http://localhost:8081`.
 
 View and inspect http requests and responses from the Logs interface in realtime as requests are received
 
-![Logs](./docs/media/logs.png)
+![Logs](./docs/static/logs.png)
 
 ### Visualize
 
 Deputy automatically creates a sequence diagram of requests it receives
 
-![Visualize](./docs/media/visualize.png)
+![Visualize](./docs/static/visualize.png)
 
 ### Mocking Interface
 
 Mocks can be imported, exported, edited, cloned, disabled, and enabled from Deputy UI
 
-![Mocking Interface](./docs/media/disable_mocks.png)
+![Mocking Interface](./docs/static/mock_management.png)
 
 ### Full Documentation
 
