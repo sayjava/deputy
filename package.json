@@ -43,7 +43,7 @@
         "dev": "ts-node src/deputy.ts --mocks-directory=mocks",
         "dev:ui": "yarn --cwd ui dev",
         "build:ui": "yarn --cwd ui build",
-        "test": "jest",
+        "test": "jest src/**/*.test.ts",
         "fill": "NODE_TLS_REJECT_UNAUTHORIZED=0 node random.js"
     },
     "devDependencies": {
