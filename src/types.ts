@@ -137,9 +137,9 @@ export interface DeputyConfig {
     apiPort?: number;
     port?: number;
     mocksDirectory?: string;
-    tlsEnabled?: boolean;
+    tls?: boolean;
     proxy?: boolean;
-    tslDomains?: string;
+    domains?: string;
 }
 
 export interface MiddlewareConfig extends DeputyConfig {

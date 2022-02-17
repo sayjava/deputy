@@ -20,8 +20,8 @@ const defaultConfig: DeputyConfig = {
     apiPort: 8081,
     proxy: true,
     mocksDirectory: 'mocks',
-    tlsEnabled: false,
-    tslDomains: '',
+    tls: false,
+    domains: '',
 };
 
 const createExpress = (): Express => {
@@ -73,7 +73,7 @@ export const createMockServer = async ({ engine, config }) => {
     const SERVER_TIMEOUT = 4000;
     const onTimeOut = () => logger.error('Request Timeout');
 
-    if (config.tlsEnabled) {
+    if (config.tls) {
         const { cert, key } = await loadSSLCerts({ domains: config.tlsDomains });
         return https.createServer({ key, cert }, server).setTimeout(SERVER_TIMEOUT, onTimeOut);
     } else {
@@ -82,7 +82,7 @@ export const createMockServer = async ({ engine, config }) => {
 };
 
 export const createServer = async (argConfig: DeputyConfig): Promise<App> => {
-    const tlsDomains = (argConfig.tslDomains || '').split(',');
+    const tlsDomains = (argConfig.domains || '').split(',');
     const config = Object.assign({}, defaultConfig, argConfig, { tlsDomains });
     const engine = createEngine(config);
 

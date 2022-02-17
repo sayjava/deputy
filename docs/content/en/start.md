@@ -21,7 +21,7 @@ npx @sayjava/deputy@latest
   <code-block label="Docker">
 
 ```bash
-docker run -p 8080:8080 -p 8081:8081 @sayjava/deputy
+docker run -p 8080:8080 -p 8081:8081 sayjava/deputy
 ```
 
   </code-block>
@@ -39,8 +39,8 @@ This command will:
 | \--port, -p              | DEPUTY_PORT            | 8080      | The port the mock sever runs on                             |
 | \--api-port, -ap         | DEPUTY_API_PORT        | 8081      | The port the api sever runs on                              |
 | \--auto-proxy, -px       | DEPUTY_AUTO_PROXY      | true      | Auto proxy requests                                         |
-| \--tls-enabled, -tls     | DEPUTY_TLS_ENABLED     | undefined | Enables HTTPs and auto generates a self-signed certificate  |
-| \--tls-domains, -domains | DEPUTY_TLS_DOMAINS     | undefined | Domain names that will be included in the certificate       |
+| \--tls-enabled, -tls     | DEPUTY_TLS             | undefined | Enables HTTPs and auto generates a self-signed certificate  |
+| \--tls-domains, -domains | DEPUTY_DOMAINS         | undefined | Domain names that will be included in the certificate       |
 
 ## Initialize Mocks
 

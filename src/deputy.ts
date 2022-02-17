@@ -29,7 +29,7 @@ const logInfo = (config) => {
 
     eth0.forEach((it) => {
         if (it.family === 'IPv4') {
-            const protocol = config.tlsEnabled ? 'https' : 'http';
+            const protocol = config.tls ? 'https' : 'http';
             const table = new Table({ head: ['Description', 'Url'] });
             routes.forEach(([desc, url]) => {
                 table.push([desc, `http://${it.address}:${config.apiPort}${url}`]);
@@ -66,17 +66,16 @@ const args = yargs(hideBin(process.argv))
         describe: 'A directory containing .yml files  definitions',
         default: process.env.DEPUTY_MOCKS_DIRECTORY || 'mocks',
     })
-    .option('tls-enabled', {
+    .option('tls', {
         type: 'boolean',
-        alias: 'tls',
         describe: 'Enable HTTPS, Auto generate ssl certificates',
-        default: process.env.DEPUTY_TSL_ENABLED || false,
+        default: process.env.DEPUTY_TLS || false,
     })
-    .option('tls-domains', {
+    .option('domains', {
         type: 'string',
         alias: 'domains',
         describe: 'Specify domain to auto-generate certification for. localhost is auto included',
-        default: process.env.DEPUTY_TSL_DOMAINS ? process.env.DEPUTY_TSL_DOMAINS.split(',') : [],
+        default: process.env.DEPUTY_DOMAINS || '',
     }).argv;
 
 const startServer = async () => {
