@@ -19,6 +19,7 @@ RUN cd ui && npm i
 RUN cd ui && npm run build
 
 FROM node:14.17.3-alpine
+RUN apk --update add openssl
 
 ENV NODE_ENV=production
 WORKDIR /app
