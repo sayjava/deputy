@@ -99,11 +99,12 @@ export class Engine extends EventEmitter {
         return !!interfaces;
     };
 
-    private baseMock() {
+    private baseMock(): Mock {
         return {
             id: shortId(),
             name: 'Mock',
             limit: 'unlimited',
+            request: { path: '/hello' },
         };
     }
 
@@ -160,7 +161,11 @@ export class Engine extends EventEmitter {
                 return pastMatches < mock.limit;
             });
 
-        return matches;
+        return matches.sort((m1, m2) => {
+            const pr1 = m1.priority || 0;
+            const pr2 = m2.priority || 0;
+            return pr2 - pr1;
+        });
     }
 
     async proxy(req: ProxyRequest): Promise<Response> {

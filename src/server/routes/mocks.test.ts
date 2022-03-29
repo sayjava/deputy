@@ -298,17 +298,17 @@ test('retrieve all mocks', async () => {
 
     expect(res.status).toBe(200);
     expect(res.body).toMatchInlineSnapshot(`
-            Array [
-              Object {
-                "id": "sample-mock",
-                "limit": "unlimited",
-                "name": "test mocks",
-                "request": Object {
-                  "method": "GET",
-                  "path": "/tasks",
-                },
-                "response": null,
-              },
-            ]
-      `);
+        Array [
+          Object {
+            "id": "sample-mock",
+            "limit": "unlimited",
+            "name": "test mocks",
+            "request": Object {
+              "method": "GET",
+              "path": "/tasks",
+            },
+            "response": null,
+          },
+        ]
+    `);
 });

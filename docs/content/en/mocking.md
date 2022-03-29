@@ -70,6 +70,9 @@ response:
 
 # Optional: defaults to unlimited
 limit: (number|unlimited). how many times this mock should be used. defaults to unlimited
+
+# Optional: defaults to 100
+priority: (number|unlimited). matching is ordered by priority (highest first) then creation (earliest first)
 ```
 
   </code-block>
@@ -103,7 +106,8 @@ limit: (number|unlimited). how many times this mock should be used. defaults to 
         },
         "delay": "seconds to delay the response. defaults to 0"
     },
-    "limit": "(number|unlimited). how many times this mock should be used. defaults to unlimited"
+    "limit": "(number|unlimited). how many times this mock should be used. defaults to unlimited",
+    "priority": "matching is ordered by priority (highest first) then creation (earliest first)"
 }
 ```
 

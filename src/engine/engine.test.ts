@@ -50,26 +50,26 @@ test('match simple method request', () => {
     });
 
     expect(matched).toMatchInlineSnapshot(`
-            Array [
-              Object {
-                "id": "exp1",
-                "limit": "unlimited",
-                "name": "sample1",
-                "request": Object {
-                  "headers": Object {},
-                  "path": "/todos",
+        Array [
+          Object {
+            "id": "exp1",
+            "limit": "unlimited",
+            "name": "sample1",
+            "request": Object {
+              "headers": Object {},
+              "path": "/todos",
+            },
+            "response": Object {
+              "body": Array [
+                Object {
+                  "id": 2,
+                  "text": "get request",
                 },
-                "response": Object {
-                  "body": Array [
-                    Object {
-                      "id": 2,
-                      "text": "get request",
-                    },
-                  ],
-                },
-              },
-            ]
-      `);
+              ],
+            },
+          },
+        ]
+    `);
 });
 
 test('match regex method request', () => {
@@ -220,29 +220,29 @@ test('match headers request', () => {
     });
 
     expect(matched).toMatchInlineSnapshot(`
-            Array [
-              Object {
-                "id": "exp1",
-                "limit": "unlimited",
-                "name": "sample1",
-                "request": Object {
-                  "headers": Object {
-                    "host": "example.com",
-                  },
-                  "method": "GET",
-                  "path": "/todos",
-                },
-                "response": Object {
-                  "body": Array [
-                    Object {
-                      "id": 2,
-                      "text": "get request",
-                    },
-                  ],
-                },
+        Array [
+          Object {
+            "id": "exp1",
+            "limit": "unlimited",
+            "name": "sample1",
+            "request": Object {
+              "headers": Object {
+                "host": "example.com",
               },
-            ]
-      `);
+              "method": "GET",
+              "path": "/todos",
+            },
+            "response": Object {
+              "body": Array [
+                Object {
+                  "id": 2,
+                  "text": "get request",
+                },
+              ],
+            },
+          },
+        ]
+    `);
 });
 
 test('match json body request', () => {
@@ -287,26 +287,26 @@ test('match json body request', () => {
     });
 
     expect(matched).toMatchInlineSnapshot(`
-            Array [
-              Object {
-                "id": "exp2",
-                "limit": "unlimited",
-                "name": "sample2",
-                "request": Object {
-                  "body": Object {
-                    "id": 3,
-                    "text": "new post",
-                  },
-                  "headers": Object {},
-                  "method": "POST",
-                  "path": "/todos",
-                },
-                "response": Object {
-                  "body": Array [],
-                },
+        Array [
+          Object {
+            "id": "exp2",
+            "limit": "unlimited",
+            "name": "sample2",
+            "request": Object {
+              "body": Object {
+                "id": 3,
+                "text": "new post",
               },
-            ]
-      `);
+              "headers": Object {},
+              "method": "POST",
+              "path": "/todos",
+            },
+            "response": Object {
+              "body": Array [],
+            },
+          },
+        ]
+    `);
 });
 
 test('match string body request', () => {
@@ -348,23 +348,23 @@ test('match string body request', () => {
     });
 
     expect(matched).toMatchInlineSnapshot(`
-            Array [
-              Object {
-                "id": "exp2",
-                "limit": "unlimited",
-                "name": "sample2",
-                "request": Object {
-                  "body": "[0-9]th todo",
-                  "headers": Object {},
-                  "method": "POST",
-                  "path": "/todos",
-                },
-                "response": Object {
-                  "body": Array [],
-                },
-              },
-            ]
-      `);
+        Array [
+          Object {
+            "id": "exp2",
+            "limit": "unlimited",
+            "name": "sample2",
+            "request": Object {
+              "body": "[0-9]th todo",
+              "headers": Object {},
+              "method": "POST",
+              "path": "/todos",
+            },
+            "response": Object {
+              "body": Array [],
+            },
+          },
+        ]
+    `);
 });
 
 test('mock: add results in error', () => {
@@ -384,18 +384,18 @@ test('mock: add', () => {
         });
     expect(add).not.toThrow();
     expect(engine.mocks).toMatchInlineSnapshot(`
-            Array [
-              Object {
-                "id": "new",
-                "limit": "unlimited",
-                "name": "base expectation",
-                "request": Object {
-                  "path": "/hello",
-                },
-                "response": Object {},
-              },
-            ]
-      `);
+        Array [
+          Object {
+            "id": "new",
+            "limit": "unlimited",
+            "name": "base expectation",
+            "request": Object {
+              "path": "/hello",
+            },
+            "response": Object {},
+          },
+        ]
+    `);
 });
 
 test('mock: remove', () => {
