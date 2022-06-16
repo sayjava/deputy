@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { IncomingMessage, ServerResponse } from 'http';
 import { Engine, Request as EngineRequest } from '../../engine';
 
 interface Props {
@@ -23,7 +24,7 @@ export const createMocksRouter = ({ engine }: Props): Router => {
                     remoteAddress: req.socket.remoteAddress,
                 } as any,
                 // @ts-ignore: Just body
-                body: req.body,
+                body: req.body || req.stringBody,
                 time: Date.now(),
             };
 
