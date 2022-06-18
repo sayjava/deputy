@@ -4,80 +4,6 @@ menuTitle: Mocking
 position: 4
 ---
 
-<code-group>
-  <code-block label="YAML">
-
-```yaml
-# Optional
-id: mock-id
-
-# Optional
-name: Name of this mock
-
-# Optional
-description: Description for this mock
-
-# Required
-request:
-    # Optional: defaults to matching any method
-    # Regex: true
-    method: GET|POST|PUT|DELETE
-
-    # Required: the path to match this mock to
-    # Regex: true
-    path: a/path/to/match
-
-    # Optional: list of header values to use for matching requests
-    # Regex: true
-    headers:
-        x-some-custom-header: any value
-
-    # Optional: JSON/Text used to match incoming requests to this mock
-    # Regex: true
-    body: json/text
-
-# Optional: Defines a destination to forward the request to instead
-proxy:
-    # Optional: The protocol to use to forward request. Defaults to the original request protocol
-    protocol: https|http
-
-    # Optional: remote port of the server. Defaults to the original request port
-    port: number
-
-    #  Optional
-    followRedirect: boolean
-
-    # Optional
-    skipVerifyTLS: boolean
-
-    # Optional:  extra headers to forward to the remote host
-    headers: map
-
-# Optional
-response:
-    # Optional: Defaults to 200
-    status: any http status code
-
-    #Optional: Defaults to empty string
-    body: json object/text
-
-    # Optional: Response headers, key-value pairs
-    headers:
-        some_header: some_header_value_like_cookies
-
-    # Optional: defaults to immediately
-    delay: seconds to delay the response. defaults to 0
-
-# Optional: defaults to unlimited
-limit: (number|unlimited). how many times this mock should be used. defaults to unlimited
-
-# Optional: defaults to 100
-priority: (number|unlimited). matching is ordered by priority (highest first) then creation (earliest first)
-```
-
-  </code-block>
-  <code-block label="JSON">
-
 ```json
 {
     "id": "mock-id",
@@ -110,9 +36,6 @@ priority: (number|unlimited). matching is ordered by priority (highest first) th
     "priority": "matching is ordered by priority (highest first) then creation (earliest first)"
 }
 ```
-
-  </code-block>
-</code-group>
 
 Mocks can either be created by initialization see [Start Guide](./start), the [REST API](./api) or via the dashboard
 
