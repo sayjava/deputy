@@ -6,42 +6,59 @@ jest.mock('fs', () => {
     return {
         existsSync: jest.fn(() => true),
         readFileSync: jest.fn(),
-        readdirSync: () => ['mocks.yml'],
+        readdirSync: () => ['mocks.json'],
         statSync: () => ({ isDirectory: () => true }),
     };
 });
 
-beforeEach(() => {
-    // @ts-ignore
-    fs.readFileSync.mockReset();
-});
+describe('Assert Requests', () => {
+    beforeEach(() => {
+        // @ts-ignore
+        fs.readFileSync.mockReset();
 
-test('return the error from a failed existence verification', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test expectations
-            request:
-                path: /random
-                method: GET
-            response:
-                body: Query worked
-    `);
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReturnValueOnce(
+            JSON.stringify([
+                {
+                    name: 'test expectations',
+                    request: {
+                        path: '/random',
+                        method: 'GET',
+                    },
+                    response: {
+                        body: 'Query worked',
+                    },
+                },
+            ]),
+        );
+    });
 
-    const { apiServer } = await createServer({});
+    it('return the error from a failed existence verification', async () => {
+        const { apiServer } = await createServer({});
 
-    const res = await request(apiServer).put('/api/requests/assert').set('content-type', 'application/x-yaml').send(`
-            - request:
-                path: '/tasks'
-                method: 'POST'
-                
-            - request: 
-                path: '/tasks'
-                method: 'GET'                
-        `);
+        const res = await request(apiServer)
+            .put('/api/requests/assert')
+            .set('content-type', 'application/json')
+            .send(
+                JSON.stringify([
+                    {
+                        request: {
+                            path: '/tasks',
+                            method: 'POST',
+                        },
+                    },
+                    {
+                        request: {
+                            path: '/tasks',
+                            method: 'GET',
+                        },
+                    },
+                ]),
+            );
 
-    expect(res.status).toBe(406);
-    expect(res.body).toMatchInlineSnapshot(
-        `
+        expect(res.status).toBe(406);
+        expect(res.body).toMatchInlineSnapshot(
+            `
     Array [
       Object {
         "actual": 0,
@@ -57,32 +74,41 @@ test('return the error from a failed existence verification', async () => {
       },
     ]
   `,
-    );
-});
+        );
+    });
 
-test('JSON return accepted http 202', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test expectations
-            request:
-                path: /tasks
-                method: GET
-            response:
-                body: Query worked
+    it('JSON return accepted http 202', async () => {
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReturnValueOnce(
+            JSON.stringify([
+                {
+                    name: 'test expectations',
+                    request: {
+                        path: '/tasks',
+                        method: 'GET',
+                    },
+                    response: {
+                        body: 'Query worked',
+                    },
+                },
+                {
+                    name: 'test expectations',
+                    request: {
+                        path: '/tasks',
+                        method: 'POST',
+                    },
+                    response: {
+                        body: 'Query worked',
+                    },
+                },
+            ]),
+        );
 
-        -   name: test expectations
-            request:
-                path: /tasks
-                method: POST
-            response:
-                body: Query worked
-    `);
+        const { mockServer, apiServer } = await createServer({});
+        await request(mockServer).post('/tasks').send();
+        await request(mockServer).get('/tasks').send();
 
-    const { mockServer, apiServer } = await createServer({});
-    await request(mockServer).post('/tasks').send();
-    await request(mockServer).get('/tasks').send();
-
-    const res = await request(apiServer).put('/api/requests/assert').set('content-type', 'application/json').send(`
+        const res = await request(apiServer).put('/api/requests/assert').set('content-type', 'application/json').send(`
         [
             {
                 "request": {
@@ -99,48 +125,69 @@ test('JSON return accepted http 202', async () => {
         ]          
         `);
 
-    expect(res.status).toBe(202);
-});
+        expect(res.status).toBe(202);
+    });
 
-test('return error for unmatched existence', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test expectations
-            request:
-                path: /tasks
-                method: GET
-            response:
-                body: Query worked
+    it('return error for unmatched existence', async () => {
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReturnValueOnce(
+            JSON.stringify([
+                {
+                    name: 'test expectations',
+                    request: {
+                        path: '/tasks',
+                        method: 'GET',
+                    },
+                    response: {
+                        body: 'Query worked',
+                    },
+                },
+                {
+                    name: 'test expectations',
+                    request: {
+                        path: '/tasks',
+                        method: 'POST',
+                    },
+                    response: {
+                        body: 'Query worked',
+                    },
+                },
+            ]),
+        );
 
-        -   name: test expectations
-            request:
-                path: /tasks
-                method: POST
-            response:
-                body: Query worked
-    `);
+        const { mockServer, apiServer } = await createServer({});
+        await request(mockServer).get('/tasks').send();
+        await request(mockServer).get('/tasks').send();
 
-    const { mockServer, apiServer } = await createServer({});
-    await request(mockServer).get('/tasks').send();
-    await request(mockServer).get('/tasks').send();
+        const res = await request(apiServer)
+            .put('/api/requests/assert')
+            .set('content-type', 'application/json')
+            .send(
+                JSON.stringify([
+                    {
+                        request: {
+                            path: '/tasks',
+                            method: 'POST',
+                        },
+                        count: {
+                            atMost: 0,
+                        },
+                    },
+                    {
+                        request: {
+                            path: '/tasks',
+                            method: 'GET',
+                        },
+                        count: {
+                            atLeast: 1,
+                        },
+                    },
+                ]),
+            );
 
-    const res = await request(apiServer).put('/api/requests/assert').set('content-type', 'application/x-yaml').send(`
-            - request:
-                path: /tasks
-                method: POST
-              count: 
-                atMost: 0
-
-            - request:
-                path: /tasks
-                method: GET
-              count:
-                atLeast: 1
-        `);
-
-    expect(res.status).toBe(406);
-    expect(res.body).toMatchInlineSnapshot(
-        `
+        expect(res.status).toBe(406);
+        expect(res.body).toMatchInlineSnapshot(
+            `
     Array [
       Object {
         "actual": 0,
@@ -150,5 +197,6 @@ test('return error for unmatched existence', async () => {
       },
     ]
   `,
-    );
+        );
+    });
 });
