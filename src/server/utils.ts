@@ -5,20 +5,9 @@ import { IncomingMessage } from 'http';
 import path from 'path';
 import { match } from 'path-to-regexp';
 import qs from 'qs';
-import Yaml from 'yaml';
 import logger from './logger';
 import fs from 'fs';
 import { DeputyConfig } from '../types';
-
-export const parseYamlMocks = (mock: string): Array<Mock> => {
-    const strMocks: Array<any> = Yaml.parse(mock);
-
-    if (!Array.isArray(strMocks)) {
-        return [validateMock(strMocks as Mock)];
-    }
-    const validatedMocks = strMocks.map(validateMock);
-    return validatedMocks;
-};
 
 export const parseJsonMocks = (mock: string): Array<Mock> => {
     const strMocks: Array<any> = JSON.parse(mock);
@@ -47,8 +36,7 @@ export const loadMocks = (args: DeputyConfig): Array<any> => {
             try {
                 const filePath = path.join(mocksDirectory, file);
                 const fileContent = fs.readFileSync(path.resolve(filePath), 'utf-8');
-                const parseMocks = file.endsWith('.yml') ? parseYamlMocks : parseJsonMocks;
-                mocks = [...mocks, ...parseMocks(fileContent)];
+                mocks = [...mocks, ...parseJsonMocks(fileContent)];
             } catch (error) {
                 console.error(error);
             }
