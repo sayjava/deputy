@@ -6,36 +6,43 @@ jest.mock('fs', () => {
     return {
         existsSync: jest.fn(() => true),
         readFileSync: jest.fn(),
-        readdirSync: () => ['mocks.yml'],
+        readdirSync: () => ['mocks.json'],
         statSync: () => ({ isDirectory: () => true }),
     };
 });
 
-beforeEach(() => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReset();
-});
+describe('Records', () => {
+    beforeEach(() => {
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReset();
 
-test('retrieve records', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test expectations
-            request:
-                path: /tasks
-                method: GET
-            response:
-                body: Query worked
-    `);
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReturnValueOnce(
+            JSON.stringify([
+                {
+                    name: 'test expectations',
+                    request: {
+                        path: '/tasks',
+                        method: 'GET',
+                    },
+                    response: {
+                        body: 'Query worked',
+                    },
+                },
+            ]),
+        );
+    });
 
-    const { mockServer, apiServer } = await createServer({});
-    await request(mockServer).post('/tasks').send();
-    await request(mockServer).get('/tasks?finished=true').send();
+    it('retrieve records', async () => {
+        const { mockServer, apiServer } = await createServer({});
+        await request(mockServer).post('/tasks').send();
+        await request(mockServer).get('/tasks?finished=true').send();
 
-    const res = await request(apiServer).get('/api/records');
+        const res = await request(apiServer).get('/api/records');
 
-    expect(res.status).toBe(200);
+        expect(res.status).toBe(200);
 
-    expect(res.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`
+        expect(res.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`
             Array [
               Object {
                 "url": "/tasks",
@@ -45,90 +52,48 @@ test('retrieve records', async () => {
               },
             ]
       `);
-});
+    });
 
-test('all records are cleared', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test expectations
-            request:
-                path: /tasks
-                method: GET
-            response:
-                body: Query worked
-    `);
+    it('all records are cleared', async () => {
+        const { mockServer, apiServer } = await createServer({});
+        await request(mockServer).post('/tasks').send();
+        await request(mockServer).get('/tasks?finished=true').send();
 
-    const { mockServer, apiServer } = await createServer({});
-    await request(mockServer).post('/tasks').send();
-    await request(mockServer).get('/tasks?finished=true').send();
+        await request(apiServer).post('/api/clear');
+        const res = await request(apiServer).get('/api/records');
 
-    await request(apiServer).post('/api/clear');
-    const res = await request(apiServer).get('/api/records');
+        expect(res.status).toBe(200);
+        expect(res.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
+    });
 
-    expect(res.status).toBe(200);
+    it('reset server', async () => {
+        const { apiServer, mockServer } = await createServer({});
+        await request(mockServer).post('/tasks').send();
+        await request(mockServer).get('/tasks?finished=true').send();
 
-    expect(res.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
-});
+        await request(apiServer).post('/api/reset');
+        const records = await request(apiServer).get('/api/records');
+        const mocks = await request(apiServer).get('/api/mocks');
 
-test('reset server', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test expectations
-            request:
-                path: /tasks
-                method: GET
-            response:
-                body: Query worked
-    `);
+        expect(records.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
+        expect(mocks.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
+    });
 
-    const { apiServer, mockServer } = await createServer({});
-    await request(mockServer).post('/tasks').send();
-    await request(mockServer).get('/tasks?finished=true').send();
+    test('handle unsupported reset', async () => {
+        const { mockServer, apiServer } = await createServer({});
+        await request(mockServer).post('/tasks').send();
+        await request(mockServer).get('/tasks?finished=true').send();
 
-    await request(apiServer).post('/api/reset');
-    const records = await request(apiServer).get('/api/records');
-    const mocks = await request(apiServer).get('/api/mocks');
+        const res = await request(apiServer).delete('/api/reset');
+        expect(res.status).toBe(404);
+    });
 
-    expect(records.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
-    expect(mocks.body.map((rec) => ({ url: rec.request.path }))).toMatchInlineSnapshot(`Array []`);
-});
+    test('handle unsupported method', async () => {
+        const { mockServer, apiServer } = await createServer({});
+        await request(mockServer).post('/tasks').send();
+        await request(mockServer).get('/tasks?finished=true').send();
 
-test('handle unsupported reset', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test expectations
-            request:
-                path: /tasks
-                method: GET
-            response:
-                body: Query worked
-    `);
-
-    const { mockServer, apiServer } = await createServer({});
-    await request(mockServer).post('/tasks').send();
-    await request(mockServer).get('/tasks?finished=true').send();
-
-    const res = await request(apiServer).delete('/api/reset');
-
-    expect(res.status).toBe(404);
-});
-
-test('handle unsupported method', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test expectations
-            request:
-                path: /tasks
-                method: GET
-            response:
-                body: Query worked
-    `);
-
-    const { mockServer, apiServer } = await createServer({});
-    await request(mockServer).post('/tasks').send();
-    await request(mockServer).get('/tasks?finished=true').send();
-
-    const res = await request(apiServer).delete('/api/records');
-
-    expect(res.status).toBe(404);
+        const res = await request(apiServer).delete('/api/records');
+        expect(res.status).toBe(404);
+    });
 });
