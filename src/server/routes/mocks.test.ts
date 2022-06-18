@@ -6,150 +6,156 @@ jest.mock('fs', () => {
     return {
         existsSync: jest.fn(() => true),
         readFileSync: jest.fn(),
-        readdirSync: () => ['mocks.yml'],
+        readdirSync: () => ['mocks.json'],
         statSync: () => ({ isDirectory: () => true }),
     };
 });
 
-beforeEach(() => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReset();
-});
+describe('API Mocks', () => {
+    beforeEach(() => {
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReset();
 
-test('add a successful mock', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test mocks
-            request:
-                path: /tasks
-                method: POST
-                queryParams:
-                    id: '[a-z]'
-            response:
-                headers:
-                  Content-Type: application/json
-    `);
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReturnValueOnce(
+            JSON.stringify([
+                {
+                    id: 'test-mock',
+                    name: 'test mocks',
+                    request: {
+                        path: '/tasks',
+                        method: 'POST',
+                        queryParams: {
+                            id: '[a-z]',
+                        },
+                    },
+                    response: {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    },
+                },
+            ]),
+        );
+    });
 
-    const { apiServer } = await createServer({});
-    const res = await request(apiServer).post('/api/mocks').set('content-type', 'application/x-yaml').send(`
-         -  name: test mocks
-            request:
-                path: /tasks
-                method: POST
-                queryParams:
-                    id: '[a-z]'
-            response:
-                headers:
-                  Content-Type: application/json
-        `);
+    it('add a successful mock', async () => {
+        const { apiServer } = await createServer({});
+        const res = await request(apiServer)
+            .post('/api/mocks')
+            .set('content-type', 'application/json')
+            .send([
+                {
+                    name: 'test mocks',
+                    request: {
+                        path: '/tasks',
+                        method: 'POST',
+                        queryParams: {
+                            id: '[a-z]',
+                        },
+                    },
+                    response: {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    },
+                },
+            ]);
 
-    expect(res.status).toBe(201);
-});
+        expect(res.status).toBe(201);
+    });
 
-test('add a single mock', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test mocks
-            request:
-                path: /tasks
-                method: POST
-                queryParams:
-                    id: '[a-z]'
-            response:
-                headers:
-                  Content-Type: application/json
-    `);
+    it('add a single mock', async () => {
+        const { apiServer } = await createServer({});
+        const res = await request(apiServer)
+            .post('/api/mocks')
+            .set('content-type', 'application/json')
+            .send({
+                name: 'test mocks',
+                request: {
+                    path: 'tasks',
+                    method: 'POST',
+                },
+            });
 
-    const { apiServer } = await createServer({});
-    const res = await request(apiServer).post('/api/mocks').set('content-type', 'application/x-yaml').send(`
-            name: test mocks
-            request: 
-                path: tasks
-                method: POST
-        `);
+        expect(res.status).toBe(201);
+    });
 
-    expect(res.status).toBe(201);
-});
+    it('fail adding a non valid mock', async () => {
+        const { apiServer } = await createServer({});
+        const res = await request(apiServer)
+            .post('/api/mocks')
+            .set('content-type', 'application/json')
+            .send([
+                {
+                    name: 'test mocks',
+                    request: {
+                        method: 'POST',
+                    },
+                    response: null,
+                },
+            ]);
 
-test('fail adding a non valid mock', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   name: test mocks
-            request:
-                path: /tasks
-                method: POST
-                queryParams:
-                    id: '[a-z]'
-            response:
-                headers:
-                  Content-Type: application/json
-    `);
-
-    const { apiServer } = await createServer({});
-    const res = await request(apiServer).post('/api/mocks').set('content-type', 'application/x-yaml').send(`
-            - name: test mocks
-              request: 
-                method: POST
-              response:
-        `);
-
-    expect(res.status).toBe(500);
-    expect(res.body).toMatchInlineSnapshot(`
+        expect(res.status).toBe(500);
+        expect(res.body).toMatchInlineSnapshot(`
         Object {
           "message": "Request requires a path",
         }
     `);
-});
+    });
 
-test('remove a mock', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   id: sample-mock
-            name: test mocks
-            request:
-                path: /tasks
-                method: GET
-            response:
+    it('remove a mock', async () => {
+        const { apiServer } = await createServer({});
+        const res = await request(apiServer)
+            .delete('/api/mocks')
+            .set('content-type', 'application/json')
+            .send({ id: 'test-mock' });
 
-    `);
-    const { apiServer } = await createServer({});
-    const res = await request(apiServer)
-        .delete('/api/mocks')
-        .set('content-type', 'application/x-yaml')
-        .send(`id: sample-mock`);
-
-    expect(res.status).toBe(201);
-    expect(res.body).toMatchInlineSnapshot(`
+        expect(res.status).toBe(201);
+        expect(res.body).toMatchInlineSnapshot(`
             Object {
               "message": "ok",
             }
       `);
-});
+    });
 
-test('update a mock', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   id: sample-mock
-            name: test mocks
-            request:
-                path: /tasks
-                method: GET
-            response:
+    it('updates a mock', async () => {
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReset();
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReturnValueOnce(
+            JSON.stringify([
+                {
+                    id: 'sample-mock',
+                    name: 'test mocks',
+                    request: {
+                        path: '/tasks',
+                        method: 'GET',
+                    },
+                    response: null,
+                },
+            ]),
+        );
+        const { apiServer } = await createServer({});
 
-    `);
-    const { apiServer } = await createServer({});
+        await request(apiServer)
+            .put('/api/mocks')
+            .set('content-type', 'application/json')
+            .send(
+                JSON.stringify({
+                    id: 'sample-mock',
+                    request: {
+                        path: '/somewhere',
+                    },
+                    response: {
+                        status: 200,
+                    },
+                }),
+            );
 
-    await request(apiServer).put('/api/mocks').set('content-type', 'application/x-yaml').send(` 
-            id: sample-mock 
-            request: 
-                path: /somewhere
-            response: 
-                status: 200
-        `);
+        const res = await request(apiServer).get('/api/mocks');
 
-    const res = await request(apiServer).get('/api/mocks');
-
-    expect(res.body).toMatchInlineSnapshot(`
+        expect(res.body).toMatchInlineSnapshot(`
         Array [
           Object {
             "id": "sample-mock",
@@ -163,44 +169,65 @@ test('update a mock', async () => {
           },
         ]
     `);
-});
+    });
 
-test('update many mocks', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   id: mock1
-            name: test mocks
-            request:
-                path: /mock1
-                method: GET
-            response:
+    it('update many mocks', async () => {
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReset();
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReturnValueOnce(
+            JSON.stringify([
+                {
+                    id: 'mock1',
+                    name: 'test mocks',
+                    request: {
+                        path: '/mock1',
+                        method: 'GET',
+                    },
+                    response: null,
+                },
+                {
+                    id: 'mock2',
+                    name: 'test mocks',
+                    request: {
+                        path: '/mock2',
+                        method: 'GET',
+                    },
+                    response: null,
+                },
+            ]),
+        );
+        const { apiServer } = await createServer({});
 
-        -   id: mock2
-            name: test mocks
-            request:
-                path: /mock2
-                method: GET
-            response:
+        await request(apiServer)
+            .put('/api/mocks')
+            .set('content-type', 'application/json')
+            .send(
+                JSON.stringify([
+                    {
+                        id: 'mock1',
+                        request: {
+                            path: '/somewhere',
+                        },
+                        response: {
+                            status: 200,
+                        },
+                    },
+                    {
+                        id: 'mock2',
+                        request: {
+                            path: '/another-place',
+                        },
+                        response: {
+                            status: 200,
+                        },
+                    },
+                ]),
+            );
 
-    `);
-    const { apiServer } = await createServer({});
+        const res = await request(apiServer).get('/api/mocks');
 
-    await request(apiServer).put('/api/mocks').set('content-type', 'application/x-yaml').send(` 
-            - id: mock1
-              request: 
-                path: /somewhere 
-              response: 
-                status: 200
-            - id: mock2
-              request: 
-                path: /another-place 
-              response: 
-                status: 200
-        `);
-
-    const res = await request(apiServer).get('/api/mocks');
-
-    expect(res.body).toMatchInlineSnapshot(`
+        expect(res.body).toMatchInlineSnapshot(`
         Array [
           Object {
             "id": "mock1",
@@ -224,38 +251,50 @@ test('update many mocks', async () => {
           },
         ]
     `);
-});
+    });
 
-test('re-order mocks', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   id: mock1
-            name: test mocks
-            request:
-                path: /mock1
-                method: GET
-            response:
+    it('re-order mocks', async () => {
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReset();
 
-        -   id: mock2
-            name: test mocks
-            request:
-                path: /mock2
-                method: GET
-            response:
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReturnValueOnce(
+            JSON.stringify([
+                {
+                    id: 'mock1',
+                    name: 'test mocks',
+                    request: {
+                        path: '/mock1',
+                        method: 'GET',
+                    },
+                    response: null,
+                },
+                {
+                    id: 'mock2',
+                    name: 'test mocks',
+                    request: {
+                        path: '/mock2',
+                        method: 'GET',
+                    },
+                    response: null,
+                },
+            ]),
+        );
+        const { apiServer } = await createServer({});
 
-    `);
-    const { apiServer } = await createServer({});
+        const res = await request(apiServer)
+            .post('/api/mocks/order')
+            .set('content-type', 'application/json')
+            .send(
+                JSON.stringify({
+                    ids: ['mock2', 'mock1'],
+                }),
+            );
 
-    const res = await request(apiServer).post('/api/mocks/order').set('content-type', 'application/x-yaml').send(` 
-            ids:
-                - mock2
-                - mock1
-        `);
+        expect(res.status).toBe(201);
 
-    expect(res.status).toBe(201);
-
-    const { body: mocks } = await request(apiServer).get('/api/mocks');
-    expect(mocks).toMatchInlineSnapshot(`
+        const { body: mocks } = await request(apiServer).get('/api/mocks');
+        expect(mocks).toMatchInlineSnapshot(`
         Array [
           Object {
             "id": "mock2",
@@ -279,25 +318,31 @@ test('re-order mocks', async () => {
           },
         ]
     `);
-});
+    });
 
-test('retrieve all mocks', async () => {
-    // @ts-ignore: Jest Mock
-    fs.readFileSync.mockReturnValueOnce(`
-        -   id: sample-mock
-            name: test mocks
-            request:
-                path: /tasks
-                method: GET
-            response:
+    it('retrieve all mocks', async () => {
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReset();
+        // @ts-ignore: Jest Mock
+        fs.readFileSync.mockReturnValueOnce(
+            JSON.stringify([
+                {
+                    id: 'sample-mock',
+                    name: 'test mocks',
+                    request: {
+                        path: '/tasks',
+                        method: 'GET',
+                    },
+                    response: null,
+                },
+            ]),
+        );
 
-    `);
+        const { apiServer } = await createServer({});
+        const res = await request(apiServer).get('/api/mocks');
 
-    const { apiServer } = await createServer({});
-    const res = await request(apiServer).get('/api/mocks');
-
-    expect(res.status).toBe(200);
-    expect(res.body).toMatchInlineSnapshot(`
+        expect(res.status).toBe(200);
+        expect(res.body).toMatchInlineSnapshot(`
         Array [
           Object {
             "id": "sample-mock",
@@ -311,4 +356,5 @@ test('retrieve all mocks', async () => {
           },
         ]
     `);
+    });
 });
