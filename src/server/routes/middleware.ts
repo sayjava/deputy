@@ -17,22 +17,6 @@ export const responseHandler = (req, res) => {
     return res.status(res.locals.code || 200).json(res.locals.body || {});
 };
 
-export const parseBodyHandler = (req, _, next) => {
-    const contentType = req.headers['content-type'] || '';
-    if (contentType.includes('application/x-yaml')) {
-        try {
-            req.payload = Yaml.parse(req.body);
-            return next();
-        } catch (error) {
-            return next(error);
-        }
-    } else {
-        req.payload = req.body;
-    }
-
-    return next();
-};
-
 export const parseRequestBody = async (request: Request, response: Response, next: (err?: any) => void) => {
     // Parse body as a raw string and JSON/form if applicable
     const requestContentType: string | undefined = request.header('Content-Type');

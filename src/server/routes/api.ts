@@ -15,7 +15,7 @@ const createMocksRouter = ({ engine }: Props) => {
 
     router.post('/', (req, res, next) => {
         // @ts-ignore
-        const body = req.payload;
+        const body = req.body;
 
         if (Array.isArray(body)) {
             body.forEach((mock) => engine.addMock(mock));
@@ -29,7 +29,7 @@ const createMocksRouter = ({ engine }: Props) => {
 
     router.put('/', (req, res, next) => {
         // @ts-ignore
-        const body = req.payload;
+        const body = req.body;
 
         if (Array.isArray(body)) {
             body.forEach((mock) => engine.updateMock(mock));
@@ -43,7 +43,7 @@ const createMocksRouter = ({ engine }: Props) => {
 
     router.delete('/', (req, res, next) => {
         // @ts-ignore
-        const body = req.payload;
+        const body = req.body;
         engine.removeMock(body.id);
         res.locals = { body: { message: 'ok' }, code: 201 };
         next();
@@ -51,7 +51,7 @@ const createMocksRouter = ({ engine }: Props) => {
 
     router.post('/order', (req, res, next) => {
         // @ts-ignore
-        const { ids } = req.payload;
+        const { ids } = req.body;
 
         if (Array.isArray(ids)) {
             engine.reorderMocks(ids);
@@ -112,7 +112,7 @@ const createRequestRouter = ({ engine }: Props) => {
     router.put('/assert', (req, res, next) => {
         try {
             // @ts-ignore
-            const verifications = req.payload;
+            const verifications = req.body;
             if (!Array.isArray(verifications)) {
                 return next(new Error('Request body must be an array'));
             }
@@ -135,7 +135,7 @@ const createRequestRouter = ({ engine }: Props) => {
     router.put('/sequence', (req, res, next) => {
         try {
             // @ts-ignore
-            const requests = req.payload;
+            const requests = req.body;
             const result = engine.assertSequence(requests);
 
             if (result === true) {

@@ -11,7 +11,7 @@ import { loadMocks } from './utils';
 import { loadSSLCerts } from './ssl';
 import { createAPIRouter } from './routes/api';
 import { createMocksRouter } from './routes/mocks';
-import { errorHandler, responseHandler, parseBodyHandler, parseRequestBody } from './routes/middleware';
+import { errorHandler, responseHandler, parseRequestBody } from './routes/middleware';
 import { DeputyConfig, MiddlewareConfig } from '../types';
 import logger from './logger';
 
@@ -53,9 +53,7 @@ export const createEngine = (config: DeputyConfig) => {
 
 export const createAPIServer = ({ engine }) => {
     const server = createExpress();
-    server.use(bodyParser.text({ type: 'application/x-yaml' }));
     server.use(bodyParser.json());
-    server.use(parseBodyHandler);
     server.use('/dashboard', express.static('ui/build/'));
     server.use('/api', createAPIRouter({ engine }));
 
