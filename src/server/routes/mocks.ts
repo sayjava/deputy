@@ -22,8 +22,7 @@ export const createMocksRouter = ({ engine }: Props): Router => {
                     httpVersion: req.httpVersion,
                     remoteAddress: req.socket.remoteAddress,
                 } as any,
-                // @ts-ignore: Just body
-                body: req.body || req.stringBody,
+                body: req.body,
                 time: Date.now(),
             };
 

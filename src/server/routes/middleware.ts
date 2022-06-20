@@ -20,35 +20,37 @@ export const responseHandler = (req, res) => {
 export const parseRequestBody = async (request: Request, response: Response, next: (err?: any) => void) => {
     // Parse body as a raw string and JSON/form if applicable
     const requestContentType: string | undefined = request.header('Content-Type');
-    const rawBody: Buffer[] = [];
+    const buffers: Buffer[] = [];
 
     request.on('data', (chunk) => {
-        rawBody.push(Buffer.from(chunk, 'binary'));
+        buffers.push(Buffer.from(chunk, 'binary'));
     });
 
     request.on('end', () => {
         // @ts-ignore
-        request.rawBody = Buffer.concat(rawBody);
-        // @ts-ignore
-        request.stringBody = request.rawBody.toString('utf8');
+        const rawBody = Buffer.concat(buffers);
+        const stringBody = rawBody.toString('utf8');
 
         try {
             // @ts-ignore
-            if (requestContentType && request.rawBody.length > 0) {
+            if (requestContentType && rawBody.length > 0) {
                 if (requestContentType.includes('application/json')) {
                     // @ts-ignore
-                    request.body = JSON.parse(request.stringBody);
+                    request.body = JSON.parse(stringBody);
                 } else if (requestContentType.includes('application/x-www-form-urlencoded')) {
                     // @ts-ignore
-                    request.body = qsParse(request.stringBody, {
+                    request.body = qsParse(stringBody, {
                         depth: 10,
                     });
                 } else if (requestContentType.includes('application/xml') || requestContentType.includes('text/xml')) {
                     // @ts-ignore
-                    request.body = Yaml.parse(request.stringBody, {});
+                    request.body = Yaml.parse(stringBody, {});
+                } else if (requestContentType.includes('text')) {
+                    request.body = stringBody;
                 }
             }
         } catch (error: any) {
+            request.body = rawBody;
             logger.error(error);
         }
 

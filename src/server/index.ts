@@ -18,7 +18,7 @@ import logger from './logger';
 const defaultConfig: DeputyConfig = {
     port: 8080,
     apiPort: 8081,
-    proxy: true,
+    autoProxy: true,
     mocksDirectory: 'mocks',
     tls: false,
     domains: '',
@@ -48,7 +48,7 @@ type App = {
 
 export const createEngine = (config: DeputyConfig) => {
     const mocks = loadMocks(config);
-    return new Engine(mocks, { autoForwardRequest: config.proxy });
+    return new Engine(mocks, { autoForwardRequest: config.autoProxy });
 };
 
 export const createAPIServer = ({ engine }) => {

@@ -38,7 +38,7 @@ This command will:
 | \--mocks-directory, -d   | DEPUTY_MOCKS_DIRECTORY | mocks     | Path to a folder containing yaml/json mock definition files |
 | \--port, -p              | DEPUTY_PORT            | 8080      | The port the mock sever runs on                             |
 | \--api-port, -ap         | DEPUTY_API_PORT        | 8081      | The port the api sever runs on                              |
-| \--auto-proxy, -px       | DEPUTY_AUTO_PROXY      | true      | Auto proxy requests                                         |
+| \--auto-proxy, -x        | DEPUTY_AUTO_PROXY      | true      | Auto proxy requests                                         |
 | \--tls-enabled, -tls     | DEPUTY_TLS             | undefined | Enables HTTPs and auto generates a self-signed certificate  |
 | \--tls-domains, -domains | DEPUTY_DOMAINS         | undefined | Domain names that will be included in the certificate       |
 

@@ -1,8 +1,8 @@
 import stringMatcher from './string';
 
 export const matchKeys = (expected: { [key: string]: any }, actual: { [key: string]: any }) => {
-    const actualKeys = Object.keys(actual);
-    const expectedKeys = Object.keys(expected);
+    const actualKeys = Object.keys(actual).map((k) => k.toLowerCase());
+    const expectedKeys = Object.keys(expected).map((k) => k.toLowerCase());
     const nonMatchingKey = expectedKeys.some((key) => !actualKeys.includes(key));
     if (nonMatchingKey) {
         return false;

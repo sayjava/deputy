@@ -56,9 +56,9 @@ const args = yargs(hideBin(process.argv))
     })
     .option('auto-proxy', {
         type: 'boolean',
-        alias: 'px',
+        alias: 'x',
         describe: 'Automatically proxy non matching requests',
-        default: process.env.DEPUTY_AUTO_PROXY === 'false',
+        default: process.env.DEPUTY_AUTO_PROXY === 'true',
     })
     .option('mocks-directory', {
         type: 'string',

@@ -138,7 +138,7 @@ export interface DeputyConfig {
     port?: number;
     mocksDirectory?: string;
     tls?: boolean;
-    proxy?: boolean;
+    autoProxy?: boolean;
     domains?: string;
 }
 
