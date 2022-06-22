@@ -7,7 +7,7 @@ describe('Headers', () => {
 
     beforeAll(async () => {
         const { apiServer, mockServer } = await createServer({ autoProxy: false });
-        const res = await request(apiServer)
+        await request(apiServer)
             .post('/api/mocks')
             .set('content-type', 'application/json')
             .send(
@@ -17,12 +17,15 @@ describe('Headers', () => {
                             path: '/headers_subset_keys',
                             method: 'GET',
                             headers: {
-                                Accept: 'application/json',
+                                Accept: 'application/text',
                                 Host: 'example.com',
                             },
                         },
                         response: {
                             status: 200,
+                            headers: {
+                                'content-type': 'text/plain',
+                            },
                             body: 'headers_subset_keys',
                         },
                     },
@@ -31,12 +34,15 @@ describe('Headers', () => {
                             path: '/headers_regex',
                             method: 'GET',
                             headers: {
-                                Accept: 'application/json',
+                                Accept: 'application/text',
                                 'x-mock-version': '[0-9]+',
                             },
                         },
                         response: {
                             status: 200,
+                            headers: {
+                                'content-type': 'text/plain',
+                            },
                             body: 'headers_regex',
                         },
                     },
@@ -48,6 +54,9 @@ describe('Headers', () => {
                         },
                         response: {
                             status: 200,
+                            headers: {
+                                'content-type': 'text/plain',
+                            },
                             body: 'empty_headers',
                         },
                     },
@@ -60,31 +69,31 @@ describe('Headers', () => {
     it('matches subset headers', async () => {
         const res = await request(server)
             .get('/headers_subset_keys')
-            .set('Accept', 'application/json')
+            .set('Accept', 'application/text')
             .set('Cache-Control', 'no-cache')
             .set('Host', 'example.com');
 
         expect(res.statusCode).toBe(200);
-        expect(res.body).toMatchInlineSnapshot(`"headers_subset_keys"`);
+        expect(res.text).toMatchInlineSnapshot(`"headers_subset_keys"`);
     });
 
     it('matches subset headers', async () => {
         const res = await request(server)
             .get('/headers_regex')
-            .set('Accept', 'application/json')
+            .set('Accept', 'application/text')
             .set('x-mock-version', '2');
 
         expect(res.statusCode).toBe(200);
-        expect(res.body).toMatchInlineSnapshot(`"headers_regex"`);
+        expect(res.text).toMatchInlineSnapshot(`"headers_regex"`);
     });
 
     it('matches subset headers', async () => {
         const res = await request(server)
             .get('/empty_headers')
-            .set('Accept', 'application/json')
+            .set('Accept', 'application/text')
             .set('x-mock-version', '2');
 
         expect(res.statusCode).toBe(200);
-        expect(res.body).toMatchInlineSnapshot(`"empty_headers"`);
+        expect(res.text).toMatchInlineSnapshot(`"empty_headers"`);
     });
 });

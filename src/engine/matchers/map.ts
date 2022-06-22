@@ -17,9 +17,14 @@ export default (expected: { [key: string]: any }, actual: { [key: string]: any }
     }
 
     try {
-        // check matching keys
         if (Array.isArray(actual)) {
-            return stringMatcher(JSON.stringify(actual), JSON.stringify(expected));
+            if (Array.isArray(expected)) {
+                const unMatched = expected.filter(
+                    (next, index) => JSON.stringify(next) !== JSON.stringify(actual[index]),
+                );
+                return unMatched.length === 0;
+            }
+            return false;
         } else {
             // Match keys
             if (!matchKeys(expected, actual)) {
@@ -33,8 +38,6 @@ export default (expected: { [key: string]: any }, actual: { [key: string]: any }
 
             return !nonMatchingValue;
         }
-
-        return true;
     } catch (e) {
         return e;
     }

@@ -31,6 +31,9 @@ describe('Paths', () => {
                         },
                     },
                     response: {
+                        headers: {
+                            'content-type': 'text/plain',
+                        },
                         body: 'Query worked',
                     },
                 },
@@ -41,7 +44,7 @@ describe('Paths', () => {
         const res = await request(mockServer).get('/tasks?id=visitShopd').send();
 
         expect(res.status).toBe(200);
-        expect(res.text).toMatchInlineSnapshot(`"\\"Query worked\\""`);
+        expect(res.text).toMatchInlineSnapshot(`"Query worked"`);
     });
 
     it('validates that path parameters work', async () => {
@@ -59,6 +62,9 @@ describe('Paths', () => {
                         },
                     },
                     response: {
+                        headers: {
+                            'content-type': 'text/plain',
+                        },
                         body: 'Query worked',
                     },
                 },
@@ -86,6 +92,9 @@ describe('Paths', () => {
                         },
                     },
                     response: {
+                        headers: {
+                            'Content-Type': 'text/plain',
+                        },
                         body: 'Query worked',
                     },
                 },
@@ -96,7 +105,7 @@ describe('Paths', () => {
         const res = await request(mockServer).get('/api/tasks/apple/doc/new').send();
 
         expect(res.status).toBe(200);
-        expect(res.body).toMatchInlineSnapshot(`"Query worked"`);
+        expect(res.text).toMatchInlineSnapshot(`"Query worked"`);
     });
 
     it('validates that response headers are sent', async () => {
@@ -116,7 +125,7 @@ describe('Paths', () => {
                     response: {
                         headers: {
                             'x-client-headers': 'some-headers',
-                            'content-type': 'application/json',
+                            'content-type': 'text/plain',
                         },
                         body: 'a response',
                     },
@@ -128,10 +137,10 @@ describe('Paths', () => {
         const res = await request(mockServer).get('/api/tasks/apple/doc/new').send();
 
         expect(res.status).toBe(200);
-        expect(res.body).toMatchInlineSnapshot(`"a response"`);
+        expect(res.text).toMatchInlineSnapshot(`"a response"`);
         expect(res.headers).toEqual(
             expect.objectContaining({
-                'content-type': 'application/json; charset=utf-8',
+                'content-type': 'text/plain; charset=utf-8',
                 'x-client-headers': 'some-headers',
             }),
         );

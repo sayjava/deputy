@@ -33,7 +33,7 @@ export const createMocksRouter = ({ engine }: Props): Router => {
                 }
             });
 
-            res.locals = { body: record.response.body || {}, code: record.response.status || 200 };
+            res.locals = { body: record.response.body, code: record.response.status || 200 };
             next();
         } catch (error) {
             next(error);
