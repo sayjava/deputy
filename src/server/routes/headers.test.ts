@@ -60,6 +60,19 @@ describe('Headers', () => {
                             body: 'empty_headers',
                         },
                     },
+                    {
+                        request: {
+                            path: '/regex_methods',
+                            method: 'PUT|POST',
+                        },
+                        response: {
+                            status: 200,
+                            headers: {
+                                'content-type': 'text/plain',
+                            },
+                            body: 'regex_methods',
+                        },
+                    },
                 ]),
             );
 
@@ -95,5 +108,17 @@ describe('Headers', () => {
 
         expect(res.statusCode).toBe(200);
         expect(res.text).toMatchInlineSnapshot(`"empty_headers"`);
+    });
+
+    it('matches subset headers', async () => {
+        const put = await request(server).put('/regex_methods').set('Accept', 'application/text');
+
+        const post = await request(server).post('/regex_methods').set('Accept', 'application/text');
+
+        const get = await request(server).get('/regex_methods').set('Accept', 'application/text');
+
+        expect(put.statusCode).toBe(200);
+        expect(post.statusCode).toBe(200);
+        expect(get.statusCode).toBe(404);
     });
 });

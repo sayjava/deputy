@@ -81,13 +81,13 @@ const createMiscRouter = ({ engine }: Props) => {
 
     router.post('/reset', (_, res, next) => {
         engine.clearAll();
-        res.locals = { body: { ok: true } };
+        res.locals = { body: { ok: true }, code: 201 };
         next();
     });
 
     router.post('/clear', (_, res, next) => {
         engine.clearAllRecords();
-        res.locals = { body: { ok: true } };
+        res.locals = { body: { ok: true }, code: 201 };
         next();
     });
 
