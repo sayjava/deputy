@@ -11,7 +11,7 @@ export const matchKeys = (expected: { [key: string]: any }, actual: { [key: stri
     return true;
 };
 
-export default (expected: { [key: string]: any }, actual: { [key: string]: any }): boolean => {
+const map = (expected: { [key: string]: any }, actual: { [key: string]: any }): boolean => {
     if (Object.keys(expected).length === 0) {
         return true;
     }
@@ -33,6 +33,9 @@ export default (expected: { [key: string]: any }, actual: { [key: string]: any }
 
             // Match Values
             const nonMatchingValue = Object.entries(expected).some(([key, expValue]) => {
+                if (typeof expValue === 'object' || typeof actual[key] === 'object') {
+                    return !map(expValue, actual[key]);
+                }
                 return !stringMatcher(actual[key], expValue);
             });
 
@@ -42,3 +45,5 @@ export default (expected: { [key: string]: any }, actual: { [key: string]: any }
         return e;
     }
 };
+
+export default map;
